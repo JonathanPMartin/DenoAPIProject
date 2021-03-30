@@ -1,20 +1,26 @@
-
-/* foo.js */
-
-import { customiseNavBar, file2Base64, showMessage } from './browserUtility.js'
-
+import { customiseNavBar, showMessage } from './browserUtility.js'
 export async function setup() {
-	console.log('FOO')
+	console.log('HOME')
 	const username = localStorage.getItem('username')
+	console.log(localStorage)
 	console.log(`username: ${username}`)
 	if(username === null) window.location.href = '#login'
-	document.querySelector('h1').innerText = 'Secure Foo Page'
-	const nav = ['logout', 'foo','home']
+	document.querySelector('h1').innerText = 'Add Order'
+	const nav = ['logout', 'foo']
+	nav.push('welcome')
 	customiseNavBar(nav)
-	document.querySelector('form').addEventListener('submit', await uploadData)
+	document.querySelector('form').addEventListener('sumbit', await Data)
+}
+async function Data(event){
+	console.log('test')
+	event.preventDefult()
+	const formData={
+		item:event.target.querySelector('input[name="itemordered"]').value
+	}
+	console.log(formData)
 }
 
-async function uploadData(event) {
+/*async function uploadData(event) {
 	event.preventDefault()
 	const element = document.querySelector('input[name="file"]')
 	console.log(element)
@@ -36,4 +42,4 @@ async function uploadData(event) {
 	const json = await response.json()
 	console.log(json)
 	showMessage('file uploaded')
-}
+}*/
