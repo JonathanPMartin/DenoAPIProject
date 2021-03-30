@@ -22,6 +22,8 @@ async function login() {
 		const response = await fetch(url, options)
 		const json = await response.json()
 		if(response.status === 200) {
+			console.log('json data bellow')
+			console.log(json.data)
 			localStorage.setItem('username', json.data.username)
 			localStorage.setItem('authorization', token)
 			window.location.href = '#foo'

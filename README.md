@@ -9,7 +9,7 @@ $ deno run --allow-all --unstable index.js
 
 The system comes pre-configured with an account:
 
-- username: `jdoe`
+- username: `doej`
 - password: `p455w0rd`
 
 You can use the registration option to create more accounts.
