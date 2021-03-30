@@ -39,7 +39,9 @@ router.post('/accounts', async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify({ status: 'success', msg: 'account created' })
 })
-
+router.post('/#AddOrder', async context => {
+	console.log('POST /accounts')
+})
 router.post('/files', async context => {
 	console.log('POST /files')
 	try {

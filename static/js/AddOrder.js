@@ -9,7 +9,7 @@ export async function setup() {
 	const nav = ['logout', 'foo']
 	nav.push('welcome')
 	customiseNavBar(nav)
-	document.querySelector('form').addEventListener('sumbit', await Data)
+	document.querySelector('form').addEventListener('sumbit', await uploadData)
 }
 async function Data(event){
 	console.log('test')
@@ -18,9 +18,17 @@ async function Data(event){
 		item:event.target.querySelector('input[name="itemordered"]').value
 	}
 	console.log(formData)
+	const options = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const response = await fetch(options)
 }
 
-/*async function uploadData(event) {
+async function uploadData(event) {
 	event.preventDefault()
 	const element = document.querySelector('input[name="file"]')
 	console.log(element)
@@ -42,4 +50,4 @@ async function Data(event){
 	const json = await response.json()
 	console.log(json)
 	showMessage('file uploaded')
-}*/
+}
