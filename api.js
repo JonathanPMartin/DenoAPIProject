@@ -2,7 +2,7 @@
 /* routes.js */
 
 import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
- import { db } from './modules/db.js'
+import { db } from './modules/db.js'
 import { extractCredentials, saveFile } from './modules/util.js'
 import { login, register } from './modules/accounts.js'
 
