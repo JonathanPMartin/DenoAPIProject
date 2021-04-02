@@ -21,7 +21,7 @@ async function router() {
 	document.querySelector('main').innerHTML = await (await fetch(`./html/${requestedPage}.html`)).text()
 	highlightNav(requestedPage)
 	try {
-		const script = `https://bishop-mozart-8080.codio-box.uk/js/${requestedPage}.js`
+		const script = `../js/${requestedPage}.js`
 		console.log(`trying to load script: ${script}`)
 		const module = await import(script)
 		console.log(`script found for "${requestedPage}" route`)

@@ -5,7 +5,6 @@ import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
 import { db } from './modules/db.js'
 import { extractCredentials, saveFile } from './modules/util.js'
 import { login, register } from './modules/accounts.js'
-
 const router = new Router()
 
 // the routes defined here
@@ -59,6 +58,7 @@ router.post('/files', async context => {
 	}
 })
 router.get('/Menu', async context => {
+	console.log('why me')
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM menu;'
 	const actors = await db.query(sql)
@@ -68,7 +68,8 @@ router.get('/Menu', async context => {
 	})
 	context.response.body = JSON.stringify(actors, null, 2)
 })
-router.get('/Menu/:id', async context => {
+router.get(`/Menu/:id`, async context => {
+	console.log('why me')
 	const sql = `SELECT * FROM menu WHERE id = ${context.params.id};`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')

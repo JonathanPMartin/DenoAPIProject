@@ -12,10 +12,11 @@ create table if not exists menu(
 );
 
 create table if not exists staff(
-	id mediumint UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	job  VARCHAR(25) NOT NULL,
-	staffid SMALLINT UNSIGNED NOT NULL,
-	status VARCHAR(25) NOT NULL
+	staffid mediumint UNSIGNED NOT NULL,
+	status VARCHAR(25) NOT NULL,
+	FOREIGN KEY(staffid) REFERENCES accounts(id)
 );
 
 create table if not exists tables(
@@ -41,4 +42,4 @@ create table if not exists tableOrder(
 	FOREIGN KEY(orderid) REFERENCES orders(id),
 	FOREIGN KEY(tableid) REFERENCES tables(id)
 );
-alter table staff ADD FOREIGN KEY(staffid) REFERENCES accounts(id);
+insert into staff(job, staffid, status) values("None",1,"Offline");

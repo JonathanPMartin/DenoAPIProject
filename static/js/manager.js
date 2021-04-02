@@ -1,7 +1,14 @@
-import { customiseNavBar, file2Base64, showMessage, getURL } from './browserUtility.js'
-
+import { customiseNavBar } from './browserUtility.js'
+//import { db } from '../../modules/db.js'
+//console.log(db)
+//const sql = 'SELECT * FROM staff;'
+//const actors = await db.query(sql)
+//console.log(actors)
 export async function setup() {
-	console.log('FOO')
+	console.log('manger')
+	let option = document.createElement("option");
+	option.text = "Kiwi";
+	document.querySelector('select[name="users"]').add(option)
 	const username = localStorage.getItem('username')
 	console.log(`username: ${username}`)
 	if(username === null) window.location.href = '#login'
@@ -14,30 +21,35 @@ export async function setup() {
 async function uploadData(event) {
 	console.log('called')
 	event.preventDefault()
-	const element = document.querySelector('input[name="file"]')
-	console.log(element)
-	const id = document.querySelector('input[name="userid"]')
-	const job=document.querySelector('input[name="job"]')
-	console.log(job)
+	
+	
+	
+	const id = document.querySelector('input[name="userid"]').value
+	const Job=document.querySelector('input[name="job"]').value
+	console.log(Job)
+	const Body={
+		job:Job
+	}
+	console.log(JSON.stringify(Body))
 	const file = document.querySelector('input[name="file"]').files[0]
-	file.base64 = await file2Base64(file)
-	file.user = localStorage.getItem('username')
-	console.log(file)
-	const baseURl=getURL()
-	const url = `${baseURl}/staff/${id}`
+	
+	
+	const url = `/staff/${id}`
 	const options = {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': localStorage.getItem('authorization')
 		},
-		body: JSON.stringify(job)
-	const value = context.request.body({ type: 'json' });
-	const data = await value
+		body: JSON.stringify(Body)
+		
+	//const value = context.request.body({ type: 'json' });
+	//const data = await value
 	}
 	const response = await fetch(url, options)
 	console.log(response)
 	const json = await response.json()
 	console.log(json)
 	showMessage('file uploaded')
+
 }

@@ -1,5 +1,8 @@
-import { customiseNavBar, showMessage } from './browserUtility.js'
+import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
+	let option = document.createElement("option");
+	option.text = "Kiwi";
+	document.querySelector('select[name="Items"]').add(option)
 	console.log('HOME')
 	const username = localStorage.getItem('username')
 	console.log(localStorage)
