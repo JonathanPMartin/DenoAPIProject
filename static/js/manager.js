@@ -1,6 +1,8 @@
 import { customiseNavBar } from './browserUtility.js'
-//import { db } from '../../modules/db.js'
-//console.log(db)
+import { db } from '\./modules/db.js'
+console.log(db)
+//x= await db.query('SELECT * FROM menu;')
+
 //const sql = 'SELECT * FROM staff;'
 //const actors = await db.query(sql)
 //console.log(actors)
