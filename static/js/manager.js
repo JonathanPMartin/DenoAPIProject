@@ -1,6 +1,4 @@
 import { customiseNavBar } from './browserUtility.js'
-import { db } from '\./modules/db.js'
-console.log(db)
 //x= await db.query('SELECT * FROM menu;')
 
 //const sql = 'SELECT * FROM staff;'
@@ -18,12 +16,21 @@ export async function setup() {
 	const nav = ['logout', 'foo','home']
 	customiseNavBar(nav)
 	document.querySelector('form').addEventListener('submit', await uploadData)
+	const url1 = `/staff/1`
+	const options1 = {
+		method: 'GET',
+		
+	//const value = context.request.body({ type: 'json' });
+	//const data = await value
+	}
+	const response2 = await fetch(url1, options1)
+	console.log(response2)
 }
 
 async function uploadData(event) {
+	
 	console.log('called')
 	event.preventDefault()
-	
 	
 	
 	const id = document.querySelector('input[name="userid"]').value

@@ -69,14 +69,15 @@ router.get('/Menu', async context => {
 	context.response.body = JSON.stringify(actors, null, 2)
 })
 router.get(`/Menu/:id`, async context => {
-	console.log('why me')
-	const sql = `SELECT * FROM menu WHERE id = ${context.params.id};`
+	console.log(context.params.id)
+	const sql = `SELECT * FROM menu WHERE id =${context.params.id};`
 	const actors = await db.query(sql)
+	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
-	context.response.status = Status.ok
+	console.log('test')
 	context.response.body = JSON.stringify(actors[0], null, 2)
 })
-router.put('/Menu/:id', async context => {
+router.post('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -85,10 +86,9 @@ router.put('/Menu/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
-router.put('/TableOrder/:id', async context => {
+router.post('/TableOrder/:id', async context => {
 	console.log("/put/TableOrder/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -97,10 +97,9 @@ router.put('/TableOrder/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
-router.put('/Orders/:id', async context => {
+router.post('/Orders/:id', async context => {
 	console.log("/put/Orders/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -109,18 +108,16 @@ router.put('/Orders/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
 router.get('/Staff/:id', async context => {
 	const sql = `SELECT * FROM staff WHERE id = ${context.params.id};`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
-	context.response.status = Status.ok
 	context.response.body = JSON.stringify(actors[0], null, 2)
 })
 
-router.put('/Tables/:id', async context => {
+router.post('/Tables/:id', async context => {
 	console.log("/put/Tables/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -129,10 +126,9 @@ router.put('/Tables/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
-router.put('/Menu/:id', async context => {
+router.post('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -141,12 +137,11 @@ router.put('/Menu/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
 
-router.put('/Staff/:id', async context => {
-	console.log("/put/Staff/:id")
+router.post('/Staff/Job/:id', async context => {
+	console.log("/put/Staff/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
@@ -154,10 +149,19 @@ router.put('/Staff/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.status = Status.OK
 	context.response.body = JSON.stringify(data, null, 2)
 })
-
+router.post('/Staff/Stauts/:id', async context => {
+	console.log("/put/Staff/Job/:id")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const id = context.params.id
+	const sql = `UPDATE staff SET status = "${StaffData.status}" WHERE id = ${id}`
+	console.log(sql)
+	await db.query(sql)
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.body = JSON.stringify(data, null, 2)
+})
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')
 	context.response.body = data

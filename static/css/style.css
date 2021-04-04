@@ -283,3 +283,6 @@ footer > p#location {
 		background-size: contain;
 	}
 }
+.flexbox{
+	display:flex;
+}
