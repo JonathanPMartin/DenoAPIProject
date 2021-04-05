@@ -20,7 +20,22 @@ async function login() {
 			headers: { 'Authorization': token }
 		}
 		const response = await fetch(url, options)
-		const json = await response.json()
+		
+		let json = await response.json()
+		console.log('json data bellow')
+			console.log(json.data)
+			localStorage.setItem('username', json.data.username)
+			const url1 = `/accounts/${json.data.username}`
+			const options1 = {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': localStorage.getItem('authorization')
+				},
+			}
+			console.log('above call on form')
+			const response2 = await fetch(url1, options1)
+			
 		if(response.status === 200) {
 			console.log('json data bellow')
 			console.log(json.data)

@@ -17,6 +17,7 @@ async function router() {
 	console.log(`page: ${requestedPage}`)
 	const querystring = data ? extractQuerystring(data) : {}
 	console.log(querystring)
+	console.log(location)
 	document.querySelector('h1').innerHTML = '&nbsp;'
 	document.querySelector('main').innerHTML = await (await fetch(`./html/${requestedPage}.html`)).text()
 	highlightNav(requestedPage)

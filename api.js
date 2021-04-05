@@ -3,7 +3,7 @@
 
 import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
 import { db } from './modules/db.js'
-import { extractCredentials, saveFile } from './modules/util.js'
+import { extractCredentials, saveFile, savedata } from './modules/util.js'
 import { login, register } from './modules/accounts.js'
 const router = new Router()
 
@@ -27,6 +27,28 @@ router.get('/accounts', async context => {
 		context.response.status = 401
 		context.response.body = JSON.stringify({ status: 'unauthorised', msg: err.msg })
 	}
+})
+router.get('/accounts/:user', async context => {
+	console.log(context.params.user)
+	let test=context.params.user
+	test=test.toString()
+	const sql = `SELECT * FROM accounts;`
+	const accounts=await db.query(sql)
+	const arrayLength = accounts.length;
+	let data='null'
+	for (var i = 0; i <= arrayLength; i++) {
+    if (accounts[i].user===context.params.user){
+		data=accounts[i]
+		console.log(accounts[i].user)
+		console.log(data)
+	}
+    //Do something
+
+	}
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	return
+	console.log('test')
 })
 
 router.post('/accounts', async context => {
@@ -66,7 +88,9 @@ router.get('/Menu', async context => {
 		actor.url = `https://${host}/Menu/${actor.id}`
 		//delete actor.id
 	})
+	context.response.status = 201
 	context.response.body = JSON.stringify(actors, null, 2)
+	return
 })
 router.get(`/Menu/:id`, async context => {
 	console.log(context.params.id)
@@ -75,7 +99,9 @@ router.get(`/Menu/:id`, async context => {
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
 	console.log('test')
+	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
+	return
 })
 router.post('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
@@ -86,7 +112,9 @@ router.post('/Menu/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	return
 })
 router.post('/TableOrder/:id', async context => {
 	console.log("/put/TableOrder/:id")
@@ -98,6 +126,7 @@ router.post('/TableOrder/:id', async context => {
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	context.response.body = JSON.stringify(data, null, 2)
+	return
 })
 router.post('/Orders/:id', async context => {
 	console.log("/put/Orders/:id")
@@ -108,40 +137,46 @@ router.post('/Orders/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	return
 })
 router.get('/Staff/:id', async context => {
 	const sql = `SELECT * FROM staff WHERE id = ${context.params.id};`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors[0], null, 2)
 	context.response.body = JSON.stringify(actors[0], null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors[0], null, 2)
+	savedata(x)
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-
-router.post('/Tables/:id', async context => {
-	console.log("/put/Tables/:id")
-	const body = await context.request.body()
-	const StaffData = await body.value
-	const id = context.params.id
-	const sql = `UPDATE tables SET status = "${StaffData.job}" WHERE id = ${id}`
-	console.log(sql)
-	await db.query(sql)
-	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.body = JSON.stringify(data, null, 2)
-})
-router.post('/Menu/:id', async context => {
-	console.log("/put/Menu/:id")
-	const body = await context.request.body()
-	const StaffData = await body.value
-	const id = context.params.id
-	const sql = `UPDATE menu SET staus = "${StaffData.job}" WHERE id = ${id}`
-	console.log(sql)
-	await db.query(sql)
-	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.body = JSON.stringify(data, null, 2)
-})
-
-router.post('/Staff/Job/:id', async context => {
-	console.log("/put/Staff/Job/:id")
+router.get('/Staff/Online', async context => {
+	console.log('why me')
+	const host = context.request.url.host
+	const sql = 'SELECT * FROM staff where status = online;'
+	const actors = await db.query(sql)
+	actors.forEach(actor => {
+		actor.url = `https://${host}/Menu/${actor.id}`
+		//delete actor.id
+	})
+	})
+router.get('/Staff/Online/:job', async context => {
+	console.log('why me')
+	const host = context.request.url.host
+	const job= context.params.job
+	const sql = `SELECT * FROM staff where status = online; AND job=${job}`
+	const actors = await db.query(sql)
+	actors.forEach(actor => {
+		actor.url = `https://${host}/Menu/${actor.id}`
+		//delete actor.id
+	})
+	})
+router.post('/Staff/Set/Job/:id', async context => {
+	console.log("/put/Staff/Set/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
@@ -149,7 +184,11 @@ router.post('/Staff/Job/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	console.log(context.response.body)
+	console.log('APi test 4')
+	return
 })
 router.post('/Staff/Stauts/:id', async context => {
 	console.log("/put/Staff/Job/:id")
@@ -160,8 +199,40 @@ router.post('/Staff/Stauts/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	return
 })
+router.post('/Tables/:id', async context => {
+	console.log("/put/Tables/:id")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const id = context.params.id
+	const sql = `UPDATE tables SET status = "${StaffData.job}" WHERE id = ${id}`
+	console.log(sql)
+	await db.query(sql)
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	console.log('APi test 2')
+	return
+})
+router.post('/Menu/:id', async context => {
+	console.log("/put/Menu/:id")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const id = context.params.id
+	const sql = `UPDATE menu SET staus = "${StaffData.job}" WHERE id = ${id}`
+	console.log(sql)
+	await db.query(sql)
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	console.log('APi test 3')
+	return
+})
+
+
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')
 	context.response.body = data

@@ -81,3 +81,7 @@ export function saveFile(base64String, username) {
 	Base64.fromBase64String(base64Image).toFile(`./static/uploads/${filename}`)
 	console.log('file saved')
 }
+export async function savedata(data){
+	window.data = data
+	
+}

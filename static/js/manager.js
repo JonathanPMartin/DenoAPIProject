@@ -1,11 +1,8 @@
 import { customiseNavBar } from './browserUtility.js'
-//x= await db.query('SELECT * FROM menu;')
 
-//const sql = 'SELECT * FROM staff;'
-//const actors = await db.query(sql)
-//console.log(actors)
 export async function setup() {
 	console.log('manger')
+	console.log(window.data)
 	let option = document.createElement("option");
 	option.text = "Kiwi";
 	document.querySelector('select[name="users"]').add(option)
@@ -16,15 +13,20 @@ export async function setup() {
 	const nav = ['logout', 'foo','home']
 	customiseNavBar(nav)
 	document.querySelector('form').addEventListener('submit', await uploadData)
-	const url1 = `/staff/1`
+	const url1 = `/Staff`
 	const options1 = {
 		method: 'GET',
-		
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
 	//const value = context.request.body({ type: 'json' });
 	//const data = await value
 	}
-	const response2 = await fetch(url1, options1)
-	console.log(response2)
+	console.log('above call on form')
+	const response = await fetch(url1, options1)
+	const json = await response.json()
+	console.log(json)
 }
 
 async function uploadData(event) {
@@ -43,7 +45,7 @@ async function uploadData(event) {
 	const file = document.querySelector('input[name="file"]').files[0]
 	
 	
-	const url = `/staff/${id}`
+	const url = `/Staff/Job/${id}`
 	const options = {
 		method: 'POST',
 		headers: {
