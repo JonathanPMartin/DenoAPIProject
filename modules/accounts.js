@@ -27,3 +27,9 @@ export async function register(credentials) {
 	records = await db.query(sql)
 	return true
 }
+export async function User(data){
+	let sql, records
+	sql=`SELECT * from accounts WHERE user="${data}";`
+	records= await db.query(sql)
+	return records
+}
