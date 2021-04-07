@@ -4,7 +4,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
 import { db } from './modules/db.js'
 import { extractCredentials, saveFile, savedata } from './modules/util.js'
-import { login, register, User } from './modules/accounts.js'
+import { login, register, User,UserID } from './modules/accounts.js'
 const router = new Router()
 
 // the routes defined here
@@ -64,10 +64,25 @@ router.post('/files', async context => {
 		context.response.body = JSON.stringify({ status: 'unauthorised', msg: err.msg })
 	}
 })
-router.get(`/Accounts/:id`, async context => {
+router.get(`/Accounts/User/:id`, async context => {
 	
 	let x = context.params.id
 	let test=await User(x)
+	console.log(test)
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.body = JSON.stringify(test[0], null, 2)
+	}else{
+		console.log()
+	}
+	
+})
+router.get(`/Accounts/ID/:id`, async context => {
+	
+	let x = context.params.id
+	let test=await UserID(x)
 	console.log(test)
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
@@ -85,10 +100,6 @@ router.get('/Menu', async context => {
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM menu;'
 	const actors = await db.query(sql)
-	actors.forEach(actor => {
-		actor.url = `https://${host}/Menu/${actor.id}`
-		//delete actor.id
-	})
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
 	if(token==="3.14159265358979323"){
@@ -102,6 +113,22 @@ router.get('/Menu', async context => {
 router.get(`/Menu/:id`, async context => {
 	console.log(context.params.id)
 	const sql = `SELECT * FROM menu WHERE id =${context.params.id};`
+	const actors = await db.query(sql)
+	console.log(actors[0])
+	if(actors.length === 0) throw new Error('record not found')
+	console.log('test')
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.body = JSON.stringify(actors[0], null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+router.get(`/Menu/Status/:status`, async context => {
+	console.log(context.params.status)
+	const sql = `SELECT * FROM menu WHERE status !=${context.params.status};`
 	const actors = await db.query(sql)
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
@@ -189,15 +216,24 @@ router.get('/Staff/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.get('/Staff/Online', async context => {
-	console.log('why me')
+router.get('/Online/Staff', async context => {
 	const host = context.request.url.host
-	const sql = 'SELECT * FROM staff where status = online;'
+	console.log('test')
+	const sql = 'SELECT * FROM staff WHERE status= "Online";'
 	const actors = await db.query(sql)
 	actors.forEach(actor => {
 		actor.url = `https://${host}/Menu/${actor.id}`
-		//delete actor.id
+		delete actor.id
 	})
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
 	})
 router.get('/Staff/Online/:job', async context => {
 	console.log('why me')
@@ -215,7 +251,7 @@ router.post('/Staff/Set/Job/:id', async context => {
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
-	const sql = `UPDATE staff SET job = "${StaffData.job}" WHERE id = ${id}`
+	const sql = `UPDATE staff SET job = "${StaffData.job}" WHERE staffid = ${id}`
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
@@ -262,12 +298,28 @@ router.post('/Staff/New/:id',async context => {
 		context.response.status = 500
 	}
 } )
+router.get('/Table/:Status', async context => {
+	const host = context.request.url.host
+	console.log('test')
+	const sql = `SELECT * FROM tables WHERE status= "${context.params.Status}";`
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+	})
 router.post('/Tables/:id', async context => {
 	console.log("/put/Tables/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
+	console.log(StaffData)
 	const id = context.params.id
-	const sql = `UPDATE tables SET status = "${StaffData.job}" WHERE id = ${id}`
+	const sql = `UPDATE tables SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
@@ -287,7 +339,7 @@ router.post('/Menu/:id', async context => {
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
-	const sql = `UPDATE menu SET staus = "${StaffData.job}" WHERE id = ${id}`
+	const sql = `UPDATE menu SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}

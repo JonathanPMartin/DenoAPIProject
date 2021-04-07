@@ -25,7 +25,7 @@ async function login() {
 		console.log('json data bellow')
 			console.log(json.data)
 			localStorage.setItem('username', json.data.username)
-			const url2 = `/Accounts/${json.data.username}`
+			const url2 = `/Accounts/User/${json.data.username}`
 			const options2 = {
 				method: 'GET',
 				headers: {
@@ -60,7 +60,7 @@ async function login() {
 				method: 'POST',
 				headers: {
 				'Content-Type': 'application/json',
-				'Authorization': token
+				'Authorization': '3.14159265358979323'
 				},
 				body: JSON.stringify(Body)
 			}

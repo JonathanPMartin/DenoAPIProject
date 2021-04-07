@@ -33,3 +33,9 @@ export async function User(data){
 	records= await db.query(sql)
 	return records
 }
+export async function UserID(data){
+	let sql, records
+	sql=`SELECT * from accounts WHERE id="${data}";`
+	records= await db.query(sql)
+	return records
+}
