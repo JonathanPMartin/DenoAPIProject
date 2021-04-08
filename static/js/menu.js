@@ -47,4 +47,30 @@ async function uploadData(event) {
 	const response = await fetch(url, options)
 	console.log(response)
 	const json = await response.json()
+	var today = new Date();
+	
+	let date=today.getDate()
+	if(date<10){
+		date="0"+date.toString()
+	}
+	let month= today.getMonth()+1
+	if(month<10){
+		month="0"+month.toString()
+	}
+	let year=today.getFullYear()
+	let hour=today.getHours()
+	if(hour<10){
+		hour="0"+hour.toString()
+	}
+	let mins= today.getMinutes()
+	if (mins<10){
+		mins="0"+mins.toString()
+	}
+	let seconds=today.getSeconds()
+	if (seconds<10){
+		seconds="0"+seconds.toString()
+	}
+	let time=date+"/"+month+"/"+year+" "+hour+":"+mins+":"+seconds
+	console.log(time)
+	
 }

@@ -146,8 +146,9 @@ router.post('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
+	console.log(StaffData.status)
 	const id = context.params.id
-	const sql = `UPDATE menu SET status = "${StaffData.job}" WHERE id = ${id}`
+	const sql = `UPDATE menu SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
@@ -165,7 +166,7 @@ router.post('/TableOrder/:id', async context => {
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
-	const sql = `insert into tableOrder(tableid,status) Values("${id}"","${StaffData.job}")`
+	const sql = `insert into tableOrder(tableid,orderid,status) Values("${id}","${StaffData.orderid }","${StaffData.status}")`
 	console.log(sql)
 	await db.query(sql)
 	const token = context.request.headers.get('Authorization')||'fail'
@@ -177,14 +178,60 @@ router.post('/TableOrder/:id', async context => {
 		context.response.status = 500
 	}
 })
-router.post('/Orders/:id', async context => {
-	console.log("/put/Orders/:id")
+router.post('/TableOrder/Status/:id', async context => {
+	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
+	console.log(StaffData.status)
 	const id = context.params.id
-	const sql = `insert into orders(orderid,menuid) Values("${id}"","${StaffData.job}")`
+	const sql = `UPDATE tableOrder SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
 	await db.query(sql)
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+router.post('/Orders/:menuid', async context => {
+	console.log("/put/TableOrder/:id")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const menuid = context.params.menuid
+	console.log(id)
+	const sql = `insert into orders(menuid,details,userid,ordertime) Values("${menuid}","${StaffData.details}","${StaffData.userid}","${StaffData.ordertime}")`
+	console.log(sql)
+	await db.query(sql)
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		console.log('error')
+		context.response.status = 500
+	}
+})
+router.delete("/TableOrder/:table", async context => {
+	const table = context.params.table
+	console.log(table)
+	const sql = `SELECT * from tableOrder WHERE tableid = ${table}`
+	console.log(sql)
+	let x= await db.query(sql)
+	const sql2=`DELETE FROM tableOrder WHERE tableid = "${table}`
+	await db.query(sql2)
+	console.log(x)
+	for (let i = 0; i < x.length; i++) {
+		console.log(x[i].orderid)
+		let orderid = x[i].orderid
+		const sql3=`DELETE FROM orders WHERE id = "${orderid}"`
+		await db.query(sql3exi)
+		console.log('test')
+	}
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
