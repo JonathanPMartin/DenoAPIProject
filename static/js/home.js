@@ -1,5 +1,5 @@
 /* home.js */
-import { customiseNavBar, showMessage } from './browserUtility.js'
+import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
 	console.log('HOME')
 	const username = localStorage.getItem('username')

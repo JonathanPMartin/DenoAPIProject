@@ -41,3 +41,37 @@ export function file2Base64(file) {
     reader.readAsDataURL(file)
   })
 }
+export async function Updload(data){
+	const url4 = `${data.url}`
+	console.log(url4)
+				const options4 = {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						'Authorization': '3.14159265358979323'
+					},
+					body: JSON.stringify(data.body)
+				}
+				console.log(JSON.stringify(options4))
+				let response = await fetch(url4, options4)
+				let json4 = await response.json()
+				return json4
+}
+export async function Get(data){
+	console.log('test 3 1 4')
+	console.log(data.url)
+	const url2 = data.url
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': '3.14159265358979323'
+		},
+	}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	const json2 = await response2
+	console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+	console.log(json2)
+	return json2
+}

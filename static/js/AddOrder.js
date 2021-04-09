@@ -1,5 +1,6 @@
-import { customiseNavBar,} from './browserUtility.js'
+import { customiseNavBar,Updload,Get} from './browserUtility.js'
 export async function setup() {
+	let tableid=0
 	console.log('HOME')
 	console.log(document)
 	const username = localStorage.getItem('username')
@@ -20,14 +21,74 @@ export async function setup() {
 		},
 	}
 	console.log('above call on form')
-	const response = await fetch(url1, options1)
-	const json = await response.json()
+	let response = await fetch(url1, options1)
+	let json = await response.json()
 	for (let i = 0; i < json.length; i++) {
 		if(json[i].status!=='NA'){
-			let option = document.createElement("option")
-			option.text = json[i].MenuItem
-			option.value=json[i].MenuItem
-			document.querySelector('select[name="itemordered"]').add(option)
+			//button add
+			let button = document.createElement("button");
+			button.innerHTML = json[i].MenuItem;
+			button.class='.button'
+			button.id='test'
+			let body = document.getElementsByName("PAG")[0]
+			body.appendChild(button);
+			button.addEventListener ("click", function() {
+				console.log(json[i].MenuItem)
+				var today = new Date();
+	
+				let date=today.getDate()
+				if(date<10){
+					date="0"+date.toString()
+				}
+				let month= today.getMonth()+1
+				if(month<10){
+					month="0"+month.toString()
+				}
+				let year=today.getFullYear()
+				let hour=today.getHours()
+				if(hour<10){
+					hour="0"+hour.toString()
+				}
+				let mins= today.getMinutes()
+				if (mins<10){
+					mins="0"+mins.toString()
+				}
+				let seconds=today.getSeconds()
+				if (seconds<10){
+					seconds="0"+seconds.toString()
+				}
+				let time=date+":"+month+":"+year+"_"+hour+":"+mins+":"+seconds
+				console.log(time)
+				let Body={
+					status:"placed",
+					details:document.querySelector('select[name="Status"]').value,
+					ordertime:time,
+					userid:localStorage.getItem('userid')
+				}
+				let id =json[i].id
+				let data={
+					body:Body,
+					url:`Orders/${id}`
+				}
+				Updload(data)
+				 data={
+				url:`Orders/${time}`
+			
+				}
+				let result= Get(data)
+				console.log(result)
+				Body={
+					orderid:result.id,
+					status:'placed'
+				}
+				data={
+					body:Body,
+					url:`TableOrder/${tableid}`
+				}
+				Updload(data)
+			
+			})
+	
 		}
 	}
 	const url2 = `Table/Taken`
@@ -42,12 +103,8 @@ export async function setup() {
 	const response2 = await fetch(url2, options2)
 	const json2 = await response2.json()
 	console.log(json2)
+	
 	for (let i = 0; i < json2.length; i++) {
-		
-		let option = document.createElement("option")
-			option.text = json2[i].id
-			option.value=json2[i].id
-			document.querySelector('select[name="Table"]').add(option)
 		let button = document.createElement("button");
 		button.innerHTML = json2[i].id;
 		button.class='.button'
@@ -59,6 +116,7 @@ export async function setup() {
 		console.log(document.getElementsByTagName("div")[0])
 		button.addEventListener ("click", function() {
 			console.log(json2[i].id)
+			tableid=json2[i].id
 			var menu = document.querySelector('.hidden') // Using a class instead, see note below.
 			menu.classList.toggle('hidden');
 			menu = document.querySelector('.hidden')
@@ -67,8 +125,7 @@ export async function setup() {
 			menu.classList.toggle('hidden');
 			menu = document.querySelector('.hidden')
 			menu.classList.toggle('hidden');
-			menu = document.querySelector('.hidden')
-			menu.classList.toggle('hidden');
+			document.querySelector('aside').classList.toggle('hidden')
 			menu = document.querySelector('.div')
 			menu.classList.toggle('hidden');
 			const toggleClass = (el, className) => el.classList.toggle(className);
@@ -93,31 +150,5 @@ export async function setup() {
 
 async function uploadData(event) {
 	event.preventDefault()
-	/*var today = new Date();
-	
-	let date=today.getDate()
-	if(date<10){
-		date="0"+date.toString()
-	}
-	let month= today.getMonth()+1
-	if(month<10){
-		month="0"+month.toString()
-	}
-	let year=today.getFullYear()
-	let hour=today.getHours()
-	if(hour<10){
-		hour="0"+hour.toString()
-	}
-	let mins= today.getMinutes()
-	if (mins<10){
-		mins="0"+mins.toString()
-	}
-	let seconds=today.getSeconds()
-	if (seconds<10){
-		seconds="0"+seconds.toString()
-	}
-	let time=date+"/"+month+"/"+year+" "+hour+":"+mins+":"+seconds
-	console.log(time)
-	*/
 
 }

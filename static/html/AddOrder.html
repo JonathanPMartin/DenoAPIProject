@@ -2,23 +2,23 @@
 
 </body>
 <form action name='form' method='post'>
-		<div class=div name="div">
-		</div>
-	
-	<p class="hidden"> 
+	<p class=div name="div">
+	</p>
+	<p class="hidden">
+		<label>Type of Order:</label><br / >
+		<select name="Status">
+			<option value="Starter">Starter</option>
+			<option value="Main">Main</option>
+			<option value="Pudding">Pudding</option>
+			<option value="Side">Side</option>
+  		</select>
+	</p>
+	<p class="hidden" name="PAG"> 
 		<label for="itemordereds">item ordered:</label><br />
-		<select name="itemordered">
-  		</select>
+
 	</p>
-	<p class="hidden">
-		<label for="quantitys" >quantity ordered</label><br />
-		<input type="number" name="quantity" min="1" max="7" >
+
+	<p class="hidden" name="div2">
+		<label>Click When Done</label>
 	</p>
-	<p class="hidden">
-		<label>table of order:</label><br / >
-		<select name="Table">
-  		</select>
-	</p>
-	<div class="hidden" name="div2">
-	</div>
 </form>

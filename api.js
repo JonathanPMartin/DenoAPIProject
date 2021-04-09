@@ -232,6 +232,29 @@ router.delete("/Orders/:id", async context => {
 		context.response.status = 500
 	}
 })
+router.get('/Orders/:ordertime', async context => {
+	let time =context.params.ordertime
+	time=time.toString()
+	const sql = `SELECT * FROM orders WHERE ordertime = "${context.params.ordertime}";`
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors[0], null, 2)
+	context.response.body = JSON.stringify(actors[0], null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors[0], null, 2)
+	
+	
+	savedata(x)
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
 router.delete("/TableOrder/:table", async context => {
 	const table = context.params.table
 	console.log(table)
