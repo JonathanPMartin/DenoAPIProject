@@ -5,6 +5,7 @@ import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
 import { db } from './modules/db.js'
 import { extractCredentials, saveFile, savedata } from './modules/util.js'
 import { login, register, User,UserID } from './modules/accounts.js'
+import {delOrd,delTaOrd} from './modules/orders.js'
 const router = new Router()
 
 // the routes defined here
@@ -163,9 +164,8 @@ router.post('/Menu/:id', async context => {
 })
 router.post('/TableOrder/:id', async context => {
 	console.log("/put/TableOrder/:id")
-	console.log(context)
 	const body = await context.request.body()
-	
+	console.log(body)
 	const StaffData = await body.value
 	const id = context.params.id
 	const sql = `insert into tableOrder(tableid,orderid,status) Values(${id},${StaffData.orderid },"${StaffData.status}")`
@@ -220,15 +220,13 @@ router.post('/Orders/:menuid', async context => {
 })
 router.delete("/Orders/:id", async context => {
 	const id = context.params.id
-	const sql3=`DELETE FROM orders WHERE id = ${id}`
-	console.log(sql3)
-	await db.query(sql3)
-	console.log('test')
+	
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
 	const data = {status: 200, msg:`genre updated to welp`}
 	if(token==="3.14159265358979323"){
 		context.response.status = 201
+		await delOrd(id)
 		context.response.body = JSON.stringify(data, null, 2)
 	}else{
 		context.response.status = 500
@@ -243,6 +241,7 @@ router.delete("/TableOrder/:table", async context => {
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
 	if(token==="3.14159265358979323"){
+	await delTaOrd()
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
