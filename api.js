@@ -168,7 +168,7 @@ router.post('/TableOrder/:id', async context => {
 	console.log(body)
 	const StaffData = await body.value
 	const id = context.params.id
-	const sql = `insert into tableOrder(tableid,orderid,status) Values(${id},${StaffData.orderid },"${StaffData.status}")`
+	const sql = `insert into tableOrder(tableid,orderid,status,details ) Values(${id},${StaffData.orderid },"${StaffData.status}", "${StaffData.details}")`
 	console.log(sql)
 	await db.query(sql)
 	console.log('test')
@@ -205,7 +205,7 @@ router.post('/Orders/:menuid', async context => {
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const menuid = context.params.menuid
-	const sql = `insert into orders(menuid,details,userid,ordertime) Values("${menuid}","${StaffData.details}","${StaffData.userid}","${StaffData.ordertime}")`
+	const sql = `insert into orders(menuid,userid,ordertime) Values("${menuid}","${StaffData.userid}","${StaffData.ordertime}")`
 	console.log(sql)
 	await db.query(sql)
 	const token = context.request.headers.get('Authorization')||'fail'
@@ -247,6 +247,50 @@ router.get('/Orders/:ordertime', async context => {
 	console.log('APi test 1')
 	console.log(context.response.body)
 	const x= JSON.stringify(actors[0], null, 2)
+	
+	
+	savedata(x)
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
+router.get('/TableOrder', async context => {
+	console.log('well this should show')
+	const sql = `SELECT * FROM tableOrder;`
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors[0], null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors, null, 2)
+	
+	
+	savedata(x)
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
+router.get('/Orders', async context => {
+	console.log('well this should show')
+	const sql = `SELECT * FROM orders;`
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log(token)
+	if(token==="3.14159265358979323"){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors[0], null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors, null, 2)
 	
 	
 	savedata(x)

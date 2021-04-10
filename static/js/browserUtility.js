@@ -70,8 +70,36 @@ export async function Get(data){
 	}
 	console.log('above call on form')
 	const response2 = await fetch(url2, options2)
-	const json2 = await response2
+	const json2 = await response2.json()
 	console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 	console.log(json2)
 	return json2
+}
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+function sleepFor( sleepDuration ){
+  var now = new Date().getTime();
+  while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+}
+
+export function sleepThenAct(){
+  sleepFor(2000);
+  console.log("hello js sleep !");
+}
+export async function trial(data){
+	const url2 = `/Orders/${data}`
+			const options2 = {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': '3.14159265358979323'
+				},
+			}
+			console.log('above call on form')
+			const response2 = await fetch(url2, options2)
+			let json2= await response2.json()
+			console.log(' ABOVE TRIAL')
+			console.log(json2)
+			return json2
 }

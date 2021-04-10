@@ -1,4 +1,4 @@
-import { customiseNavBar,Updload,Get} from './browserUtility.js'
+import { customiseNavBar,Updload,Get,sleepThenAct, trial} from './browserUtility.js'
 export async function setup() {
 	let tableid=0
 	console.log('HOME')
@@ -38,24 +38,24 @@ export async function setup() {
 	
 				let date=today.getDate()
 				if(date<10){
-					date="0"+date.toString()
+					date="0"+date
 				}
 				let month= today.getMonth()+1
 				if(month<10){
-					month="0"+month.toString()
+					month="0"+month
 				}
 				let year=today.getFullYear()
 				let hour=today.getHours()
 				if(hour<10){
-					hour="0"+hour.toString()
+					hour="0"+hour
 				}
 				let mins= today.getMinutes()
 				if (mins<10){
-					mins="0"+mins.toString()
+					mins="0"+mins
 				}
 				let seconds=today.getSeconds()
 				if (seconds<10){
-					seconds="0"+seconds.toString()
+					seconds="0"+seconds
 				}
 				let time=date+":"+month+":"+year+"_"+hour+":"+mins+":"+seconds
 				console.log(time)
@@ -70,22 +70,42 @@ export async function setup() {
 					body:Body,
 					url:`Orders/${id}`
 				}
-				Updload(data)
+				//Updload(data)
 				 data={
-				url:`Orders/${time}`
+					url:`Orders/${time}`
+					 //url:'Orders/10:04:2021_12:05:49'
 			
 				}
-				let result= Get(data)
-				console.log(result)
+				time = '10:04:2021_13:09:30'
+				console.log(trial(time))
+				let test = trial(time)
+				let test2= test.id
+				trial(time).Promise 
+				console.log('above shit')
+				console.log(test)
+				console.log('above the string stuff')
+				console.log(Object.values(test))
+				let result= Get(data).valueOf()
+				console.log('above x')
+				let x= result
+				console.log(x)
 				Body={
 					orderid:result.id,
-					status:'placed'
+					status:'placed',
+					details:document.querySelector('select[name="Status"]').value
 				}
 				data={
 					body:Body,
 					url:`TableOrder/${tableid}`
 				}
+				sleepThenAct()
 				Updload(data)
+				sleepThenAct()
+				Updload(data)
+				console.log(result)
+				//poss solutions have the form called itself outside
+				//have everything done by a single function to see where errors lie
+				//
 			
 			})
 	
