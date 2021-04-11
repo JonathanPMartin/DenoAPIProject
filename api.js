@@ -70,9 +70,12 @@ router.get(`/Accounts/User/:id`, async context => {
 	let x = context.params.id
 	let test=await User(x)
 	console.log(test)
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(test[0], null, 2)
 	}else{
@@ -85,9 +88,12 @@ router.get(`/Accounts/ID/:id`, async context => {
 	let x = context.params.id
 	let test=await UserID(x)
 	console.log(test)
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(test[0], null, 2)
 	}else{
@@ -101,9 +107,12 @@ router.get('/Menu', async context => {
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM menu;'
 	const actors = await db.query(sql)
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -118,9 +127,12 @@ router.get(`/Menu/:id`, async context => {
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
 	console.log('test')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
 	}else{
@@ -134,9 +146,12 @@ router.get(`/Menu/Status/:status`, async context => {
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
 	console.log('test')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
 	}else{
@@ -153,9 +168,12 @@ router.post('/Menu/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -172,9 +190,12 @@ router.post('/TableOrder/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	console.log('test')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -191,9 +212,12 @@ router.post('/TableOrder/Status/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -208,9 +232,12 @@ router.post('/Orders/:menuid', async context => {
 	const sql = `insert into orders(menuid,userid,ordertime) Values("${menuid}","${StaffData.userid}","${StaffData.ordertime}")`
 	console.log(sql)
 	await db.query(sql)
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	const data = {status: 200, msg: `genre ${menuid} updated to ${StaffData}`}
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -221,10 +248,12 @@ router.post('/Orders/:menuid', async context => {
 router.delete("/Orders/:id", async context => {
 	const id = context.params.id
 	
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	const data = {status: 200, msg:`genre updated to welp`}
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 		context.response.status = 201
 		await delOrd(id)
 		context.response.body = JSON.stringify(data, null, 2)
@@ -238,15 +267,18 @@ router.get('/Orders/:ordertime', async context => {
 	const sql = `SELECT * FROM orders WHERE ordertime = "${context.params.ordertime}";`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
-	context.response.statusText = JSON.stringify(actors[0], null, 2)
-	context.response.body = JSON.stringify(actors[0], null, 2)
+	context.response.statusText = JSON.stringify(actors, null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
 	console.log('APi test 1')
 	console.log(context.response.body)
-	const x= JSON.stringify(actors[0], null, 2)
+	const x= JSON.stringify(actors, null, 2)
 	
 	
 	savedata(x)
@@ -255,14 +287,37 @@ router.get('/Orders/:ordertime', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
+router.post('/Orders/Time/:ordertime', async context => {
+	console.log("/put/Orders/:id")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const sql = `UPDATE orders SET ordertime ="${StaffData.ordertime}" WHERE ordertime="${context.params.ordertime}";`
+	console.log(sql)
+	await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	const data = {status: 200, msg: `genre test updated to ${StaffData}`}
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		console.log('error')
+		context.response.status = 500
+	}
+})
 router.get('/TableOrder', async context => {
 	console.log('well this should show')
 	const sql = `SELECT * FROM tableOrder;`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.statusText = JSON.stringify(actors[0], null, 2)
 	context.response.body = JSON.stringify(actors, null, 2)
@@ -282,9 +337,12 @@ router.get('/Orders', async context => {
 	const sql = `SELECT * FROM orders;`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.statusText = JSON.stringify(actors[0], null, 2)
 	context.response.body = JSON.stringify(actors, null, 2)
@@ -305,9 +363,12 @@ router.delete("/TableOrder/:table", async context => {
 	const sql2=`DELETE FROM tableOrder WHERE tableid = "${table}`
 	await db.query(sql2)
 	const data = {status: 200, msg: `genre ${table} updated to welp`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	await delTaOrd()
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
@@ -319,9 +380,12 @@ router.get('/Staff/:id', async context => {
 	const sql = `SELECT * FROM staff WHERE staffid = ${context.params.id};`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.statusText = JSON.stringify(actors[0], null, 2)
 	context.response.body = JSON.stringify(actors[0], null, 2)
@@ -345,26 +409,18 @@ router.get('/Online/Staff', async context => {
 		actor.url = `https://${host}/Menu/${actor.id}`
 		delete actor.id
 	})
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
 		context.response.status = 201
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
-	})
-router.get('/Staff/Online/:job', async context => {
-	console.log('why me')
-	const host = context.request.url.host
-	const job= context.params.job
-	const sql = `SELECT * FROM staff where status = online; AND job=${job}`
-	const actors = await db.query(sql)
-	actors.forEach(actor => {
-		actor.url = `https://${host}/Menu/${actor.id}`
-		//delete actor.id
-	})
 	})
 router.post('/Staff/Set/Job/:id', async context => {
 	console.log("/put/Staff/Set/Job/:id")
@@ -375,9 +431,12 @@ router.post('/Staff/Set/Job/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log(context.response.body)
@@ -395,9 +454,12 @@ router.post('/Staff/Stauts/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	return
@@ -409,9 +471,12 @@ router.post('/Staff/New/:id',async context => {
 	const sql=`insert into staff(job, staffid, status) values("None",${context.params.id},"Offline");`
 	await db.query(sql)
 	const data = {status: 200, msg: `new data ${context.params.id} created`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -423,9 +488,12 @@ router.get('/Table/:Status', async context => {
 	console.log('test')
 	const sql = `SELECT * FROM tables WHERE status= "${context.params.Status}";`
 	const actors = await db.query(sql)
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -443,9 +511,12 @@ router.post('/Tables/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log('APi test 2')
@@ -463,19 +534,35 @@ router.post('/Menu/:id', async context => {
 	console.log(sql)
 	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	const token = context.request.headers.get('Authorization')||'fail'
-	console.log(token)
-	if(token==="3.14159265358979323"){
-	context.response.status = 201
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log('APi test 3')
+	}else{
+		context.response.status = 500
+	}
+	
 	return
+})
+
+router.get('/TESTING', async context => {
+	console.log('in route')
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
 	}else{
 		context.response.status = 500
 	}
 })
-
-
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')
 	context.response.body = data

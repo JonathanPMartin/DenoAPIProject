@@ -1,5 +1,28 @@
 import { customiseNavBar,Updload,Get,sleepThenAct, trial} from './browserUtility.js'
 export async function setup() {
+	var today = new Date();
+	let date=today.getDate()
+	if(date<10){
+		date="0"+date
+	}
+	let month= today.getMonth()+1
+				if(month<10){
+					month="0"+month
+				}
+				let year=today.getFullYear()
+				let hour=today.getHours()
+				if(hour<10){
+					hour="0"+hour
+				}
+				let mins= today.getMinutes()
+				if (mins<10){
+					mins="0"+mins
+				}
+				let seconds=today.getSeconds()
+				if (seconds<10){
+					seconds="0"+seconds
+				}
+				let time=date+":"+month+":"+year+"_"+hour+":"+mins+":"+seconds
 	let tableid=0
 	console.log('HOME')
 	console.log(document)
@@ -34,30 +57,7 @@ export async function setup() {
 			body.appendChild(button);
 			button.addEventListener ("click", function() {
 				console.log(json[i].MenuItem)
-				var today = new Date();
-	
-				let date=today.getDate()
-				if(date<10){
-					date="0"+date
-				}
-				let month= today.getMonth()+1
-				if(month<10){
-					month="0"+month
-				}
-				let year=today.getFullYear()
-				let hour=today.getHours()
-				if(hour<10){
-					hour="0"+hour
-				}
-				let mins= today.getMinutes()
-				if (mins<10){
-					mins="0"+mins
-				}
-				let seconds=today.getSeconds()
-				if (seconds<10){
-					seconds="0"+seconds
-				}
-				let time=date+":"+month+":"+year+"_"+hour+":"+mins+":"+seconds
+				
 				console.log(time)
 				let Body={
 					status:"placed",
@@ -70,13 +70,13 @@ export async function setup() {
 					body:Body,
 					url:`Orders/${id}`
 				}
-				//Updload(data)
+				Updload(data)
 				 data={
 					url:`Orders/${time}`
 					 //url:'Orders/10:04:2021_12:05:49'
 			
 				}
-				time = '10:04:2021_13:09:30'
+				
 				console.log(trial(time))
 				let test = trial(time)
 				let test2= test.id
