@@ -1,4 +1,4 @@
-import { customiseNavBar,Updload,Get,sleepThenAct, trial} from './browserUtility.js'
+import { customiseNavBar,Updload,Get,sleepThenAct, trial,AddOrder} from './browserUtility.js'
 export async function setup() {
 	var today = new Date();
 	let date=today.getDate()
@@ -40,7 +40,7 @@ export async function setup() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')
@@ -65,32 +65,25 @@ export async function setup() {
 					ordertime:time,
 					userid:localStorage.getItem('userid')
 				}
+				let alldata={}
+				alldata.body1=Body
+				alldata.url1=json[i].id
+				
 				let id =json[i].id
 				let data={
 					body:Body,
 					url:`Orders/${id}`
 				}
-				Updload(data)
+				//Updload(data)
 				 data={
 					url:`Orders/${time}`
 					 //url:'Orders/10:04:2021_12:05:49'
 			
 				}
+				alldata.url2=time
 				
 				console.log(trial(time))
-				let test = trial(time)
-				let test2= test.id
-				trial(time).Promise 
-				console.log('above shit')
-				console.log(test)
-				console.log('above the string stuff')
-				console.log(Object.values(test))
-				let result= Get(data).valueOf()
-				console.log('above x')
-				let x= result
-				console.log(x)
 				Body={
-					orderid:result.id,
 					status:'placed',
 					details:document.querySelector('select[name="Status"]').value
 				}
@@ -98,11 +91,9 @@ export async function setup() {
 					body:Body,
 					url:`TableOrder/${tableid}`
 				}
-				sleepThenAct()
-				Updload(data)
-				sleepThenAct()
-				Updload(data)
-				console.log(result)
+				alldata.url3=`TableOrder/${tableid}`
+				alldata.body3=Body
+				AddOrder(alldata)
 				//poss solutions have the form called itself outside
 				//have everything done by a single function to see where errors lie
 				//
@@ -116,7 +107,7 @@ export async function setup() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')

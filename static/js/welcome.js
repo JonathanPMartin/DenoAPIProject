@@ -12,7 +12,7 @@ export async function setup() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')

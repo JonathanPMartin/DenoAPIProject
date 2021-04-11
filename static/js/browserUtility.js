@@ -48,7 +48,7 @@ export async function Updload(data){
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json',
-						'Authorization': '3.14159265358979323'
+						'Authorization': localStorage.getItem('authorization')
 					},
 					body: JSON.stringify(data.body)
 				}
@@ -65,7 +65,7 @@ export async function Get(data){
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')
@@ -93,7 +93,7 @@ export async function trial(data){
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': '3.14159265358979323'
+					'Authorization': localStorage.getItem('authorization')
 				},
 			}
 			console.log('above call on form')
@@ -101,5 +101,57 @@ export async function trial(data){
 			let json2= await response2.json()
 			console.log(' ABOVE TRIAL')
 			console.log(json2)
-			return json2
+			
+}
+export async function AddOrder(data){
+	const url4 = `/Orders/${data.url1}`
+	console.log(url4)
+	const options4 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data.body1)
+	}
+	console.log(JSON.stringify(options4))
+	let response = await fetch(url4, options4)
+	let json4 = await response.json()
+	console.log(json4)
+	console.log('bellow first call')
+	
+	const url2 = `/Orders/${data.url2}`
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	let json2= await response2.json()
+	console.log(' ABOVE TRIAL')
+	console.log(json2)
+	let orderid=json2.id
+	data.body3.orderid=orderid
+	console.log('bellow seccond call')
+	//
+	
+	const url3 = `/${data.url3}`
+	console.log(url3)
+	const options3 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data.body3)
+	}
+	console.log(JSON.stringify(options3))
+	let response3 = await fetch(url3, options3)
+	let json3 = await response3.json()
+	console.log('bellow third call')
+	
+				
 }

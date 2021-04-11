@@ -11,7 +11,7 @@ export async function setup() {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 		body: JSON.stringify(Body)
 	}

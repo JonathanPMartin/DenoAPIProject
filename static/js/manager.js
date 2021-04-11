@@ -16,7 +16,7 @@ export async function setup() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	//const value = context.request.body({ type: 'json' });
 	//const data = await value
@@ -30,7 +30,7 @@ export async function setup() {
 			method: 'GET',
 			headers: {
 				'Content-Type': 'application/json',
-				'Authorization': '3.14159265358979323'
+				'Authorization': localStorage.getItem('authorization')
 			},
 		}
 		const response2 = await fetch(url2, options2)
@@ -56,7 +56,7 @@ async function uploadData(event) {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')
@@ -82,7 +82,7 @@ async function uploadData(event) {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 		body: JSON.stringify(Body)
 		

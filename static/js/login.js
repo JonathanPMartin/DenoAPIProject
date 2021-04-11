@@ -30,7 +30,7 @@ async function login() {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': '3.14159265358979323'
+					'Authorization':token
 				},
 			}
 			console.log('above call on form')
@@ -43,7 +43,7 @@ async function login() {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': '3.14159265358979323'
+					'Authorization': token
 				},
 			}
 			console.log('above call on form')
@@ -60,7 +60,7 @@ async function login() {
 				method: 'POST',
 				headers: {
 				'Content-Type': 'application/json',
-				'Authorization': '3.14159265358979323'
+				'Authorization':token
 				},
 				body: JSON.stringify(Body)
 			}
