@@ -1,6 +1,8 @@
-import { customiseNavBar,Updload,Get,sleepThenAct, trial,AddOrder} from './browserUtility.js'
+import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct} from './browserUtility.js'
 export async function setup() {
+	let order="Current Order is: "
 	var today = new Date();
+	let orders=[]
 	let date=today.getDate()
 	if(date<10){
 		date="0"+date
@@ -82,7 +84,6 @@ export async function setup() {
 				}
 				alldata.url2=time
 				
-				console.log(trial(time))
 				Body={
 					status:'placed',
 					details:document.querySelector('select[name="Status"]').value
@@ -92,11 +93,10 @@ export async function setup() {
 					url:`TableOrder/${tableid}`
 				}
 				alldata.url3=`TableOrder/${tableid}`
+				alldata.url4=tableid
 				alldata.body3=Body
-				AddOrder(alldata)
-				//poss solutions have the form called itself outside
-				//have everything done by a single function to see where errors lie
-				//
+				orders.push(alldata)
+				order=order+json[i].MenuItem+" + "
 			
 			})
 	
@@ -144,8 +144,10 @@ export async function setup() {
 			element.classList.toggle('hidden');
 		
 		});
-		let button2 = document.createElement("button");
-		button2.innerHTML = 'test';
+		
+	}
+	let button2 = document.createElement("button");
+		button2.innerHTML = 'Submit Table Order';
 		button2.class='.button'
 		button2.id='test'
 		let body2 = document.getElementsByName("div2")[0]
@@ -153,9 +155,61 @@ export async function setup() {
 		console.log('££££££££££££££££££££££££££££££££££££££££££££££££££')
 		console.log(document.getElementsByTagName("div2")[0])
 		button2.addEventListener ("click", function() {
-		console.log('test')
-		})
+			//
+			time
+			var today = new Date();
+	let date=today.getDate()
+	if(date<10){
+		date="0"+date
 	}
+	let month= today.getMonth()+1
+				if(month<10){
+					month="0"+month
+				}
+				let year=today.getFullYear()
+				let hour=today.getHours()
+				if(hour<10){
+					hour="0"+hour
+				}
+				let mins= today.getMinutes()
+				if (mins<10){
+					mins="0"+mins
+				}
+				let seconds=today.getSeconds()
+				if (seconds<10){
+					seconds="0"+seconds
+				}
+				let time2=date+":"+month+":"+year+"_"+hour+":"+mins+":"+seconds
+			console.log('test')
+			let body={
+				ordertime:time2
+			}
+			let UpdateOrder={
+				url:`/Orders/Time/${time}`,
+				body:body
+			}
+			localStorage.setItem('orders',orders.length)
+			//for (let i = 0; i < orders.length; i++) {
+				
+				//fistcall(orders[i])
+				
+			//}
+			fistcall(orders)
+			localStorage.removeItem('orders')
+			Updload(UpdateOrder)
+			localStorage.removeItem('orderid')
+		})
+	let button3 = document.createElement("button");
+		button3.innerHTML = 'Current Order';
+		button3.class='.button'
+		button3.id='test'
+		let body3 = document.getElementsByName("div2")[0]
+		body3.appendChild(button3);
+		console.log('££££££££££££££££££££££££££££££££££££££££££££££££££')
+		console.log(document.getElementsByTagName("div2")[0])
+		button3.addEventListener ("click", function() {
+			showMessage(order)
+		})
 	document.querySelector('form').addEventListener('submit', await uploadData)
 }
 

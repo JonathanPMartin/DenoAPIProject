@@ -104,6 +104,7 @@ export async function trial(data){
 			
 }
 export async function AddOrder(data){
+	console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 	const url4 = `/Orders/${data.url1}`
 	console.log(url4)
 	const options4 = {
@@ -117,9 +118,12 @@ export async function AddOrder(data){
 	console.log(JSON.stringify(options4))
 	let response = await fetch(url4, options4)
 	let json4 = await response.json()
+	console.log('json data bellow')
 	console.log(json4)
+	let hope=json4.id
 	console.log('bellow first call')
-	
+	console.log('time')
+	console.log(data.url2)
 	const url2 = `/Orders/${data.url2}`
 	const options2 = {
 		method: 'GET',
@@ -132,9 +136,10 @@ export async function AddOrder(data){
 	const response2 = await fetch(url2, options2)
 	let json2= await response2.json()
 	console.log(' ABOVE TRIAL')
-	console.log(json2)
+	console.log(json2.id)
 	let orderid=json2.id
-	data.body3.orderid=orderid
+	data.body3.orderid=json2.id
+	console.log(data)
 	console.log('bellow seccond call')
 	//
 	
@@ -151,7 +156,80 @@ export async function AddOrder(data){
 	console.log(JSON.stringify(options3))
 	let response3 = await fetch(url3, options3)
 	let json3 = await response3.json()
+	
 	console.log('bellow third call')
 	
 				
+}
+export async function fistcall(data){
+	const url4 ='/AddOrder'
+	console.log(url4)
+	const options4 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data)
+	}
+	console.log(JSON.stringify(options4))
+	let response = await fetch(url4, options4)
+	let json4 = await response.json()
+	/*const url4 = `/Orders/${data.url1}`
+	console.log(url4)
+	const options4 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data.body1)
+	}
+	console.log(JSON.stringify(options4))
+	let response = await fetch(url4, options4)
+	let json4 = await response.json()
+	await seccondcall(data)
+	*/
+}
+async function seccondcall(data){
+	console.log(data.url2)
+	const url2 = `/Orders/${data.url2}`
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	let json2= await response2.json()
+	console.log(' ABOVE TRIAL')
+	console.log(json2.id)
+	let orderid=json2.id
+	console.log(orderid)
+	data.body3.orderid=json2.id
+	await thirdcall(data)
+}
+async function thirdcall(data){
+	let tem = localStorage.getItem('orders')
+	let tem2 = data.body3.orderid-tem
+	tem = tem -1 
+	data.body3.orderid=tem2
+	console.log(tem2)
+	localStorage.setItem('orders',tem)
+	const url3 = `/${data.url3}`
+	console.log(url3)
+	const options3 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data.body3)
+	}
+	console.log(JSON.stringify(options3))
+	let response3 = await fetch(url3, options3)
+	let json3 = await response3.json()
+	console.log('bellow third call')
 }

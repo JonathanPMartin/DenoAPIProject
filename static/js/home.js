@@ -2,6 +2,8 @@
 import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
 	console.log('HOME')
+	localStorage.setItem('orderid',2)
+	console.log(localStorage.getItem('orderid')==undefined)
 	const username = localStorage.getItem('username')
 	
 	console.log(`username: ${username}`)

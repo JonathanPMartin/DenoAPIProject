@@ -180,28 +180,7 @@ router.post('/Menu/:id', async context => {
 		context.response.status = 500
 	}
 })
-router.post('/TableOrder/:id', async context => {
-	console.log("/put/TableOrder/:id")
-	const body = await context.request.body()
-	console.log(body)
-	const StaffData = await body.value
-	const id = context.params.id
-	const sql = `insert into tableOrder(tableid,orderid,status,details ) Values(${id},${StaffData.orderid },"${StaffData.status}", "${StaffData.details}")`
-	console.log(sql)
-	await db.query(sql)
-	console.log('test')
-	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const { user, pass } = credentials
-	console.log(user===username)
-	if(user==username){
-	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
-	context.response.body = JSON.stringify(data, null, 2)
-	}else{
-		context.response.status = 500
-	}
-})
+
 router.post('/TableOrder/Status/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
@@ -224,6 +203,9 @@ router.post('/TableOrder/Status/:id', async context => {
 		context.response.status = 500
 	}
 })
+
+//
+
 router.post('/Orders/:menuid', async context => {
 	console.log("/put/Orders/:id")
 	const body = await context.request.body()
@@ -238,10 +220,97 @@ router.post('/Orders/:menuid', async context => {
 	const { user, pass } = credentials
 	console.log(user===username)
 	if(user==username){
-	const data = {status: 200, msg: `genre ${menuid} updated to ${StaffData}`}
+	const data = {status: 200, msg: `new order added`}
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
 		console.log('error')
+		context.response.status = 500
+	}
+})
+router.get('/Orders/:ordertime', async context => {
+	console.log('correct route in place')
+	let time =context.params.ordertime
+	time=time.toString()
+	const sql = `SELECT * FROM orders WHERE ordertime = "${context.params.ordertime}";`
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors[actors.length - 1], null, 2)
+	context.response.body = JSON.stringify(actors[actors.length - 1], null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors[0], null, 2)
+	
+	
+	savedata(x)
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
+router.post('/TableOrder/:id', async context => {
+	console.log("/put/TableOrder/:id")
+	const body = await context.request.body()
+	console.log(body)
+	const StaffData = await body.value
+	const id = context.params.id
+	const sql = `insert into tableOrder(tableid,orderid,status,details ) Values(${id},${StaffData.orderid },"${StaffData.status}", "${StaffData.details}")`
+	console.log(sql)
+	await db.query(sql)
+	console.log('test')
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+//
+
+router.post('/AddOrder', async context => {
+	console.log("/put/AddOrder/")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	console.log(StaffData)
+
+	//const sql = `UPDATE tables SET status = "${StaffData.status}" WHERE id = ${id}`
+	//console.log(sql)
+	//await db.query(sql)
+	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		for (let i = 0; i < StaffData.length; i++) {
+			console.log(i)
+			let sql1 =`insert into orders(menuid,userid,ordertime) Values("${StaffData[i].url1}","${StaffData[i].body1.userid}","${StaffData[i].body1.ordertime}")`
+			await db.query(sql1)
+			let sql2 = `SELECT * FROM orders WHERE ordertime = "${StaffData[i].url2}";`
+			let data = await db.query(sql2)
+			console.log(data)
+			const entry = data[data.length - 1]
+			let sql3 = `insert into tableOrder(tableid,orderid,status,details ) Values(${StaffData[i].url4},${entry},"${StaffData[i].body3.status}", "${StaffData[i].body3.details}")`
+			await db.query(sql3)
+		}
+	let test ={data:'ok'}
+	context.response.status = 201
+	context.response.body = JSON.stringify(test, null, 2)
+	console.log('APi test 2')
+	return
+	}else{
 		context.response.status = 500
 	}
 })
@@ -261,32 +330,7 @@ router.delete("/Orders/:id", async context => {
 		context.response.status = 500
 	}
 })
-router.get('/Orders/:ordertime', async context => {
-	let time =context.params.ordertime
-	time=time.toString()
-	const sql = `SELECT * FROM orders WHERE ordertime = "${context.params.ordertime}";`
-	const actors = await db.query(sql)
-	if(actors.length === 0) throw new Error('record not found')
-	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const { user, pass } = credentials
-	console.log(user===username)
-	if(user==username){
-	context.response.status = 201
-	context.response.statusText = JSON.stringify(actors, null, 2)
-	context.response.body = JSON.stringify(actors, null, 2)
-	console.log('APi test 1')
-	console.log(context.response.body)
-	const x= JSON.stringify(actors, null, 2)
-	
-	
-	savedata(x)
-	}else{
-		context.response.status = 500
-	}
-	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
-})
+
 router.post('/Orders/Time/:ordertime', async context => {
 	console.log("/put/Orders/:id")
 	const body = await context.request.body()
@@ -525,6 +569,7 @@ router.post('/Tables/:id', async context => {
 		context.response.status = 500
 	}
 })
+
 router.post('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()

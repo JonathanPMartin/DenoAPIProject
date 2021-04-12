@@ -23,5 +23,6 @@ export async function setup() {
 	localStorage.removeItem('userjob')
 	localStorage.removeItem('staffid')
 	localStorage.removeItem('userid')
+	
 	window.location.href = '#login'
 }
