@@ -39,3 +39,11 @@ export async function UserID(data){
 	records= await db.query(sql)
 	return records
 }
+export async function Order(data){
+	let sql,records
+	for (let i = 0; i < data.length; i++) {
+		console.log(data[i])
+		await db.query(sql1)
+		console.log('test')
+	}
+}

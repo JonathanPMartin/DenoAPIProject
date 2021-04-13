@@ -4,7 +4,7 @@
 import { Router } from 'https://deno.land/x/oak@v6.3.2/mod.ts'
 import { db } from './modules/db.js'
 import { extractCredentials, saveFile, savedata } from './modules/util.js'
-import { login, register, User,UserID } from './modules/accounts.js'
+import { login, register, User,UserID,Order } from './modules/accounts.js'
 import {delOrd,delTaOrd} from './modules/orders.js'
 const router = new Router()
 
@@ -284,35 +284,50 @@ router.post('/AddOrder', async context => {
 	const StaffData = await body.value
 	console.log(StaffData)
 
-	//const sql = `UPDATE tables SET status = "${StaffData.status}" WHERE id = ${id}`
-	//console.log(sql)
-	//await db.query(sql)
-	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	
+	if(user==username){
+		console.log('testing if this should run')
+		let sql1 =`insert into OrderDetails(tableid,userid,Detials,time,status) Values('${StaffData.tableid}','${StaffData.userid}','${StaffData.Detials}','${StaffData.time}','${StaffData.status}')`
+		console.log(sql1)
+		await db.query(sql1)
+		console.log('after run of sql')
+	let test ={data:'ok'}
+	context.response.status = 201
+	context.response.body = JSON.stringify(test, null, 2)
+	console.log('APi test 2')
+	}else{
+		context.response.status = 500
+	}
+})
+router.get('/AddOrder', async context => {
+	console.log('well this should show')
+	const sql = `SELECT * FROM OrderDetails;`
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
 	const { user, pass } = credentials
 	console.log(user===username)
 	if(user==username){
-		for (let i = 0; i < StaffData.length; i++) {
-			console.log(i)
-			let sql1 =`insert into orders(menuid,userid,ordertime) Values("${StaffData[i].url1}","${StaffData[i].body1.userid}","${StaffData[i].body1.ordertime}")`
-			await db.query(sql1)
-			let sql2 = `SELECT * FROM orders WHERE ordertime = "${StaffData[i].url2}";`
-			let data = await db.query(sql2)
-			console.log(data)
-			const entry = data[data.length - 1]
-			let sql3 = `insert into tableOrder(tableid,orderid,status,details ) Values(${StaffData[i].url4},${entry},"${StaffData[i].body3.status}", "${StaffData[i].body3.details}")`
-			await db.query(sql3)
-		}
-	let test ={data:'ok'}
 	context.response.status = 201
-	context.response.body = JSON.stringify(test, null, 2)
-	console.log('APi test 2')
-	return
+	context.response.statusText = JSON.stringify(actors[0], null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors, null, 2)
+	
+	
+	savedata(x)
 	}else{
 		context.response.status = 500
 	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.delete("/Orders/:id", async context => {
 	const id = context.params.id

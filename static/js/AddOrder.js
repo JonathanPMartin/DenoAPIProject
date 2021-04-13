@@ -3,6 +3,8 @@ export async function setup() {
 	let order="Current Order is: "
 	var today = new Date();
 	let orders=[]
+	let order2=[]
+	let TRIAL={}
 	let date=today.getDate()
 	if(date<10){
 		date="0"+date
@@ -66,6 +68,16 @@ export async function setup() {
 					details:document.querySelector('select[name="Status"]').value,
 					ordertime:time,
 					userid:localStorage.getItem('userid')
+				}
+				let TRIALBODY={
+					status:"placed",
+					details:document.querySelector('select[name="Status"]').value,
+					menuid:json[i].id
+				}
+				order2.push(TRIALBODY)
+				let TRIAL = {
+					userid:localStorage.getItem('userid'),
+					tableid:tableid
 				}
 				let alldata={}
 				alldata.body1=Body
@@ -194,9 +206,25 @@ export async function setup() {
 				//fistcall(orders[i])
 				
 			//}
-			fistcall(orders)
+			
+			
+			let tem=JSON.stringify(order2)
+			let output=''
+			for (let z = 0; z < tem.length; z++) {
+        output += tem[z].charCodeAt(0).toString(2) + " ";
+    }
+			
+			output.trimEnd();
+			TRIAL.Detials=tem
+			TRIAL.status='placed'
+			TRIAL.time=time2
+			TRIAL.userid=localStorage.getItem('userid')
+			TRIAL.tableid=tableid
+			console.log(TRIAL)
+			//fistcall(orders)
+			fistcall(TRIAL)
 			localStorage.removeItem('orders')
-			Updload(UpdateOrder)
+			//Updload(UpdateOrder)
 			localStorage.removeItem('orderid')
 		})
 	let button3 = document.createElement("button");

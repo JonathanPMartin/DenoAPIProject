@@ -42,4 +42,11 @@ create table if not exists tableOrder(
 	FOREIGN KEY(orderid) REFERENCES orders(id),
 	FOREIGN KEY(tableid) REFERENCES tables(id)
 );
-insert into staff(job, staffid, status) values("None",1,"Offline");
+create table if not exists OrderDetails(
+	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	tableid SMALLINT UNSIGNED NOT NULL,
+	userid SMALLINT UNSIGNED,
+	Detials VARCHAR(8000) NOT NULL,
+	FOREIGN KEY(tableid) REFERENCES tables(id),
+	FOREIGN KEY(userid) REFERENCES staff(id)
+);

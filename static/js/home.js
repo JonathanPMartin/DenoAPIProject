@@ -12,7 +12,7 @@ export async function setup() {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 	}
 	console.log('above call on form')
@@ -21,6 +21,22 @@ export async function setup() {
 	let userjob =json3.job
 	
 	localStorage.setItem('userjob', userjob)
+	const url4 = `/AddOrder`
+	const options4 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response4 = await fetch(url4, options4)
+	let json4= await response4.json()
+	let hope = json4[0]
+	let hope2=hope.Detials
+	let hope3 = JSON.parse(hope2)
+	console.log(hope3)
+	console.log(hope)
 	console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 	console.log(localStorage.getItem('uerjob'))
 	if(username === null) window.location.href = '#login'
@@ -48,34 +64,5 @@ async function uploadData(event) {
 	console.log('called')
 	
 	event.preventDefault()
-/*	
-	
-	const itemordered = document.querySelector('select[name="itemordered"]').value
-	
-	const quantity=document.querySelector('input[name="quantity"]').value
-	console.log(itemordered)
-	const Body={
-		job:itemordered
-	}
-	console.log(JSON.stringify(Body))
-	
-	
-	const url = `/staff/1`
-	const options = {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
-		},
-		body: JSON.stringify(Body)
-		
-	//const value = context.request.body({ type: 'json' });
-	//const data = await value
-	}
-	const response = await fetch(url, options)
-	console.log(response)
-	const json = await response.json()
-	console.log(json)
-	showMessage('file uploaded')
-*/
+
 }
