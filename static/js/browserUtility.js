@@ -175,6 +175,36 @@ export async function fistcall(data){
 	console.log(JSON.stringify(options4))
 	let response = await fetch(url4, options4)
 	let json4 = await response.json()
+	console.log('THIS IS ABOVE THE DATA')
+	console.log(json4)
+	//
+	const url2 = `/GetOrder`
+	const options2 = {
+		method: 'GET',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const response2 = await fetch(url2, options2)
+	let json2= await response2.json()
+	console.log(json2)
+	data.orderid=json2.id
+	//
+	const url3 ='/AddTableOrder'
+	console.log(url3)
+	const options3 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data)
+	}
+	console.log(JSON.stringify(options3))
+	let response3 = await fetch(url3, options3)
+	let json3 = await response3.json()
+	console.log(json3)
 	/*const url4 = `/Orders/${data.url1}`
 	console.log(url4)
 	const options4 = {

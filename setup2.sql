@@ -44,9 +44,17 @@ create table if not exists tableOrder(
 );
 create table if not exists OrderDetails(
 	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	Detials VARCHAR(8000) NOT NULL
+);
+create table if not exists TableOrderDetails(
+	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	tableid SMALLINT UNSIGNED NOT NULL,
 	userid SMALLINT UNSIGNED,
-	Detials VARCHAR(8000) NOT NULL,
+	orderid SMALLINT UNSIGNED,
+	ordertime varchar(60) not null,
+	status varchar(60) NOT NULL,
 	FOREIGN KEY(tableid) REFERENCES tables(id),
-	FOREIGN KEY(userid) REFERENCES staff(id)
+	FOREIGN KEY(userid) REFERENCES staff(id),
+	FOREIGN KEY(orderid) REFERENCES OrderDetails(id)
 );
+

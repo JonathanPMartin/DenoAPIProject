@@ -20,8 +20,28 @@ export async function setup() {
 	let json3= await response3.json()
 	let userjob =json3.job
 	
-	localStorage.setItem('userjob', userjob)
-	const url4 = `/AddOrder`
+	
+	const url5 = `/GetAllOrders`
+	const options5 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response5 = await fetch(url5, options5)
+	let orders= await response5.json()
+	let orderdetials={}
+	for(let i = 0; i <orders.length; i++){
+		let data= JSON.parse(orders[i].Detials)
+		let places = data.length
+		orderdetials[orders[i].id] = places
+	}
+	console.log(orderdetials)
+	
+	//
+	const url4 = `/GetAllTableOrders`
 	const options4 = {
 		method: 'GET',
 		headers: {
@@ -31,12 +51,43 @@ export async function setup() {
 	}
 	console.log('above call on form')
 	const response4 = await fetch(url4, options4)
-	let json4= await response4.json()
-	let hope = json4[0]
-	let hope2=hope.Detials
-	let hope3 = JSON.parse(hope2)
-	console.log(hope3)
-	console.log(hope)
+	let tableorders = await response4.json()
+	let tableorderdetails=[]
+	for(let i = 0; i <tableorders.length; i++){
+		let time=tableorders[i].ordertime
+		let time2=time.substr(11, 17);
+		let places=orderdetials[tableorders[i].orderid]
+		let status=tableorders[i].status
+		let body={
+			table:tableorders[i].tableid,
+			places:places,
+			time:time2,
+			status:status
+		}
+		if(status==='placed'||'ready'){
+			tableorderdetails.push(body)
+		}
+	}
+	console.log(tableorderdetails)
+	for(let i = 0; i <tableorderdetails.length; i++){
+		var table = document.getElementById("myTable");
+
+		// Create an empty <tr> element and add it to the 1st position of the table:
+		var row = table.insertRow(-1);
+
+		// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);
+		var cell3 = row.insertCell(2);
+		var cell4 = row.insertCell(3);
+		// Add some text to the new cells:
+		cell1.innerHTML = tableorderdetails[i].table;
+		cell2.innerHTML = tableorderdetails[i].places;
+		cell3.innerHTML = tableorderdetails[i].time;
+		cell4.innerHTML = tableorderdetails[i].status;
+	}
+	console.log(tableorderdetails)
+	
 	console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 	console.log(localStorage.getItem('uerjob'))
 	if(username === null) window.location.href = '#login'

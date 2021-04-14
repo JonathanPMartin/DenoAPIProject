@@ -70,9 +70,9 @@ export async function setup() {
 					userid:localStorage.getItem('userid')
 				}
 				let TRIALBODY={
-					status:"placed",
-					details:document.querySelector('select[name="Status"]').value,
-					menuid:json[i].id
+					menuid:json[i].id,
+					details:document.querySelector('select[name="Status"]').value
+					
 				}
 				order2.push(TRIALBODY)
 				let TRIAL = {
