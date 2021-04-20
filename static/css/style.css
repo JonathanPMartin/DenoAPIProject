@@ -6,7 +6,9 @@ body, p, h1, h2, h3, ul {
 	padding: 0;
 	font-family: Arial, Helvetica, sans-serif;
 }
-
+html, body{
+	height:100%;
+}
 p {
 	margin-bottom: 0.6em;
 	font-size: 1em;
@@ -70,7 +72,46 @@ ul {
 	/* height: 3em; */
 	justify-content: flex-start;
 }
+.flextable>div:nth-child(even){
+	background-color:#dddddd
+}
 
+.flextable>div{
+	/*width:300px;*/
+	padding:10px;
+	font-size:2em;
+	color:#ffeead;
+	background-color:#96ceb4;
+	/* auto gives width based on its width
+	flex:1;
+	*/
+}
+section{
+	/*width:300px;*/
+	padding:10px;
+	font-size:2em;
+	color:#ffeead;
+	background-color:#96ceb4;
+	/* auto gives width based on its width
+	flex:1;
+	*/
+}
+article{
+	
+}
+.flex{
+	display:flex;
+	justify-content:space-around;
+	
+}
+.flexStart{
+	
+	align-self:flex-start;
+}
+.flexEnd{
+	
+	align-self:flex-end;
+}
 li {
 	padding: 0;
 	margin: 0;
@@ -246,7 +287,7 @@ td, th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #82a9bc;
 }
 
 /* ==================== DETECTS IF SCREEN SUPPORTS TOUCH ==================== */

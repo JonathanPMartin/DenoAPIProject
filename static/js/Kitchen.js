@@ -66,37 +66,67 @@ export async function setup() {
 	console.log('above call on form')
 	const response4 = await fetch(url4, options4)
 	const json4 = await response4.json()
+	let Order=[]
+	let Orders=[]
 	for(let i =0;i<json4.length;i++){
-		console.log(orderdetials[json4[i].orderid])
+		Order=[]
+		let id=json4[i].id
+		let time= json4[i].ordertime.substr(11, 17);
+		let tem=orderdetials[json4[i].orderid]
+		for(let j=1;j<21;j++){
+			if(tem[j] !=0){
+				
+				let tem2=Menu[j]+":"+tem[j]
+				Order.push(tem2)
+			}
+			
+		}
+		let body={
+			id:id,
+			items:Order,
+			time:time
+		}
+		Orders.push(body)
 	}
+	let body=""
+	for(let i=0; i<Orders.length;i++){
+		body=body+`<section><h3>Order id ${Orders[i].id} Time ${Orders[i].time}</h3>`
+		body=body+`<p>items orderd ${Orders[i].items}</p>`
+		body=body+`<input type = 'button' id ="${Orders[i].id}" value= 'ready'></section>`
+		
+	}
+	document.querySelector('form').innerHTML=body
+	console.log(Orders)
 	//
 	
-	let button = document.createElement("button");
-			button.innerHTML = 'test';
-			button.class='.button'
-			button.id='test'
-	var table = document.getElementById("myTable");
-
-		// Create an empty <tr> element and add it to the 1st position of the table:
-		var row = table.insertRow(-1);
-
-		// Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-		var cell1 = row.insertCell(0);
-		var cell2 = row.insertCell(1);
-		var cell3 = row.insertCell(2);
-		// Add some text to the new cells:
-		let body = document.getElementsByName("table")[0]
-			body.appendChild(button);
-		cell1.innerHTML = button
-		cell2.innerHTML = 'test'
-			//button.addEventListener ("click", function() {
-				
-			//})
-	//document.querySelector('form').addEventListener('submit', await uploadData)
-}
-async function uploadData(event) {
-	console.log('called')
 	
+	document.querySelector('form').addEventListener('click', await order)
+}
+async function order(event) {
+	let test= event.target.id
+	console.log('called')
+	console.log(test)
 	event.preventDefault()
+	let Body={status:'ready'}
+	const url20 = `/UpdateTableOrders/${test}`
+	const options20 = {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(Body)
+		
+	//const value = context.request.body({ type: 'json' });
+	//const data = await value
+	}
+	const response20 = await fetch(url20, options20)
+	console.log(response20)
+	const json20 = await response20.json()
+	console.log(json20)
+	localStorage.setItem('redirect','#Kitchen')
+	window.location.href = '#home'
+	
+
 
 }

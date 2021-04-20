@@ -402,8 +402,37 @@ router.get('/GetAllTableOrders', async context => {
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.get('/GetTableOrders/:status', async context => {
+	
 	console.log('well this should show')
 	const sql = `SELECT * FROM TableOrderDetails where status ="${context.params.status}"`
+	console.log(sql)
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors, null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors, null, 2)
+	
+	
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
+router.post('/UpdateTableOrders/:id', async context => {
+	
+	console.log('well this should show')
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const sql = `UPDATE TableOrderDetails SET status ="${StaffData.status}" WHERE id ="${context.params.id}"`
 	console.log(sql)
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')

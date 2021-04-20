@@ -2,6 +2,12 @@
 import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
 	console.log('HOME')
+	if (localStorage.getItem('redirect')!= undefined){
+		let tem=localStorage.getItem('redirect')
+		console.log(tem)
+		localStorage.removeItem('redirect')
+		window.location.href = tem
+	}
 	localStorage.setItem('orderid',2)
 	console.log(localStorage.getItem('orderid')==undefined)
 	const username = localStorage.getItem('username')
