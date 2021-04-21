@@ -3,6 +3,7 @@ export async function setup() {
 	console.log('manger')
 	const username = localStorage.getItem('username')
 	console.log(`username: ${username}`)
+	if(localStorage.getItem('userjob') !== 'welcome')window.location.href = '#home'
 	if(username === null) window.location.href = '#login'
 	document.querySelector('h1').innerText = 'test'
 	const nav = ['logout','home']

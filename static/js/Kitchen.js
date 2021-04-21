@@ -1,6 +1,6 @@
 import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
-	
+	if(localStorage.getItem('userjob') !== 'cheff')window.location.href = '#home'
 	console.log('HOME')
 	const username = localStorage.getItem('username')
 	console.log(localStorage)

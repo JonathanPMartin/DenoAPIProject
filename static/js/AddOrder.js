@@ -1,5 +1,6 @@
 import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct} from './browserUtility.js'
 export async function setup() {
+	if(localStorage.getItem('userjob') !== 'manager')window.location.href = '#home'
 	let order="Current Order is: "
 	var today = new Date();
 	let orders=[]
