@@ -38,7 +38,7 @@ async function uploadData(event) {
 	}
 	const url = `/Menu/${item}`
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': localStorage.getItem('authorization')

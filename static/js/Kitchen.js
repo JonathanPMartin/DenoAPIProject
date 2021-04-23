@@ -110,7 +110,7 @@ async function order(event) {
 	let Body={status:'ready'}
 	const url20 = `/UpdateTableOrders/${test}`
 	const options20 = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': localStorage.getItem('authorization')

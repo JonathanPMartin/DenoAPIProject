@@ -80,7 +80,7 @@ async function uploadData(event) {
 	
 	const url = `/Staff/Set/Job/${id}`
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': localStorage.getItem('authorization')

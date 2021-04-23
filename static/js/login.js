@@ -57,7 +57,7 @@ async function login() {
 			}
 			const url4 = `/Staff/Stauts/${staffid}`
 			const options4 = {
-				method: 'POST',
+				method: 'PUT',
 				headers: {
 				'Content-Type': 'application/json',
 				'Authorization':token

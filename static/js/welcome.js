@@ -45,10 +45,10 @@ async function uploadData(event) {
 	let id=document.querySelector('select[name="Tables"]').value
 	const url = `/Tables/${id}`
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': '3.14159265358979323'
+			'Authorization': localStorage.getItem('authorization')
 		},
 		body: JSON.stringify(Body)
 		

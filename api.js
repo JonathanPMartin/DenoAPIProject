@@ -75,7 +75,7 @@ router.get(`/Accounts/User/:id`, async context => {
 	const username = await login(credentials)
 	const { user, pass } = credentials
 	console.log(user===username)
-	if(user==username){
+	if(token==='3.14159265358979323'){
 	context.response.status = 201
 	context.response.body = JSON.stringify(test[0], null, 2)
 	}else{
@@ -158,7 +158,7 @@ router.get(`/Menu/Status/:status`, async context => {
 		context.response.status = 500
 	}
 })
-router.post('/Menu/:id', async context => {
+router.put('/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -181,7 +181,7 @@ router.post('/Menu/:id', async context => {
 	}
 })
 
-router.post('/TableOrder/Status/:id', async context => {
+/*router.post('/TableOrder/Status/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -202,11 +202,11 @@ router.post('/TableOrder/Status/:id', async context => {
 	}else{
 		context.response.status = 500
 	}
-})
+})*/
 
 //
 
-router.post('/Orders/:menuid', async context => {
+/*router.post('/Orders/:menuid', async context => {
 	console.log("/put/Orders/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -226,8 +226,9 @@ router.post('/Orders/:menuid', async context => {
 		console.log('error')
 		context.response.status = 500
 	}
-})
-router.get('/Orders/:ordertime', async context => {
+})*/
+
+/*router.get('/Orders/:ordertime', async context => {
 	console.log('correct route in place')
 	let time =context.params.ordertime
 	time=time.toString()
@@ -253,7 +254,8 @@ router.get('/Orders/:ordertime', async context => {
 		context.response.status = 500
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
-})
+})*/
+/*
 router.post('/TableOrder/:id', async context => {
 	console.log("/put/TableOrder/:id")
 	const body = await context.request.body()
@@ -275,7 +277,7 @@ router.post('/TableOrder/:id', async context => {
 	}else{
 		context.response.status = 500
 	}
-})
+})*/
 //
 router.post('/AddOrder', async context => {
 	console.log("/put/AddOrder/")
@@ -427,7 +429,7 @@ router.get('/GetTableOrders/:status', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.post('/UpdateTableOrders/:id', async context => {
+router.put('/UpdateTableOrders/:id', async context => {
 	
 	console.log('well this should show')
 	const body = await context.request.body()
@@ -455,7 +457,46 @@ router.post('/UpdateTableOrders/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.delete("/Orders/:id", async context => {
+router.delete("/DeleteTableOrders/:id", async context => {
+	const id = context.params.id
+	console.log(id)
+	const sql2=`DELETE FROM TableOrderDetails WHERE id = "${id}"`
+	console.log(sql2)
+
+	const data = {status: 200, msg: `genre ${id} updated to welp`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	console.log('test')
+	await db.query(sql2)
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+router.delete("/DeleteOrders/:id", async context => {
+	const id = context.params.id
+	console.log(id)
+	const sql2=`DELETE FROM OrderDetails WHERE id = "${id}"`
+	const data = {status: 200, msg: `genre ${id} updated to welp`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	await db.query(sql2)
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+/*router.delete("/Orders/:id", async context => {
 	const id = context.params.id
 	
 	const token = context.request.headers.get('Authorization')
@@ -470,9 +511,9 @@ router.delete("/Orders/:id", async context => {
 	}else{
 		context.response.status = 500
 	}
-})
+})*/
 
-router.post('/Orders/Time/:ordertime', async context => {
+/*router.post('/Orders/Time/:ordertime', async context => {
 	console.log("/put/Orders/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -491,8 +532,8 @@ router.post('/Orders/Time/:ordertime', async context => {
 		console.log('error')
 		context.response.status = 500
 	}
-})
-router.get('/TableOrder', async context => {
+})*/
+/*router.get('/TableOrder', async context => {
 	console.log('well this should show')
 	const sql = `SELECT * FROM tableOrder;`
 	const actors = await db.query(sql)
@@ -516,8 +557,8 @@ router.get('/TableOrder', async context => {
 		context.response.status = 500
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
-})
-router.get('/Orders', async context => {
+})*/
+/*router.get('/Orders', async context => {
 	console.log('well this should show')
 	const sql = `SELECT * FROM orders;`
 	const actors = await db.query(sql)
@@ -541,8 +582,8 @@ router.get('/Orders', async context => {
 		context.response.status = 500
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
-})
-router.delete("/TableOrder/:table", async context => {
+})*/
+/*router.delete("/TableOrder/:table", async context => {
 	const table = context.params.table
 	console.log(table)
 	const sql2=`DELETE FROM tableOrder WHERE tableid = "${table}`
@@ -560,7 +601,7 @@ router.delete("/TableOrder/:table", async context => {
 	}else{
 		context.response.status = 500
 	}
-})
+})*/
 router.get('/Staff/:id', async context => {
 	const sql = `SELECT * FROM staff WHERE staffid = ${context.params.id};`
 	const actors = await db.query(sql)
@@ -607,7 +648,7 @@ router.get('/Online/Staff', async context => {
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
 	})
-router.post('/Staff/Set/Job/:id', async context => {
+router.put('/Staff/Set/Job/:id', async context => {
 	console.log("/put/Staff/Set/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -630,7 +671,7 @@ router.post('/Staff/Set/Job/:id', async context => {
 		context.response.status = 500
 	}
 })
-router.post('/Staff/Stauts/:id', async context => {
+router.put('/Staff/Stauts/:id', async context => {
 	console.log("/put/Staff/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -661,7 +702,7 @@ router.post('/Staff/New/:id',async context => {
 	const username = await login(credentials)
 	const { user, pass } = credentials
 	console.log(user===username)
-	if(user==username){
+	if(token==='3.14159265358979323'){
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -686,7 +727,7 @@ router.get('/Table/:Status', async context => {
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
 	})
-router.post('/Tables/:id', async context => {
+router.put('/Tables/:id', async context => {
 	console.log("/put/Tables/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
