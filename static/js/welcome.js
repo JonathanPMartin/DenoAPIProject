@@ -8,7 +8,7 @@ export async function setup() {
 	document.querySelector('h1').innerText = 'test'
 	const nav = ['logout','home']
 	customiseNavBar(nav)
-	const url1 = `Table/Free`
+	const url1 = `/API/1/Table/Free`
 	const options1 = {
 		method: 'GET',
 		headers: {
@@ -43,7 +43,7 @@ async function uploadData(event) {
 		status:"Taken"
 	}
 	let id=document.querySelector('select[name="Tables"]').value
-	const url = `/Tables/${id}`
+	const url = `/API/1/Tables/${id}`
 	const options = {
 		method: 'PUT',
 		headers: {

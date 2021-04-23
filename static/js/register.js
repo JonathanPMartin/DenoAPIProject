@@ -14,7 +14,7 @@ async function register() {
 	const formData = new FormData(event.target)
 	const data = Object.fromEntries(formData.entries())
 	console.log(data)
-	const url = '/accounts'
+	const url = '/API/1/accounts'
 	const options = {
 		method: 'POST',
 		headers: {
@@ -45,7 +45,7 @@ async function register() {
 	const Body={
 		status:'online'
 	}
-	const url4 = `/Staff/New/${userid}`
+	const url4 = `/API/1/Staff/New/${userid}`
 	const options4 = {
 		method: 'POST',
 		headers: {

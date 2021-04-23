@@ -14,7 +14,7 @@ router.get('/', async context => {
 	context.response.body = data
 })
 
-router.get('/accounts', async context => {
+router.get('/API/1/accounts', async context => {
 	console.log('GET /accounts')
 	const token = context.request.headers.get('Authorization')
 	console.log(`auth: ${token}`)
@@ -31,7 +31,7 @@ router.get('/accounts', async context => {
 })
 
 
-router.post('/accounts', async context => {
+router.post('/API/1/accounts', async context => {
 	console.log('POST /accounts')
 	const body  = await context.request.body()
 	const data = await body.value
@@ -65,9 +65,9 @@ router.post('/files', async context => {
 		context.response.body = JSON.stringify({ status: 'unauthorised', msg: err.msg })
 	}
 })
-router.get(`/Accounts/User/:id`, async context => {
+router.get(`/API/1/Accounts/User/:user`, async context => {
 	
-	let x = context.params.id
+	let x = context.params.user
 	let test=await User(x)
 	console.log(test)
 	const token = context.request.headers.get('Authorization')
@@ -83,7 +83,7 @@ router.get(`/Accounts/User/:id`, async context => {
 	}
 	
 })
-router.get(`/Accounts/ID/:id`, async context => {
+router.get(`/API/1/Accounts/ID/:id`, async context => {
 	
 	let x = context.params.id
 	let test=await UserID(x)
@@ -101,7 +101,7 @@ router.get(`/Accounts/ID/:id`, async context => {
 	}
 	
 })
-router.get('/Menu', async context => {
+router.get('/API/1/Menu', async context => {
 	console.log('why me')
 	
 	const host = context.request.url.host
@@ -120,7 +120,7 @@ router.get('/Menu', async context => {
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
 })
-router.get(`/Menu/:id`, async context => {
+router.get(`/API/1/Menu/:id`, async context => {
 	console.log(context.params.id)
 	const sql = `SELECT * FROM menu WHERE id =${context.params.id};`
 	const actors = await db.query(sql)
@@ -139,7 +139,7 @@ router.get(`/Menu/:id`, async context => {
 		context.response.status = 500
 	}
 })
-router.get(`/Menu/Status/:status`, async context => {
+router.get(`/API/1/Menu/Status/:status`, async context => {
 	console.log(context.params.status)
 	const sql = `SELECT * FROM menu WHERE status !=${context.params.status};`
 	const actors = await db.query(sql)
@@ -158,7 +158,7 @@ router.get(`/Menu/Status/:status`, async context => {
 		context.response.status = 500
 	}
 })
-router.put('/Menu/:id', async context => {
+router.put('/API/1/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -279,7 +279,7 @@ router.post('/TableOrder/:id', async context => {
 	}
 })*/
 //
-router.post('/AddOrder', async context => {
+router.post('/API/1/AddOrder', async context => {
 	console.log("/put/AddOrder/")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -304,7 +304,7 @@ router.post('/AddOrder', async context => {
 		context.response.status = 500
 	}
 })
-router.post('/AddTableOrder', async context => {
+router.post('/API/1/AddTableOrder', async context => {
 	console.log("/put/AddTableOrder/")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -330,9 +330,10 @@ router.post('/AddTableOrder', async context => {
 		context.response.status = 500
 	}
 })
-router.get('/GetOrder', async context => {
+//below route may not be called 
+router.get('/API/1/GetOrder', async context => {
 	console.log('well this should show')
-	const sql = `SELECT * FROM OrderDetails;`
+	const sql = `SELECT * FROM OrderDetails`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
 	const token = context.request.headers.get('Authorization')
@@ -355,7 +356,7 @@ router.get('/GetOrder', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.get('/GetAllOrders', async context => {
+router.get('/API/1/GetAllOrders', async context => {
 	console.log('well this should show')
 	const sql = `SELECT * FROM OrderDetails`
 	const actors = await db.query(sql)
@@ -379,7 +380,7 @@ router.get('/GetAllOrders', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.get('/GetAllTableOrders', async context => {
+router.get('/API/1/GetAllTableOrders', async context => {
 	console.log('well this should show')
 	const sql = `SELECT * FROM TableOrderDetails`
 	const actors = await db.query(sql)
@@ -403,7 +404,7 @@ router.get('/GetAllTableOrders', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.get('/GetTableOrders/:status', async context => {
+router.get('/API/1/GetTableOrders/:status', async context => {
 	
 	console.log('well this should show')
 	const sql = `SELECT * FROM TableOrderDetails where status ="${context.params.status}"`
@@ -429,7 +430,7 @@ router.get('/GetTableOrders/:status', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.put('/UpdateTableOrders/:id', async context => {
+router.put('/API/1/UpdateTableOrders/:id', async context => {
 	
 	console.log('well this should show')
 	const body = await context.request.body()
@@ -457,7 +458,7 @@ router.put('/UpdateTableOrders/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.delete("/DeleteTableOrders/:id", async context => {
+router.delete("/API/1/DeleteTableOrders/:id", async context => {
 	const id = context.params.id
 	console.log(id)
 	const sql2=`DELETE FROM TableOrderDetails WHERE id = "${id}"`
@@ -478,7 +479,7 @@ router.delete("/DeleteTableOrders/:id", async context => {
 		context.response.status = 500
 	}
 })
-router.delete("/DeleteOrders/:id", async context => {
+router.delete("/API/1/DeleteOrders/:id", async context => {
 	const id = context.params.id
 	console.log(id)
 	const sql2=`DELETE FROM OrderDetails WHERE id = "${id}"`
@@ -602,7 +603,7 @@ router.delete("/DeleteOrders/:id", async context => {
 		context.response.status = 500
 	}
 })*/
-router.get('/Staff/:id', async context => {
+router.get('/API/1/Staff/:id', async context => {
 	const sql = `SELECT * FROM staff WHERE staffid = ${context.params.id};`
 	const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
@@ -626,7 +627,7 @@ router.get('/Staff/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
-router.get('/Online/Staff', async context => {
+router.get('/API/1/Online/Staff', async context => {
 	const host = context.request.url.host
 	console.log('test')
 	const sql = 'SELECT * FROM staff WHERE status= "Online";'
@@ -648,7 +649,7 @@ router.get('/Online/Staff', async context => {
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
 	})
-router.put('/Staff/Set/Job/:id', async context => {
+router.put('/API/1/Staff/Set/Job/:id', async context => {
 	console.log("/put/Staff/Set/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -671,7 +672,7 @@ router.put('/Staff/Set/Job/:id', async context => {
 		context.response.status = 500
 	}
 })
-router.put('/Staff/Stauts/:id', async context => {
+router.put('/API/1/Staff/Stauts/:id', async context => {
 	console.log("/put/Staff/Job/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -693,7 +694,7 @@ router.put('/Staff/Stauts/:id', async context => {
 		context.response.status = 500
 	}
 })
-router.post('/Staff/New/:id',async context => {
+router.post('/API/1/Staff/New/:id',async context => {
 	const sql=`insert into staff(job, staffid, status) values("None",${context.params.id},"Offline");`
 	await db.query(sql)
 	const data = {status: 200, msg: `new data ${context.params.id} created`}
@@ -709,7 +710,7 @@ router.post('/Staff/New/:id',async context => {
 		context.response.status = 500
 	}
 } )
-router.get('/Table/:Status', async context => {
+router.get('/API/1/Table/:Status', async context => {
 	const host = context.request.url.host
 	console.log('test')
 	const sql = `SELECT * FROM tables WHERE status= "${context.params.Status}";`
@@ -727,7 +728,7 @@ router.get('/Table/:Status', async context => {
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
 	})
-router.put('/Tables/:id', async context => {
+router.put('/API/1/Tables/:id', async context => {
 	console.log("/put/Tables/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -752,7 +753,7 @@ router.put('/Tables/:id', async context => {
 	}
 })
 
-router.post('/Menu/:id', async context => {
+router.post('/API/1/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -777,7 +778,7 @@ router.post('/Menu/:id', async context => {
 	return
 })
 
-router.get('/TESTING', async context => {
+router.get('/API/1/TESTING', async context => {
 	console.log('in route')
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
@@ -789,6 +790,27 @@ router.get('/TESTING', async context => {
 	}else{
 		context.response.status = 500
 	}
+})
+router.get('/API', async context => {
+	const host = context.request.url.host
+	console.log('test')
+	const data = {
+		name: 'Movies API',
+		desc: 'a simple API to demonstrate hateos principles',
+		links: [
+			{
+				name: 'actors',
+				desc: 'a list of actors',
+				href: `https://${host}/1/actors`,
+			},
+			{
+				name: 'movies',
+				desc: 'a list of movies',
+				href: `https://${host}/1/movies`,
+			}
+		]
+	}
+	context.response.body = JSON.stringify(data, null, 2)
 })
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')

@@ -88,7 +88,7 @@ export function sleepThenAct(){
   console.log("hello js sleep !");
 }
 export async function trial(data){
-	const url2 = `/Orders/${data}`
+	const url2 = `/API/1/Orders/${data}`
 			const options2 = {
 				method: 'GET',
 				headers: {
@@ -105,7 +105,7 @@ export async function trial(data){
 }
 export async function AddOrder(data){
 	console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-	const url4 = `/Orders/${data.url1}`
+	const url4 = `/API/1/Orders/${data.url1}`
 	console.log(url4)
 	const options4 = {
 		method: 'POST',
@@ -124,7 +124,7 @@ export async function AddOrder(data){
 	console.log('bellow first call')
 	console.log('time')
 	console.log(data.url2)
-	const url2 = `/Orders/${data.url2}`
+	const url2 = `/API/1/Orders/${data.url2}`
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -143,7 +143,7 @@ export async function AddOrder(data){
 	console.log('bellow seccond call')
 	//
 	
-	const url3 = `/${data.url3}`
+	const url3 = `${data.url3}`
 	console.log(url3)
 	const options3 = {
 		method: 'POST',
@@ -162,7 +162,7 @@ export async function AddOrder(data){
 				
 }
 export async function fistcall(data){
-	const url4 ='/AddOrder'
+	const url4 ='/API/1/AddOrder'
 	console.log(url4)
 	const options4 = {
 		method: 'POST',
@@ -178,7 +178,7 @@ export async function fistcall(data){
 	console.log('THIS IS ABOVE THE DATA')
 	console.log(json4)
 	//
-	const url2 = `/GetOrder`
+	const url2 = `/API/1/GetOrder`
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -191,7 +191,7 @@ export async function fistcall(data){
 	console.log(json2)
 	data.orderid=json2.id
 	//
-	const url3 ='/AddTableOrder'
+	const url3 ='/API/1/AddTableOrder'
 	console.log(url3)
 	const options3 = {
 		method: 'POST',
@@ -223,7 +223,7 @@ export async function fistcall(data){
 }
 async function seccondcall(data){
 	console.log(data.url2)
-	const url2 = `/Orders/${data.url2}`
+	const url2 = `/API/1/Orders/${data.url2}`
 	const options2 = {
 		method: 'GET',
 		headers: {

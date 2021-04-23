@@ -40,7 +40,7 @@ export async function setup() {
 	console.log(document.querySelector('select[name="itemordered"]'))
 	const nav = ['logout', 'foo']
 	customiseNavBar(nav)
-	const url1 = `/Menu`
+	const url1 = `/API/1/Menu`
 	const options1 = {
 		method: 'GET',
 		headers: {
@@ -87,11 +87,11 @@ export async function setup() {
 				let id =json[i].id
 				let data={
 					body:Body,
-					url:`Orders/${id}`
+					url:`1/Orders/${id}`
 				}
 				//Updload(data)
 				 data={
-					url:`Orders/${time}`
+					url:`/1/Orders/${time}`
 					 //url:'Orders/10:04:2021_12:05:49'
 			
 				}
@@ -103,9 +103,9 @@ export async function setup() {
 				}
 				data={
 					body:Body,
-					url:`TableOrder/${tableid}`
+					url:`/1/TableOrder/${tableid}`
 				}
-				alldata.url3=`TableOrder/${tableid}`
+				alldata.url3=`/1/TableOrder/${tableid}`
 				alldata.url4=tableid
 				alldata.body3=Body
 				orders.push(alldata)
@@ -115,7 +115,7 @@ export async function setup() {
 	
 		}
 	}
-	const url2 = `Table/Taken`
+	const url2 = `/API/1/Table/Taken`
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -198,7 +198,7 @@ export async function setup() {
 				ordertime:time2
 			}
 			let UpdateOrder={
-				url:`/Orders/Time/${time}`,
+				url:`/API/1/Orders/Time/${time}`,
 				body:body
 			}
 			localStorage.setItem('orders',orders.length)

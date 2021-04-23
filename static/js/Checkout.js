@@ -24,7 +24,7 @@ export async function setup() {
 	const response = await fetch(url1, options1)
 	const json = await response.json()
 	console.log(json)
-	const url2 = `/GetAllOrders`
+	const url2 = `/API/1/GetAllOrders`
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -38,7 +38,7 @@ export async function setup() {
 	const response2 = await fetch(url2, options2)
 	const json2 = await response2.json()
 	console.log(json2)
-	const url3 = `/Menu`
+	const url3 = `/API/1/Menu`
 	const options3 = {
 		method: 'GET',
 		headers: {

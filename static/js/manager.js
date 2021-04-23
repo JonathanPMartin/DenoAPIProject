@@ -12,7 +12,7 @@ export async function setup() {
 	const nav = ['logout', 'foo','home']
 	customiseNavBar(nav)
 	
-	const url1 = `/Online/Staff`
+	const url1 = `/API/1/Online/Staff`
 	const options1 = {
 		method: 'GET',
 		headers: {
@@ -26,7 +26,7 @@ export async function setup() {
 	const response = await fetch(url1, options1)
 	const json = await response.json()
 	for (let i = 0; i < json.length; i++) {
-		const url2 = `/Accounts/ID/${json[i].staffid}`
+		const url2 = `/API/1/Accounts/ID/${json[i].staffid}`
 		const options2 = {
 			method: 'GET',
 			headers: {
@@ -52,7 +52,7 @@ async function uploadData(event) {
 	console.log('called')
 	
 	event.preventDefault()
-	const url2 = `/Accounts/User/${username2}`
+	const url2 = `/API/1/Accounts/User/${username2}`
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -78,7 +78,7 @@ async function uploadData(event) {
 	const file = document.querySelector('input[name="file"]').files[0]
 	
 	
-	const url = `/Staff/Set/Job/${id}`
+	const url = `/API/1/Staff/Set/Job/${id}`
 	const options = {
 		method: 'PUT',
 		headers: {

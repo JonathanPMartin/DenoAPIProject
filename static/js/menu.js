@@ -36,7 +36,7 @@ async function uploadData(event) {
 	let Body={
 		status:status
 	}
-	const url = `/Menu/${item}`
+	const url = `/API/1/Menu/${item}`
 	const options = {
 		method: 'PUT',
 		headers: {

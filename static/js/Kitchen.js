@@ -12,7 +12,7 @@ export async function setup() {
 	customiseNavBar(nav)
 	//
 	
-	const url3 = `/Menu`
+	const url3 = `/API/1/Menu`
 	const options3 = {
 		method: 'GET',
 		headers: {
@@ -30,7 +30,7 @@ export async function setup() {
 	console.log('above menu')
 	console.log(Menu)
 	//
-	const url5 = `/GetAllOrders`
+	const url5 = `/API/1/GetAllOrders`
 	const options5 = {
 		method: 'GET',
 		headers: {
@@ -55,7 +55,7 @@ export async function setup() {
 		
 	}
 	//
-	const url4 = `/GetTableOrders/placed`
+	const url4 = `/API/1/GetTableOrders/placed`
 	const options4 = {
 		method: 'GET',
 		headers: {
@@ -108,7 +108,7 @@ async function order(event) {
 	console.log(test)
 	event.preventDefault()
 	let Body={status:'ready'}
-	const url20 = `/UpdateTableOrders/${test}`
+	const url20 = `/API/1/UpdateTableOrders/${test}`
 	const options20 = {
 		method: 'PUT',
 		headers: {

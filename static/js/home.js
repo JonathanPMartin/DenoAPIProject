@@ -13,7 +13,7 @@ export async function setup() {
 	const username = localStorage.getItem('username')
 	
 	console.log(`username: ${username}`)
-	const url3 = `/Staff/${localStorage.getItem('userid')}`
+	const url3 = `/API/1/Staff/${localStorage.getItem('userid')}`
 	const options3 = {
 		method: 'GET',
 		headers: {
@@ -27,7 +27,7 @@ export async function setup() {
 	let userjob =json3.job
 	
 	
-	const url5 = `/GetAllOrders`
+	const url5 = `/1/GetAllOrders`
 	const options5 = {
 		method: 'GET',
 		headers: {
@@ -47,7 +47,7 @@ export async function setup() {
 	console.log(orderdetials)
 	
 	//
-	const url4 = `/GetAllTableOrders`
+	const url4 = `/API/1/GetAllTableOrders`
 	const options4 = {
 		method: 'GET',
 		headers: {

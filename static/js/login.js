@@ -14,7 +14,7 @@ async function login() {
 	event.preventDefault()
 		console.log('form submitted')
 		const token = getToken()
-		const url = '/accounts'
+		const url = '/API/1/accounts'
 		const options = {
 			method: 'GET',
 			headers: { 'Authorization': token }
@@ -25,7 +25,7 @@ async function login() {
 		console.log('json data bellow')
 			console.log(json.data)
 			localStorage.setItem('username', json.data.username)
-			const url2 = `/Accounts/User/${json.data.username}`
+			const url2 = `/API/1/Accounts/User/${json.data.username}`
 			const options2 = {
 				method: 'GET',
 				headers: {
@@ -38,7 +38,7 @@ async function login() {
 			let json2= await response2.json()
 			const userid=json2.id
 			//
-			const url3 = `/Staff/${userid}`
+			const url3 = `/API/1/Staff/${userid}`
 			const options3 = {
 				method: 'GET',
 				headers: {
@@ -55,7 +55,7 @@ async function login() {
 			const Body={
 				status:'Online'
 			}
-			const url4 = `/Staff/Stauts/${staffid}`
+			const url4 = `/API/1/Staff/Stauts/${staffid}`
 			const options4 = {
 				method: 'PUT',
 				headers: {
