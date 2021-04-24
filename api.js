@@ -9,6 +9,178 @@ import {delOrd,delTaOrd} from './modules/orders.js'
 const router = new Router()
 
 // the routes defined here
+router.post(`/API/1/TableOrders`, async context => {
+	console.log("/put/AddOrder/")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	console.log(StaffData)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		console.log('testing if this should run')
+		let sql1 =`insert into TableOrders(tableid,userid,ordertime,status) Values('${StaffData.tableid}','${StaffData.userid}','${StaffData.time}','${StaffData.status}')`
+		console.log(sql1)
+		let test = await db.query(sql1)
+		console.log('after run of sql')
+	context.response.status = 201
+	context.response.body = JSON.stringify(test, null, 2)
+	console.log('APi test 2')
+	}else{
+		context.response.status = 500
+	}	
+})
+router.get('/API/1/TableOrders', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = 'SELECT * FROM TableOrders;'
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors[actors.length -1], null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+})
+router.get('/API/1/TableOrders/All', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = 'SELECT * FROM TableOrders;'
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+})
+router.get('/API/1/TableOrders/Status/:status', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = `SELECT * FROM TableOrders WHERE status ="${context.params.status}";`
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+})
+router.get('/API/1/TableOrders/Tableid/:tableid', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = `SELECT * FROM TableOrders WHERE tableid ="${context.params.tableid}";`
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors[actors.length -1], null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+})
+router.post(`/API/1/Orders`, async context => {
+	console.log("/put/AddOrder/")
+	const body = await context.request.body()
+	const StaffData = await body.value
+	console.log(StaffData)
+
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	
+	if(user==username){
+		console.log('testing if this should run')
+		let sql1 =`insert into Orders(menuid,TableOrderid,status) Values('${StaffData.menuid}','${StaffData.TableOrderid}','${StaffData.details}')`
+		console.log(sql1)
+		let test = await db.query(sql1)
+		console.log('after run of sql')
+	context.response.status = 201
+	context.response.body = JSON.stringify(test, null, 2)
+	console.log('APi test 2')
+	}else{
+		context.response.status = 500
+	}
+	
+})
+router.get('/API/1/Orders', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = 'SELECT * FROM Orders;'
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
+})
+router.put('/API/1/TableOrders/:id', async context => {
+	
+	console.log('well this should show')
+	const body = await context.request.body()
+	const StaffData = await body.value
+	const sql = `UPDATE TableOrders SET status ="${StaffData.status}" WHERE id ="${context.params.id}"`
+	console.log(sql)
+	const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	context.response.status = 201
+	context.response.statusText = JSON.stringify(actors, null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
+	console.log('APi test 1')
+	console.log(context.response.body)
+	const x= JSON.stringify(actors, null, 2)
+	
+	
+	}else{
+		context.response.status = 500
+	}
+	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+})
 router.get('/', async context => {
 	const data = await Deno.readTextFile('static/index.html')
 	context.response.body = data
@@ -141,7 +313,7 @@ router.get(`/API/1/Menu/:id`, async context => {
 })
 router.get(`/API/1/Menu/Status/:status`, async context => {
 	console.log(context.params.status)
-	const sql = `SELECT * FROM menu WHERE status !=${context.params.status};`
+	const sql = `SELECT * FROM menu WHERE status =${context.params.status};`
 	const actors = await db.query(sql)
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')

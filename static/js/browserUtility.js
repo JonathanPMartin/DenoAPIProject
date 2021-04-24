@@ -263,3 +263,148 @@ async function thirdcall(data){
 	let json3 = await response3.json()
 	console.log('bellow third call')
 }
+export async function AddOrder2(data){
+	console.log('above me normaising the database')
+	data.Detials
+	data.status
+	data.tableid
+	data.time
+	data.userid
+	
+	const url4 ='/API/1/TableOrders'
+	console.log(url4)
+	const options4 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(data)
+	}
+	console.log(JSON.stringify(options4))
+	let response = await fetch(url4, options4)
+	let json4 = await response.json()
+	console.log('THIS IS ABOVE THE DATA')
+	console.log(json4)
+	//
+	const url2 = `/API/1/TableOrders`
+	const options2 = {
+		method: 'GET',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const response2 = await fetch(url2, options2)
+	let json2= await response2.json()
+	console.log(json2)
+	//data.TableOrderid=json2.id
+	let orders=JSON.parse(data.Detials)
+
+	for (let i=0;i<orders.length;i++){
+		console.log(orders[i])
+		orders[i].TableOrderid=json2.id
+		const url3 ='/API/1/Orders'
+	console.log(url3)
+	const options3 = {
+		method: 'POST',
+		headers: {
+		'Content-Type': 'application/json',
+		'Authorization': localStorage.getItem('authorization')
+		},
+		body: JSON.stringify(orders[i])
+	}
+	let response3 = await fetch(url3, options3)
+	let json3 = await response3.json()
+	}
+	console.log(orders)
+	
+	
+}
+export async function Kitchen(){
+	const url3 = `/API/1/Menu`
+	const options3 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response3 = await fetch(url3, options3)
+	const json3 = await response3.json()
+	let Menu={}
+	for (let i=0; i<json3.length;i++){
+		Menu[json3[i].id]=json3[i].MenuItem
+	}
+	const url2 = `/API/1/Orders`
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	let TableOrder={}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	const json2 = await response2.json()
+	for(let i =0;i<json2.length;i++){
+		let menuid=json2[i].menuid
+		let orderid=json2[i].TableOrderid
+		
+		if (TableOrder[json2[i].TableOrderid]==undefined){
+			let items={}
+			for(let j=1;j<21;j++){
+				items[j]=0
+			}
+			TableOrder[orderid]=items
+		}
+		//
+		let tem=TableOrder[json2[i].TableOrderid]
+		tem[json2[i].menuid]=tem[json2[i].menuid]+1
+		console.log(tem)
+		TableOrder[json2[i].TableOrderid]=tem
+	}
+	console.log('Above TableORder')
+	const url1 = `/API/1/TableOrders/Status/placed`
+	const options1 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	
+	const response1 = await fetch(url1, options1)
+	const json1=await response1.json()
+	console.log('above json1')
+	console.log(json1)
+	let Display=[]
+	
+	for(let i=0; i<json1.length; i++){
+		let time= json1[i].ordertime.substr(11, 17);
+		
+		let items = TableOrder[json1[i].id]
+		let order="Items Ordered:"
+		for(let j=1; j<21 ;j++){
+			if (items[j]!==0){
+				let tem = Menu[j]+" x"+items[j]
+				
+				if (order==="Items Ordered:"){
+					order=order+" "+tem
+				}else{
+					order=order+", "+tem
+				}
+			}
+		}
+		let body={
+			time:time,
+			id:json1[i].id,
+			items:order
+		}
+		Display.push(body)
+	}
+	return Display
+	
+}

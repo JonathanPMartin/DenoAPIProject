@@ -27,7 +27,7 @@ export async function setup() {
 	let userjob =json3.job
 	
 	
-	const url5 = `/1/GetAllOrders`
+	const url5 = `API/1/GetAllOrders`
 	const options5 = {
 		method: 'GET',
 		headers: {
@@ -115,7 +115,7 @@ export async function setup() {
 	}
 	customiseNavBar(nav)
 	//document.querySelector('form').addEventListener('submit', await uploadData)
-	console.log(localStorage.getItem('userjob'))
+	//console.log(localStorage.getItem('userjob'))
 }
 async function uploadData(event) {
 	console.log('called')

@@ -1,6 +1,6 @@
-import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct} from './browserUtility.js'
+import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct,AddOrder2} from './browserUtility.js'
 export async function setup() {
-	if(localStorage.getItem('userjob') !== 'manager')window.location.href = '#home'
+	//if(localStorage.getItem('userjob') !== 'manager')window.location.href = '#home'
 	let order="Current Order is: "
 	var today = new Date();
 	let orders=[]
@@ -224,6 +224,7 @@ export async function setup() {
 			console.log(TRIAL)
 			//fistcall(orders)
 			fistcall(TRIAL)
+			AddOrder2(TRIAL)
 			localStorage.removeItem('orders')
 			//Updload(UpdateOrder)
 			localStorage.removeItem('orderid')

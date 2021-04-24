@@ -1,5 +1,9 @@
-import { customiseNavBar } from './browserUtility.js'
+import { customiseNavBar,Kitchen } from './browserUtility.js'
 export async function setup() {
+	console.log('above Kitchen Route')
+	let test = await Kitchen()
+	console.log('above test')
+	console.log(test)
 	if(localStorage.getItem('userjob') !== 'cheff')window.location.href = '#home'
 	console.log('HOME')
 	const username = localStorage.getItem('username')
@@ -89,10 +93,16 @@ export async function setup() {
 		Orders.push(body)
 	}
 	let body=""
-	for(let i=0; i<Orders.length;i++){
+	/*for(let i=0; i<Orders.length;i++){
 		body=body+`<section><h3>Order id ${Orders[i].id} Time ${Orders[i].time}</h3>`
 		body=body+`<p>items orderd ${Orders[i].items}</p>`
 		body=body+`<input type = 'button' id ="${Orders[i].id}" value= 'ready'></section>`
+		
+	}*/
+	for(let i=0; i<test.length;i++){
+		body=body+`<section><h3>Order id ${test[i].id} Time ${test[i].time}</h3>`
+		body=body+`<p>${test[i].items}</p>`
+		body=body+`<input type = 'button' id ="${test[i].id}" value= 'ready'></section>`
 		
 	}
 	document.querySelector('form').innerHTML=body
@@ -108,7 +118,7 @@ async function order(event) {
 	console.log(test)
 	event.preventDefault()
 	let Body={status:'ready'}
-	const url20 = `/API/1/UpdateTableOrders/${test}`
+	const url20 = `/API/1/TableOrders/${test}`
 	const options20 = {
 		method: 'PUT',
 		headers: {
