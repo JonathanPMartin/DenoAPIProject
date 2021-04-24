@@ -753,7 +753,7 @@ router.put('/API/1/Tables/:id', async context => {
 	}
 })
 
-router.post('/API/1/Menu/:id', async context => {
+/*router.post('/API/1/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -776,7 +776,7 @@ router.post('/API/1/Menu/:id', async context => {
 	}
 	
 	return
-})
+})*/
 
 router.get('/API/1/TESTING', async context => {
 	console.log('in route')
@@ -794,19 +794,130 @@ router.get('/API/1/TESTING', async context => {
 router.get('/API', async context => {
 	const host = context.request.url.host
 	console.log('test')
+	let baseurl=`https://${host}/API/1`
 	const data = {
-		name: 'Movies API',
-		desc: 'a simple API to demonstrate hateos principles',
+		name: 'Website API',
+		desc: 'A list of all API Routes. where the name indicates the http request and what it is interacting with',
 		links: [
 			{
-				name: 'actors',
-				desc: 'a list of actors',
-				href: `https://${host}/1/actors`,
+				name: 'get accounts',
+				desc: 'checks to see if the account info is correct',
+				href: `${baseurl}/accounts`,
 			},
 			{
-				name: 'movies',
-				desc: 'a list of movies',
-				href: `https://${host}/1/movies`,
+				name: 'post accounts',
+				desc: 'adds a new account to the table',
+				href: `${baseurl}/accounts`,
+			},
+			{
+				name: ' get accounts',
+				desc: 'filters accounts by user where user = :user',
+				href: `${baseurl}/Accounts/User/:user`
+			},
+			{
+				name: ' get accounts',
+				desc: 'filters accounts by user where id = :id',
+				href: `${baseurl}/Accounts/ID/:id`
+			},
+			{
+				name: ' get menu',
+				desc: 'gets all menu items',
+				href: `${baseurl}/Menu`
+			},
+			{
+				name: ' get menu',
+				desc: 'gets Menu where id = :id',
+				href: `${baseurl}/Menu/:id`
+			},
+			{
+				name: ' get menu',
+				desc: 'gets Menu by status where status = :status',
+				href: `${baseurl}/Menu/Status/:status`
+			},
+			{
+				name: ' put Menu',
+				desc: 'updates Menu status where id = :id',
+				href: `${baseurl}/Menu/:id`
+			},
+			{
+				name: ' post AddOrder',
+				desc: 'Adds new item to OrderDetials',
+				href: `${baseurl}/AddOrder`
+			},
+			{
+				name: ' post AddTableOrder',
+				desc: 'Adds new item to TableOrderDetials',
+				href: `${baseurl}/AddTableOrder`
+			},
+			{
+				name: ' get orders',
+				desc: 'Gets the last Order From OrderDetails',
+				href: `${baseurl}/GetOrder`
+			},
+			{
+				name: ' get orders',
+				desc: 'Gets All items From OrderDetails',
+				href: `${baseurl}/GetAllOrders`
+			},
+			{
+				name: ' get Table Orders',
+				desc: 'Gets All items From TableOrderDetials',
+				href: `${baseurl}/GetAllTableOrders`
+			},
+			{
+				name: ' get Table Orders',
+				desc: 'Gets TableOrdersDetails where status = :status',
+				href: `${baseurl}/GetTableOrders/:status`
+			},
+			{
+				name: ' put Table Orders',
+				desc: 'Updates status of TableOrderDetails where id = :id',
+				href: `${baseurl}/UpdateTableOrders/:id`
+			},
+			{
+				name: ' delete Table Orders',
+				desc: 'Removes ORder From TableOrderDetails where id= :id',
+				href: `${baseurl}/DeleteTableOrders/:id`
+			},
+			{
+				name: ' delete Orders',
+				desc: 'Removes Order From OrderDetails where id = :id',
+				href: `${baseurl}/DeleteOrders/:id`
+			},
+			{
+				name: ' get Staff',
+				desc: 'Gets Staff where id =:id',
+				href: `${baseurl}/Staff/:id`
+			},
+			{
+				name: ' get Staff',
+				desc: 'Gets the members of Staff Online',
+				href: `${baseurl}/Online/Staff`
+			},
+			{
+				name: ' put Staff',
+				desc: 'Updates Job of Staff where id =:id',
+				href: `${baseurl}/Staff/Set/Job/:id`
+			},
+			{
+				name: ' put Staff',
+				desc: 'Updates status of staff whre id =:id',
+				href: `${baseurl}/Staff/Status/:id`
+			},
+			{
+				name: ' post Staff',
+				desc: 'Adds a new member of staff Where Staffid=:id',
+				href: `${baseurl}/Staff/New/:id`
+			},
+			{
+				name: ' get Table',
+				desc: 'Gets table by status where status=:Status',
+				href: `${baseurl}/Table/:Status`
+			},
+			{
+				name: ' put Tables',
+				desc: 'Updates the status of the table where the id is :id',
+				href: `${baseurl}/Tables/:id`
 			}
 		]
 	}
