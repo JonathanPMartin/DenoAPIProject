@@ -1,7 +1,9 @@
 /* home.js */
-import { customiseNavBar } from './browserUtility.js'
+import { customiseNavBar,Home } from './browserUtility.js'
 export async function setup() {
 	console.log('HOME')
+	console.log('above testing of the new route being added')
+	let result=await Home()
 	if (localStorage.getItem('redirect')!= undefined){
 		let tem=localStorage.getItem('redirect')
 		console.log(tem)
@@ -75,6 +77,7 @@ export async function setup() {
 		}
 	}
 	console.log(tableorderdetails)
+	tableorderdetails=result
 	for(let i = 0; i <tableorderdetails.length; i++){
 		var table = document.getElementById("myTable");
 

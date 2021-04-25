@@ -408,3 +408,161 @@ export async function Kitchen(){
 	return Display
 	
 }
+export async function Checkout(){
+	const url3 = `/API/1/Menu`
+	const options3 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response3 = await fetch(url3, options3)
+	const json3 = await response3.json()
+	let Menu={}
+	let prices={}
+	for (let i=0; i<json3.length;i++){
+		Menu[json3[i].id]=json3[i].MenuItem
+		prices[json3[i].id]=json3[i].price
+	}
+	const url2 = `/API/1/Orders`
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	let TableOrder={}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	const json2 = await response2.json()
+	
+	for(let i =0;i<json2.length;i++){
+		let menuid=json2[i].menuid
+		let orderid=json2[i].TableOrderid
+		
+		if (TableOrder[json2[i].TableOrderid]==undefined){
+			
+			let items={}
+			for(let j=1;j<21;j++){
+				items[j]=0
+			}
+			TableOrder[orderid]=items
+		}
+		//
+		let tem=TableOrder[json2[i].TableOrderid]
+		tem[json2[i].menuid]=tem[json2[i].menuid]+1
+		console.log(tem)
+		TableOrder[json2[i].TableOrderid]=tem
+	}
+	console.log('Above TableORder')
+	const url1 = `/API/1/TableOrders/Status/finished`
+	const options1 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	
+	const response1 = await fetch(url1, options1)
+	const json1=await response1.json()
+	console.log('above json1')
+	console.log(json1)
+	let Display={}
+	
+	for(let i=0; i<json1.length; i++){
+		let time= json1[i].ordertime.substr(11, 17);
+		
+		let items = TableOrder[json1[i].id]
+		let order="Items Ordered:"
+		let price=0
+		
+		for(let j=1; j<21 ;j++){
+			if (items[j]!==0){
+				let tem = Menu[j]+" x"+items[j]
+				
+				if (order==="Items Ordered:"){
+					order=order+" "+tem
+				}else{
+					order=order+", "+tem
+				}
+				price=price+prices[j]
+			}
+			
+		}
+		let body={
+			time:time,
+			id:json1[i].id,
+			items:order
+		}
+		console.log(price)
+		body.price=price
+		console.log(body)
+		Display[json1[i].id]=body
+	}
+	console.log('Above Display')
+	console.log(Display)
+	return Display
+	
+}
+export async function Home(){
+const url2 = `/API/1/Orders`
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	let TableOrder={}
+	console.log('above call on form')
+	const response2 = await fetch(url2, options2)
+	const json2 = await response2.json()
+	console.log(json2)
+	for(let i =0;i<json2.length;i++){
+		let menuid=json2[i].menuid
+		let orderid=json2[i].TableOrderid
+		
+		if(TableOrder[json2[i].TableOrderid]==undefined){
+			TableOrder[json2[i].TableOrderid]=1
+		}else{
+			TableOrder[json2[i].TableOrderid]=TableOrder[json2[i].TableOrderid]+1
+		}
+	}
+	const url4 = `/API/1/TableOrders/All`
+	const options4 = {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	console.log('above call on form')
+	const response4 = await fetch(url4, options4)
+	let tableorders = await response4.json()
+	console.log(tableorders)
+	let tableorderdetails=[]
+	for(let i = 0; i <tableorders.length; i++){
+		let time=tableorders[i].ordertime
+		let time2=time.substr(11, 17);
+		let places=TableOrder[tableorders[i].id]
+		let status=tableorders[i].status
+		let body={
+			table:tableorders[i].tableid,
+			places:places,
+			time:time2,
+			status:status
+		}
+		if(status==='ready'){
+			console.log(status)
+			tableorderdetails.push(body)
+		}else if(status==='placed'){
+			console.log(status)
+			tableorderdetails.push(body)
+		}
+	}
+	return tableorderdetails
+}
