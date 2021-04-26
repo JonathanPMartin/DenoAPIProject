@@ -8,7 +8,7 @@ import { login } from './modules/accounts.js'
 
 import router from './api.js'
 
-const port = 8080||process.env.PORT
+const port = 80||process.env.PORT
 
 const app = new Application()
 
