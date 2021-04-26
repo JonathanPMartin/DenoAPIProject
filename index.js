@@ -8,7 +8,7 @@ import { login } from './modules/accounts.js'
 
 import router from './api.js'
 
-const port = 8080
+const port = 8080||process.env.PORT
 
 const app = new Application()
 
@@ -61,4 +61,4 @@ app.use(errorHandler)
 
 app.addEventListener('listen', ({ port }) => console.log(`listening on port: ${port}`) )
 
-await app.listen(process.env.PORT ||{ port })
+await app.listen({ port })
