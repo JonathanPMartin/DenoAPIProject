@@ -5,7 +5,7 @@ export async function setup() {
 	const username = localStorage.getItem('username')
 	console.log(localStorage)
 	console.log(`username: ${username}`)
-	//if(localStorage.getItem('userjob') !== 'till')window.location.href = '#home'
+	if(localStorage.getItem('userjob') !== 'till')window.location.href = '#home'
 	if(username === null) window.location.href = '#login'
 	document.querySelector('h1').innerText = 'Home Page'
 	const nav = ['logout', 'foo']

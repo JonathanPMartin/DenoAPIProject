@@ -10,7 +10,16 @@ const router = new Router()
 //added this line to have a diffrence
 // the routes defined here
 router.post(`/API/1/TableOrders`, async context => {
-	console.log("/put/AddOrder/")
+	let expected={
+		tableid:'num of tableid',
+		userid:'num of userid',
+		time:'string i.e. 26:04:2021_14:04:36',
+		status:'ready'
+	}
+	console.log("/post/API/1/TableOrders")
+	
+	console.log('example below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -109,7 +118,14 @@ router.get('/API/1/TableOrders/Tableid/:tableid', async context => {
 	}
 })
 router.post(`/API/1/Orders`, async context => {
-	console.log("/put/AddOrder/")
+	let expected={
+		menuid:'num of menuid',
+		TableOrderid:'num of TableOrderid',
+		status:'status of order i.e. Starter'
+	}
+	console.log("/post/API/1/Orders/")
+	console.log('demo below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -154,8 +170,12 @@ router.get('/API/1/Orders', async context => {
 	}
 })
 router.put('/API/1/TableOrders/:id', async context => {
-	
-	console.log('well this should show')
+	let expected={
+		status:'new status i.e. placed'
+	}
+	console.log('/put/API/1/TableOrders/:id')
+	console.log('expected below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const sql = `UPDATE TableOrders SET status ="${StaffData.status}" WHERE id ="${context.params.id}"`
@@ -185,7 +205,45 @@ router.get('/', async context => {
 	const data = await Deno.readTextFile('static/index.html')
 	context.response.body = data
 })
+router.delete("/API/1/TableOrders/:id", async context => {
+	const id = context.params.id
+	console.log(id)
+	const sql2=`DELETE FROM TableOrderDetails WHERE id = "${id}"`
+	console.log(sql2)
 
+	const data = {status: 200, msg: `genre ${id} updated to welp`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	console.log('test')
+	await db.query(sql2)
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
+router.delete("/API/1/Orders/:TableOrderid", async context => {
+	const id = context.params.TableOrderid
+	console.log(id)
+	const sql2=`DELETE FROM Orders WHERE TableOrderid = "${id}"`
+	const data = {status: 200, msg: `genre ${id} updated to welp`}
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+	await db.query(sql2)
+	context.response.status = 201
+	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 500
+	}
+})
 router.get('/API/1/accounts', async context => {
 	console.log('GET /accounts')
 	const token = context.request.headers.get('Authorization')
@@ -205,6 +263,12 @@ router.get('/API/1/accounts', async context => {
 
 router.post('/API/1/accounts', async context => {
 	console.log('POST /accounts')
+	let expected={
+		user:'username of new user',
+		pass:'password of new user'
+	}
+	console.log('demo below')
+	console.log(expected)
 	const body  = await context.request.body()
 	const data = await body.value
 	console.log(data)
@@ -241,15 +305,17 @@ router.get(`/API/1/Accounts/User/:user`, async context => {
 	
 	let x = context.params.user
 	let test=await User(x)
-	console.log(test)
+	let test2={
+		id:test[0].id,
+		user:test[0].user
+		
+	}
 	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const { user, pass } = credentials
-	console.log(user===username)
+	console.log('above token')
+	console.log(token)
 	if(token==='3.14159265358979323'){
 	context.response.status = 201
-	context.response.body = JSON.stringify(test[0], null, 2)
+	context.response.body = JSON.stringify(test2, null, 2)
 	}else{
 		console.log()
 	}
@@ -332,6 +398,11 @@ router.get(`/API/1/Menu/Status/:status`, async context => {
 })
 router.put('/API/1/Menu/:id', async context => {
 	console.log("/put/Menu/:id")
+	let expected={
+		status:'new status i.e. NA'
+	}
+	console.log('demo below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData.status)
@@ -451,8 +522,11 @@ router.post('/TableOrder/:id', async context => {
 	}
 })*/
 //
+
+//note routes below where before database was noramalised to third normal form and work with the old tables these routes remain in case needed by another devloper, they are not used in the product itself
 router.post('/API/1/AddOrder', async context => {
 	console.log("/put/AddOrder/")
+	console.log('warning you are using an outted route please consider checking route at /API')
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -478,6 +552,7 @@ router.post('/API/1/AddOrder', async context => {
 })
 router.post('/API/1/AddTableOrder', async context => {
 	console.log("/put/AddTableOrder/")
+	console.log('warning you are using an outted route please consider checking route at /API')
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -504,6 +579,7 @@ router.post('/API/1/AddTableOrder', async context => {
 })
 //below route may not be called 
 router.get('/API/1/GetOrder', async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	console.log('well this should show')
 	const sql = `SELECT * FROM OrderDetails`
 	const actors = await db.query(sql)
@@ -529,6 +605,7 @@ router.get('/API/1/GetOrder', async context => {
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.get('/API/1/GetAllOrders', async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	console.log('well this should show')
 	const sql = `SELECT * FROM OrderDetails`
 	const actors = await db.query(sql)
@@ -553,6 +630,7 @@ router.get('/API/1/GetAllOrders', async context => {
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.get('/API/1/GetAllTableOrders', async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	console.log('well this should show')
 	const sql = `SELECT * FROM TableOrderDetails`
 	const actors = await db.query(sql)
@@ -577,6 +655,7 @@ router.get('/API/1/GetAllTableOrders', async context => {
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.get('/API/1/GetTableOrders/:status', async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	
 	console.log('well this should show')
 	const sql = `SELECT * FROM TableOrderDetails where status ="${context.params.status}"`
@@ -603,7 +682,7 @@ router.get('/API/1/GetTableOrders/:status', async context => {
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
 router.put('/API/1/UpdateTableOrders/:id', async context => {
-	
+	console.log('warning you are using an outted route please consider checking route at /API')
 	console.log('well this should show')
 	const body = await context.request.body()
 	const StaffData = await body.value
@@ -630,7 +709,9 @@ router.put('/API/1/UpdateTableOrders/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
+
 router.delete("/API/1/DeleteTableOrders/:id", async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	const id = context.params.id
 	console.log(id)
 	const sql2=`DELETE FROM TableOrderDetails WHERE id = "${id}"`
@@ -652,6 +733,7 @@ router.delete("/API/1/DeleteTableOrders/:id", async context => {
 	}
 })
 router.delete("/API/1/DeleteOrders/:id", async context => {
+	console.log('warning you are using an outted route please consider checking route at /API')
 	const id = context.params.id
 	console.log(id)
 	const sql2=`DELETE FROM OrderDetails WHERE id = "${id}"`
@@ -822,7 +904,12 @@ router.get('/API/1/Online/Staff', async context => {
 	}
 	})
 router.put('/API/1/Staff/Set/Job/:id', async context => {
+	let expected ={
+		job:'new job i.e. cheff'
+	}
 	console.log("/put/Staff/Set/Job/:id")
+	console.log('demo below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
@@ -845,7 +932,12 @@ router.put('/API/1/Staff/Set/Job/:id', async context => {
 	}
 })
 router.put('/API/1/Staff/Stauts/:id', async context => {
+	let expected ={
+		status:'new status i.e. Online'
+	}
 	console.log("/put/Staff/Job/:id")
+	console.log('demo below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
@@ -867,6 +959,12 @@ router.put('/API/1/Staff/Stauts/:id', async context => {
 	}
 })
 router.post('/API/1/Staff/New/:id',async context => {
+	let expected ={
+		staffid:'value of staffid'
+	}
+	console.log('/post/API/1/Staff/New/:id')
+	console.log('demo below')
+	console.log(expected)
 	const sql=`insert into staff(job, staffid, status) values("None",${context.params.id},"Offline");`
 	await db.query(sql)
 	const data = {status: 200, msg: `new data ${context.params.id} created`}
@@ -901,7 +999,12 @@ router.get('/API/1/Table/:Status', async context => {
 	}
 	})
 router.put('/API/1/Tables/:id', async context => {
+	let expected ={
+		status:'new status i.e. NA'
+	}
 	console.log("/put/Tables/:id")
+	console.log('example below')
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -969,7 +1072,7 @@ router.get('/API', async context => {
 	let baseurl=`https://${host}/API/1`
 	const data = {
 		name: 'Website API',
-		desc: 'A list of all API Routes. where the name indicates the http request and what it is interacting with',
+		desc: 'A list of all API Routes. where the name indicates the http request. if a href has /:item at its end it indicates that the link its end is expecting a input i.e. /Accounts/ID/1 is an exsample request for /Accounts/ID/:id  the API uses BASIC authentication unless otherwise specified',
 		links: [
 			{
 				name: 'get accounts',
@@ -978,12 +1081,12 @@ router.get('/API', async context => {
 			},
 			{
 				name: 'post accounts',
-				desc: 'adds a new account to the table',
+				desc: 'adds a new account to the table uses pi for authorisation header',
 				href: `${baseurl}/accounts`,
 			},
 			{
 				name: ' get accounts',
-				desc: 'filters accounts by user where user = :user',
+				desc: 'filters accounts by user where user = :user uses pi for authorisation header',
 				href: `${baseurl}/Accounts/User/:user`
 			},
 			{
@@ -1012,49 +1115,49 @@ router.get('/API', async context => {
 				href: `${baseurl}/Menu/:id`
 			},
 			{
-				name: ' post AddOrder',
-				desc: 'Adds new item to OrderDetials',
-				href: `${baseurl}/AddOrder`
+				name: ' post TableOrders',
+				desc: 'Adds a new TalbeOrder to the Table TableOrders',
+				href: `${baseurl}/TableOrders`
 			},
 			{
-				name: ' post AddTableOrder',
-				desc: 'Adds new item to TableOrderDetials',
-				href: `${baseurl}/AddTableOrder`
+				name: ' get TableOrders',
+				desc: 'returns the last item from the Table TableOrders',
+				href: `${baseurl}/TableOrders`
 			},
 			{
-				name: ' get orders',
-				desc: 'Gets the last Order From OrderDetails',
-				href: `${baseurl}/GetOrder`
+				name: ' get TableOrders',
+				desc: 'returns all items from the Table TableOrders',
+				href: `${baseurl}/TableOrders/All`
 			},
 			{
-				name: ' get orders',
-				desc: 'Gets All items From OrderDetails',
-				href: `${baseurl}/GetAllOrders`
+				name: ' get TableOrders',
+				desc: 'returns items from the Table TableOrders where tableid = :tableid',
+				href: `${baseurl}/TableOrders/Tableid/:tableid`
 			},
 			{
-				name: ' get Table Orders',
-				desc: 'Gets All items From TableOrderDetials',
-				href: `${baseurl}/GetAllTableOrders`
+				name: ' post Orders',
+				desc: 'adds a new order into the table Orders',
+				href: `${baseurl}/Orders`
 			},
 			{
-				name: ' get Table Orders',
-				desc: 'Gets TableOrdersDetails where status = :status',
-				href: `${baseurl}/GetTableOrders/:status`
+				name: ' get Orders',
+				desc: 'gets all items into the table Orders',
+				href: `${baseurl}/Orders`
 			},
 			{
-				name: ' put Table Orders',
-				desc: 'Updates status of TableOrderDetails where id = :id',
-				href: `${baseurl}/UpdateTableOrders/:id`
+				name: ' put TableOrders',
+				desc: 'updates the status of TableOrders where id = :id',
+				href: `${baseurl}/TableOrders/:id`
 			},
 			{
-				name: ' delete Table Orders',
-				desc: 'Removes ORder From TableOrderDetails where id= :id',
-				href: `${baseurl}/DeleteTableOrders/:id`
+				name: ' delete TableOrders',
+				desc: 'deletes items from TableOrders where id = :id',
+				href: `${baseurl}/TableOrders/:id`
 			},
 			{
 				name: ' delete Orders',
-				desc: 'Removes Order From OrderDetails where id = :id',
-				href: `${baseurl}/DeleteOrders/:id`
+				desc: 'deletes items from Orders where TableOrderid = :TableOrderid',
+				href: `${baseurl}/TableOrders/:TableOrderid`
 			},
 			{
 				name: ' get Staff',
@@ -1078,7 +1181,7 @@ router.get('/API', async context => {
 			},
 			{
 				name: ' post Staff',
-				desc: 'Adds a new member of staff Where Staffid=:id',
+				desc: 'Adds a new member of staff Where Staffid=:id uses pi for authorisation header',
 				href: `${baseurl}/Staff/New/:id`
 			},
 			{

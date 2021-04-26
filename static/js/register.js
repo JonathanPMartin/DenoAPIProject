@@ -29,7 +29,7 @@ async function register() {
 	//
 	console.log('above test')
 	console.log(data.user)
-	const url2 = `/Accounts/User/${data.user}`
+	const url2 = `/API/1/Accounts/User/${data.user}`
 	const options2 = {
 		method: 'GET',
 		headers: {

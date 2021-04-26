@@ -2,9 +2,9 @@ import { customiseNavBar,Kitchen } from './browserUtility.js'
 export async function setup() {
 	console.log('above Kitchen Route')
 	let test = await Kitchen()
+	if(localStorage.getItem('userjob') !== 'cheff')window.location.href = '#home'
 	console.log('above test')
 	console.log(test)
-	if(localStorage.getItem('userjob') !== 'cheff')window.location.href = '#home'
 	console.log('HOME')
 	const username = localStorage.getItem('username')
 	console.log(localStorage)
@@ -133,6 +133,7 @@ async function order(event) {
 	const response20 = await fetch(url20, options20)
 	console.log(response20)
 	const json20 = await response20.json()
+	console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
 	console.log(json20)
 	localStorage.setItem('redirect','#Kitchen')
 	window.location.href = '#home'
