@@ -8,7 +8,8 @@ import { login } from './modules/accounts.js'
 
 import router from './api.js'
 
-const port =process.env.PORT || 8080
+const port = 8080
+
 const app = new Application()
 
 // checks if file exists
@@ -60,4 +61,4 @@ app.use(errorHandler)
 
 app.addEventListener('listen', ({ port }) => console.log(`listening on port: ${port}`) )
 
-await app.listen({ port })
+await app.listen(process.env.PORT ||{ port })
