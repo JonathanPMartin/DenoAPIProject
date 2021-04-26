@@ -1004,7 +1004,7 @@ router.put('/API/1/Tables/:id', async context => {
 	}
 	console.log("/put/Tables/:id")
 	console.log('example below')
-	console.log(expected)
+	console.log(expectedgit )
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
