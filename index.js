@@ -8,7 +8,7 @@ import { login } from './modules/accounts.js'
 
 import router from './api.js'
 
-const port = 80||process.env.PORT
+const port = 8080
 
 const app = new Application()
 
@@ -21,7 +21,7 @@ async function fileExists(path) {
     if (e && e instanceof Deno.errors.NotFound) {
       return false
     } else {
-		console.log('so something went wrong and you are putting this code here because you assume this is what is running')
+		console.log('so something went wrong and you are putting this code here be')
       throw e
     }
   }
