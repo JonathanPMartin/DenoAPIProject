@@ -5,11 +5,13 @@ import { Application, Status, send } from 'https://deno.land/x/oak/mod.ts'
 // status codes https://deno.land/std@0.82.0/http/http_status.ts
 import { setHeaders } from './modules/util.js'
 import { login } from './modules/accounts.js'
-
+import * as flags from "https://deno.land/std/flags/mod.ts"
 import router from './api.js'
-
-const port = 8080
-
+const{args}=Deno
+const Normalport = 8080
+const Seccondport = flags.parse(args).port
+console.log(Seccondport)
+const port = Seccondport ? Number(Seccondport ):Normalport
 const app = new Application()
 
 // checks if file exists
