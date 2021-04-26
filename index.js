@@ -21,6 +21,7 @@ async function fileExists(path) {
     if (e && e instanceof Deno.errors.NotFound) {
       return false
     } else {
+		console.log('so something went wrong and you are putting this code here because you assume this is what is running')
       throw e
     }
   }
