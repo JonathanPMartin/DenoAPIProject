@@ -66,8 +66,11 @@ export async function setup() {
 		let time2=time.substr(11, 17);
 		let places=orderdetials[tableorders[i].orderid]
 		let status=tableorders[i].status
+		let tem=tableorders[i].tableid
+		tem=tem+6
+		tem=tem/10
 		let body={
-			table:tableorders[i].tableid,
+			table:tem,
 			places:places,
 			time:time2,
 			status:status
@@ -90,7 +93,10 @@ export async function setup() {
 		var cell3 = row.insertCell(2);
 		var cell4 = row.insertCell(3);
 		// Add some text to the new cells:
-		cell1.innerHTML = tableorderdetails[i].table;
+		let tem = tableorderdetails[i].table
+		tem=tem+6
+		tem=tem/10
+		cell1.innerHTML = tem;
 		cell2.innerHTML = tableorderdetails[i].places;
 		cell3.innerHTML = tableorderdetails[i].time;
 		cell4.innerHTML = tableorderdetails[i].status;

@@ -317,10 +317,11 @@ router.get(`/API/1/Accounts/User/:user`, async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(test2, null, 2)
 	}else{
-		console.log()
+		console.log('yer problem')
 	}
 	
 })
+
 router.get(`/API/1/Accounts/ID/:id`, async context => {
 	
 	let x = context.params.id
@@ -912,6 +913,7 @@ router.put('/API/1/Staff/Set/Job/:id', async context => {
 	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
+	console.log(StaffData)
 	const id = context.params.id
 	const sql = `UPDATE staff SET job = "${StaffData.job}" WHERE staffid = ${id}`
 	console.log(sql)
@@ -965,18 +967,21 @@ router.post('/API/1/Staff/New/:id',async context => {
 	console.log('/post/API/1/Staff/New/:id')
 	console.log('demo below')
 	console.log(expected)
-	const sql=`insert into staff(job, staffid, status) values("None",${context.params.id},"Offline");`
-	await db.query(sql)
-	const data = {status: 200, msg: `new data ${context.params.id} created`}
-	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const { user, pass } = credentials
-	console.log(user===username)
+	const sql=`insert into staff(job, staffid, status) values("None",${context.params.id},"Offline")`
+	
+	const data = {we:'did it'}
+	const token = context.request.headers.get('Authorization')||'fail'
+	console.log('above token')
+	console.log(token)
+	console.log(token==='3.14159265358979323')
 	if(token==='3.14159265358979323'){
+		console.log('test')
+		console.log(sql)
+		await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
+		
 		context.response.status = 500
 	}
 } )
@@ -1004,7 +1009,7 @@ router.put('/API/1/Tables/:id', async context => {
 	}
 	console.log("/put/Tables/:id")
 	console.log('example below')
-	console.log(expectedgit )
+	console.log(expected)
 	const body = await context.request.body()
 	const StaffData = await body.value
 	console.log(StaffData)
@@ -1197,6 +1202,25 @@ router.get('/API', async context => {
 		]
 	}
 	context.response.body = JSON.stringify(data, null, 2)
+})
+router.get('/API/1/TableTest', async context => {
+	console.log('why me')
+	
+	const host = context.request.url.host
+	const sql = 'show tables;'
+	const actors = await db.query(sql)
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const { user, pass } = credentials
+	console.log(user===username)
+	if(user==username){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 201
+		context.response.body = JSON.stringify('fail', null, 2)
+	}
 })
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')

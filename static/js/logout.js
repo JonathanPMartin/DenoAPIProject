@@ -8,7 +8,7 @@ export async function setup() {
 	}
 	const url = `/API/1/Staff/Stauts/${localStorage.getItem('staffid')}`
 	const options = {
-		method: 'POST',
+		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
 			'Authorization': localStorage.getItem('authorization')

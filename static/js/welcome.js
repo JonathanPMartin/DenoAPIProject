@@ -22,10 +22,13 @@ export async function setup() {
 	console.log(json)
 	for (let i = 0; i < json.length; i++) {
 		let id=json[i].id
+		let display=id+6
+		display=display/10
+		display=display.toString()
 		id=id.toString()
 		let seats =json[i].seats
 		seats=seats.toString()
-		let tem= "Table:"+id+" Seats:"+seats
+		let tem= "Table:"+display+" Seats:"+seats
 		let option = document.createElement("option");
 		console.log(tem)
 		option = document.createElement("option");

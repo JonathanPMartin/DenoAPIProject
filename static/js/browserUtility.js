@@ -355,7 +355,7 @@ export async function Kitchen(){
 		
 		if (TableOrder[json2[i].TableOrderid]==undefined){
 			let items={}
-			for(let j=1;j<21;j++){
+			for(let j=4;j<198;j=j+10){
 				items[j]=0
 			}
 			TableOrder[orderid]=items
@@ -387,7 +387,7 @@ export async function Kitchen(){
 		
 		let items = TableOrder[json1[i].id]
 		let order="Items Ordered:"
-		for(let j=1; j<21 ;j++){
+		for(let j=4;j<198;j=j+10){
 			if (items[j]!==0){
 				let tem = Menu[j]+" x"+items[j]
 				
@@ -446,7 +446,7 @@ export async function Checkout(){
 		if (TableOrder[json2[i].TableOrderid]==undefined){
 			
 			let items={}
-			for(let j=1;j<21;j++){
+			for(let j=4;j<198;j=j+10){
 				items[j]=0
 			}
 			TableOrder[orderid]=items
@@ -480,7 +480,7 @@ export async function Checkout(){
 		let order="Items Ordered:"
 		let price=0
 		
-		for(let j=1; j<21 ;j++){
+		for(let j=4;j<198;j=j+10){
 			if (items[j]!==0){
 				let tem = Menu[j]+" x"+items[j]
 				

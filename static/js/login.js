@@ -30,7 +30,7 @@ async function login() {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization':token
+					'Authorization':'3.14159265358979323'
 				},
 			}
 			console.log('above call on form')

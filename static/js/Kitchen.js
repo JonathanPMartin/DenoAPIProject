@@ -77,7 +77,7 @@ export async function setup() {
 		let id=json4[i].id
 		let time= json4[i].ordertime.substr(11, 17);
 		let tem=orderdetials[json4[i].orderid]
-		for(let j=1;j<21;j++){
+		for(let j=4;j<198;j=j+10){
 			if(tem[j] !=0){
 				
 				let tem2=Menu[j]+":"+tem[j]
@@ -100,6 +100,7 @@ export async function setup() {
 		
 	}*/
 	for(let i=0; i<test.length;i++){
+		let tem= test[i].id
 		body=body+`<section><h3>Order id ${test[i].id} Time ${test[i].time}</h3>`
 		body=body+`<p>${test[i].items}</p>`
 		body=body+`<input type = 'button' id ="${test[i].id}" value= 'ready'></section>`

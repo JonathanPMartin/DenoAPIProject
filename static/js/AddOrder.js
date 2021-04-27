@@ -1,6 +1,6 @@
 import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct,AddOrder2} from './browserUtility.js'
 export async function setup() {
-	if(localStorage.getItem('userjob') !== 'manager')window.location.href = '#home'
+	if(localStorage.getItem('userjob') !== 'server')window.location.href = '#home'
 	let order="Current Order is: "
 	var today = new Date();
 	let orders=[]
@@ -130,7 +130,10 @@ export async function setup() {
 	
 	for (let i = 0; i < json2.length; i++) {
 		let button = document.createElement("button");
-		button.innerHTML = json2[i].id;
+		let test=json2[i].id
+		test=test+6
+		test=test/10
+		button.innerHTML = test;
 		button.class='.button'
 		button.id='test'
 		let body = document.getElementsByName("div")[0]
@@ -223,7 +226,7 @@ export async function setup() {
 			TRIAL.tableid=tableid
 			console.log(TRIAL)
 			//fistcall(orders)
-			fistcall(TRIAL)
+			//fistcall(TRIAL)
 			AddOrder2(TRIAL)
 			localStorage.removeItem('orders')
 			//Updload(UpdateOrder)
