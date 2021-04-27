@@ -346,6 +346,7 @@ router.get('/API/1/Menu', async context => {
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM menu;'
 	const actors = await db.query(sql)
+	console.log(actors)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
