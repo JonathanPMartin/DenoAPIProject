@@ -75,7 +75,6 @@ async function uploadData(event) {
 		job:Job
 	}
 	console.log(JSON.stringify(Body))
-	const file = document.querySelector('input[name="file"]').files[0]
 	
 	
 	const url = `/API/1/Staff/Set/Job/${id}`
