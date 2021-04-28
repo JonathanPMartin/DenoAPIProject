@@ -83,8 +83,8 @@ function sleepFor( sleepDuration ){
   while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
 }
 
-export function sleepThenAct(){
-  sleepFor(2000);
+export function sleepThenAct(dur){
+  sleepFor(dur);
   console.log("hello js sleep !");
 }
 export async function trial(data){
@@ -284,6 +284,7 @@ export async function AddOrder2(data){
 	console.log(JSON.stringify(options4))
 	let response = await fetch(url4, options4)
 	let json4 = await response.json()
+	console.log('above POST REQUEST for TableOrders')
 	console.log('THIS IS ABOVE THE DATA')
 	console.log(json4)
 	//
@@ -300,7 +301,7 @@ export async function AddOrder2(data){
 	console.log(json2)
 	//data.TableOrderid=json2.id
 	let orders=JSON.parse(data.Detials)
-
+	let lastorder=''
 	for (let i=0;i<orders.length;i++){
 		console.log(orders[i])
 		orders[i].TableOrderid=json2.id
@@ -316,12 +317,25 @@ export async function AddOrder2(data){
 	}
 	let response3 = await fetch(url3, options3)
 	let json3 = await response3.json()
+	console.log('ABOVE POST REQUEST FOR Orders')
+	console.log(json3)
+	lastorder=json3
 	}
 	console.log(orders)
-	
-	
+	return lastorder
 }
 export async function Kitchen(){
+	const envURl='/Enivorment'
+	const envOptions={
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const envResponce=await fetch(envURl, envOptions)
+	const envDetails=await envResponce.json()
+	const env=envDetails.test !=='/home/codio'
 	const url3 = `/API/1/Menu`
 	const options3 = {
 		method: 'GET',
@@ -355,8 +369,14 @@ export async function Kitchen(){
 		
 		if (TableOrder[json2[i].TableOrderid]==undefined){
 			let items={}
+			if (env){
 			for(let j=4;j<198;j=j+10){
 				items[j]=0
+			}
+			}else{
+				for(let j=1;j<21;j=j+1){
+				items[j]=0
+			}
 			}
 			TableOrder[orderid]=items
 		}
@@ -381,12 +401,13 @@ export async function Kitchen(){
 	console.log('above json1')
 	console.log(json1)
 	let Display=[]
-	
+	let times={}
 	for(let i=0; i<json1.length; i++){
 		let time= json1[i].ordertime.substr(11, 17);
 		
 		let items = TableOrder[json1[i].id]
 		let order="Items Ordered:"
+		if(env){
 		for(let j=4;j<198;j=j+10){
 			if (items[j]!==0){
 				let tem = Menu[j]+" x"+items[j]
@@ -398,17 +419,50 @@ export async function Kitchen(){
 				}
 			}
 		}
+	}else{
+		for(let j=1;j<21;j=j+1){
+			if (items[j]!==0){
+				let tem = Menu[j]+" x"+items[j]
+				
+				if (order==="Items Ordered:"){
+					order=order+" "+tem
+				}else{
+					order=order+", "+tem
+				}
+			}
+		}
+	}
 		let body={
 			time:time,
 			id:json1[i].id,
 			items:order
 		}
-		Display.push(body)
+		times[time]=body
+		
+	}
+	console.log('times')
+	console.log(times)
+	let keys= Object.keys(times)
+	keys=keys.sort()
+	console.log(keys)
+	for(let j=0;j<keys.length;j++){
+		Display.push(times[keys[j]])
 	}
 	return Display
 	
 }
 export async function Checkout(){
+	const envURl='/Enivorment'
+	const envOptions={
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const envResponce=await fetch(envURl, envOptions)
+	const envDetails=await envResponce.json()
+	const env=envDetails.test !=='/home/codio'
 	const url3 = `/API/1/Menu`
 	const options3 = {
 		method: 'GET',
@@ -446,11 +500,18 @@ export async function Checkout(){
 		if (TableOrder[json2[i].TableOrderid]==undefined){
 			
 			let items={}
+			if (env){
 			for(let j=4;j<198;j=j+10){
 				items[j]=0
 			}
+			}else{
+				for(let j=1;j<21;j=j+1){
+					items[j]=0
+				}
+			}
 			TableOrder[orderid]=items
 		}
+	
 		//
 		let tem=TableOrder[json2[i].TableOrderid]
 		tem[json2[i].menuid]=tem[json2[i].menuid]+1
@@ -479,7 +540,7 @@ export async function Checkout(){
 		let items = TableOrder[json1[i].id]
 		let order="Items Ordered:"
 		let price=0
-		
+		if (env){
 		for(let j=4;j<198;j=j+10){
 			if (items[j]!==0){
 				let tem = Menu[j]+" x"+items[j]
@@ -492,6 +553,21 @@ export async function Checkout(){
 				price=price+prices[j]
 			}
 			
+		}
+		}else{
+			for(let j=1;j<21;j=j+1){
+			if (items[j]!==0){
+				let tem = Menu[j]+" x"+items[j]
+				
+				if (order==="Items Ordered:"){
+					order=order+" "+tem
+				}else{
+					order=order+", "+tem
+				}
+				price=price+prices[j]
+			}
+			
+		}
 		}
 		let body={
 			time:time,
@@ -525,7 +601,7 @@ const url2 = `/API/1/Orders`
 	for(let i =0;i<json2.length;i++){
 		let menuid=json2[i].menuid
 		let orderid=json2[i].TableOrderid
-		
+		console.log(orderid)
 		if(TableOrder[json2[i].TableOrderid]==undefined){
 			TableOrder[json2[i].TableOrderid]=1
 		}else{
@@ -548,6 +624,9 @@ const url2 = `/API/1/Orders`
 	for(let i = 0; i <tableorders.length; i++){
 		let time=tableorders[i].ordertime
 		let time2=time.substr(11, 17);
+		console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+		console.log(TableOrder[tableorders[i].id])
+		console.log(tableorders[i].id)
 		let places=TableOrder[tableorders[i].id]
 		let status=tableorders[i].status
 		let body={

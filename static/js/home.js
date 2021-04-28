@@ -1,6 +1,19 @@
 /* home.js */
-import { customiseNavBar,Home } from './browserUtility.js'
+import { customiseNavBar,Home,sleepThenAct} from './browserUtility.js'
 export async function setup() {
+	sleepThenAct(1000)
+	const envURl='/Enivorment'
+	const envOptions={
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const envResponce=await fetch(envURl, envOptions)
+	const envDetails=await envResponce.json()
+	const env=envDetails.test !=='/home/codio'
+	console.log(env)
 	console.log('HOME')
 	console.log('above testing of the new route being added')
 	let result=await Home()
@@ -64,11 +77,16 @@ export async function setup() {
 	for(let i = 0; i <tableorders.length; i++){
 		let time=tableorders[i].ordertime
 		let time2=time.substr(11, 17);
+		console.log('above table orders')
+		console.log(tableorders[i])
 		let places=orderdetials[tableorders[i].orderid]
 		let status=tableorders[i].status
 		let tem=tableorders[i].tableid
-		tem=tem+6
-		tem=tem/10
+		if (env!=='/home/codio'){
+			console.log(env)
+			tem=tem+6
+			tem=tem/10
+		}
 		let body={
 			table:tem,
 			places:places,
@@ -81,6 +99,8 @@ export async function setup() {
 	}
 	console.log(tableorderdetails)
 	tableorderdetails=result
+	console.log('above new results')
+	console.log(result)
 	for(let i = 0; i <tableorderdetails.length; i++){
 		var table = document.getElementById("myTable");
 
@@ -94,8 +114,11 @@ export async function setup() {
 		var cell4 = row.insertCell(3);
 		// Add some text to the new cells:
 		let tem = tableorderdetails[i].table
-		tem=tem+6
-		tem=tem/10
+			if (env){
+			console.log(env)
+			tem=tem+6
+			tem=tem/10
+		}
 		cell1.innerHTML = tem;
 		cell2.innerHTML = tableorderdetails[i].places;
 		cell3.innerHTML = tableorderdetails[i].time;

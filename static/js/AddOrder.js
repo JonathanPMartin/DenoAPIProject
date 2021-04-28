@@ -1,5 +1,16 @@
 import { customiseNavBar,Updload,fistcall,showMessage,sleepThenAct,AddOrder2} from './browserUtility.js'
 export async function setup() {
+	const envURl='/Enivorment'
+	const envOptions={
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const envResponce=await fetch(envURl, envOptions)
+	const envDetails=await envResponce.json()
+	const env=envDetails.test !=='/home/codio'
 	if(localStorage.getItem('userjob') !== 'server')window.location.href = '#home'
 	let order="Current Order is: "
 	var today = new Date();
@@ -131,8 +142,10 @@ export async function setup() {
 	for (let i = 0; i < json2.length; i++) {
 		let button = document.createElement("button");
 		let test=json2[i].id
+		if (env){
 		test=test+6
 		test=test/10
+		}
 		button.innerHTML = test;
 		button.class='.button'
 		button.id='test'
@@ -227,7 +240,14 @@ export async function setup() {
 			console.log(TRIAL)
 			//fistcall(orders)
 			//fistcall(TRIAL)
-			AddOrder2(TRIAL)
+			
+			console.log('above forcing the code to run the POST requests for the tem')
+			let lastpost=AddOrder2(TRIAL)
+			console.log('above the last post from the form')
+			console.log(lastpost)
+			showMessage(order)
+			window.location.href = '#home'
+			
 			localStorage.removeItem('orders')
 			//Updload(UpdateOrder)
 			localStorage.removeItem('orderid')

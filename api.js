@@ -1199,6 +1199,11 @@ router.get('/API', async context => {
 				name: ' put Tables',
 				desc: 'Updates the status of the table where the id is :id',
 				href: `${baseurl}/Tables/:id`
+			},
+			{
+				name: ' get Enivorment',
+				desc: 'returns /app if the server is running on heroku and returns /home/codio if being run on a codio tab',
+				href: `${baseurl}/Enivorment`
 			}
 		]
 	}
@@ -1222,6 +1227,12 @@ router.get('/API/1/TableTest', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify('fail', null, 2)
 	}
+})
+router.get(`/Enivorment`, async context => {
+	const home = Deno.env.get('HOME')
+	let actors ={test:home}
+	context.response.status = 201
+	context.response.body = JSON.stringify(actors, null, 2)
 })
 router.get("/(.*)", async context => {      
 	const data = await Deno.readTextFile('static/404.html')

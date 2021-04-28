@@ -44,7 +44,7 @@ header strong {
 main {
 	padding: 1em;
 }
-
+/*
 footer {
 	position: absolute;
 	bottom: 0;
@@ -52,7 +52,7 @@ footer {
 	width: 100%;
 	padding: 0;
 }
-
+*/
 input {
 	width: 200px;
 	font-size: 1.2em;
@@ -96,8 +96,11 @@ section{
 	flex:1;
 	*/
 }
-article{
-	
+section:nth-child(even) {
+  background-color: #82a9bc;
+}
+article>nth-child(even) {
+  background-color: #82a9bc;
 }
 .flex{
 	display:flex;
@@ -244,12 +247,15 @@ footer {
 	position: fixed;
 	bottom: 0;
 	left: 0;
-	background-color: #DDDD;
 	width: 100%;
 	padding: 0;
 	margin: 0;
 	padding-left: 0.3em;
 	padding-top: 0.5em;
+}
+button{
+	margin:0.3em;
+	font-size: 1.4em;
 }
 
 footer > p#device, footer > p#resolution, footer > p#connectivity {
@@ -266,14 +272,14 @@ footer > p#connectivity {
 	background-image: url(../images/online.png);
 }
 
-footer > p#location {
+/*footer > p#location {
 	display: inline-block;
 	margin: 0;
 	height: 0.7em;
 	margin-left: 0.3em;
 	font-size: 0.8em;
 	color: gray;
-}
+}*/
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -303,10 +309,10 @@ tr:nth-child(even) {
 
 /* Detects a non-touch screen with a mouse or trackpad */
 @media (hover: hover) and (pointer: fine) {
-	footer > p#device {
+	/*footer > p#device {
 		background-image: url(../images/desktop.png);
 		background-size: contain;
-	}
+	}*/
 }
 
 .currentpage {
@@ -318,10 +324,10 @@ tr:nth-child(even) {
 
 /* Narrow screen */
 @media (max-width: 400px) {
-	footer > p#resolution {
+	/*footer > p#resolution {
 		background-image: url(../images/red.png);
 		background-size: contain;
-	}
+	}*/
 }
 
 /* Medium width screen */
@@ -334,10 +340,10 @@ tr:nth-child(even) {
 
 /* Wide screen */
 @media (min-width: 801px) {
-	footer > p#resolution {
+	/*footer > p#resolution {
 		background-image: url(../images/green.png);
 		background-size: contain;
-	}
+	}*/
 }
 .flexbox{
 	display:flex;
