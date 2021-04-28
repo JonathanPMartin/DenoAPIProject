@@ -257,6 +257,7 @@ export async function setup() {
 		button3.class='.button'
 		button3.id='test'
 		let body3 = document.getElementsByName("div2")[0]
+		body3.appendChild('<label>Click To check Current Order</label>')
 		body3.appendChild(button3);
 		console.log('££££££££££££££££££££££££££££££££££££££££££££££££££')
 		console.log(document.getElementsByTagName("div2")[0])
