@@ -86,11 +86,14 @@ ul {
 	flex:1;
 	*/
 }
+form{
+flex:start;
+}
 section{
+	flex:1;
 	/*width:300px;*/
 	padding:10px;
-	font-size:2em;
-	color:#ffeead;
+	font-size:1.3em;
 	background-color:#96ceb4;
 	/* auto gives width based on its width
 	flex:1;

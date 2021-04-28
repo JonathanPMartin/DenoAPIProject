@@ -38,7 +38,7 @@ router.post(`/API/1/TableOrders`, async context => {
 	context.response.body = JSON.stringify(test, null, 2)
 	console.log('APi test 2')
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}	
 })
 router.get('/API/1/TableOrders', async context => {
@@ -146,7 +146,7 @@ router.post(`/API/1/Orders`, async context => {
 	context.response.body = JSON.stringify(test, null, 2)
 	console.log('APi test 2')
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	
 })
@@ -197,7 +197,7 @@ router.put('/API/1/TableOrders/:id', async context => {
 	
 	
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -223,7 +223,7 @@ router.delete("/API/1/TableOrders/:id", async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.delete("/API/1/Orders/:TableOrderid", async context => {
@@ -241,7 +241,7 @@ router.delete("/API/1/Orders/:TableOrderid", async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.get('/API/1/accounts', async context => {
@@ -395,7 +395,7 @@ router.get(`/API/1/Menu/:id`, async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.get(`/API/1/Menu/Status/:status`, async context => {
@@ -414,7 +414,7 @@ router.get(`/API/1/Menu/Status/:status`, async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.put('/API/1/Menu/:id', async context => {
@@ -441,7 +441,7 @@ router.put('/API/1/Menu/:id', async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 
@@ -568,7 +568,7 @@ router.post('/API/1/AddOrder', async context => {
 	context.response.body = JSON.stringify(test, null, 2)
 	console.log('APi test 2')
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.post('/API/1/AddTableOrder', async context => {
@@ -595,7 +595,7 @@ router.post('/API/1/AddTableOrder', async context => {
 	context.response.body = JSON.stringify(test, null, 2)
 	console.log('APi test 2')
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 //below route may not be called 
@@ -621,7 +621,7 @@ router.get('/API/1/GetOrder', async context => {
 	
 	savedata(x)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -646,7 +646,7 @@ router.get('/API/1/GetAllOrders', async context => {
 	
 	
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -671,7 +671,7 @@ router.get('/API/1/GetAllTableOrders', async context => {
 	
 	
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -698,7 +698,7 @@ router.get('/API/1/GetTableOrders/:status', async context => {
 	
 	
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -726,7 +726,7 @@ router.put('/API/1/UpdateTableOrders/:id', async context => {
 	
 	
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -750,7 +750,7 @@ router.delete("/API/1/DeleteTableOrders/:id", async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.delete("/API/1/DeleteOrders/:id", async context => {
@@ -769,7 +769,7 @@ router.delete("/API/1/DeleteOrders/:id", async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 /*router.delete("/Orders/:id", async context => {
@@ -898,7 +898,7 @@ router.get('/API/1/Staff/:id', async context => {
 	
 	savedata(x)
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
@@ -950,7 +950,7 @@ router.put('/API/1/Staff/Set/Job/:id', async context => {
 	console.log(context.response.body)
 	console.log('APi test 4')
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.put('/API/1/Staff/Stauts/:id', async context => {
@@ -977,7 +977,7 @@ router.put('/API/1/Staff/Stauts/:id', async context => {
 	context.response.body = JSON.stringify(data, null, 2)
 	return
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.post('/API/1/Staff/New/:id',async context => {
@@ -1002,7 +1002,7 @@ router.post('/API/1/Staff/New/:id',async context => {
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
 		
-		context.response.status = 500
+		context.response.status = 401
 	}
 } )
 router.get('/API/1/Table/:Status', async context => {
@@ -1049,7 +1049,7 @@ router.put('/API/1/Tables/:id', async context => {
 	console.log('APi test 2')
 	return
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 
@@ -1088,7 +1088,7 @@ router.get('/API/1/TESTING', async context => {
 	if(user==username){
 		context.response.status = 201
 	}else{
-		context.response.status = 500
+		context.response.status = 401
 	}
 })
 router.get('/API', async context => {
@@ -1097,7 +1097,7 @@ router.get('/API', async context => {
 	let baseurl=`https://${host}/API/1`
 	const data = {
 		name: 'Website API',
-		desc: 'A list of all API Routes. where the name indicates the http request. if a href has /:item at its end it indicates that the link its end is expecting a input i.e. /Accounts/ID/1 is an exsample request for /Accounts/ID/:id  the API uses BASIC authentication unless otherwise specified',
+		desc: 'A list of all API Routes. where the name indicates the http request. if a href has /:item at its end it indicates that the link its end is expecting a input i.e. /Accounts/ID/1 is an exsample request for /Accounts/ID/:id  the API uses BASIC authentication unless otherwise specified.put/post requests will output execpted values in the console, so if you wish to understand what data should be sent simply pass nothing',
 		links: [
 			{
 				name: 'get accounts',
