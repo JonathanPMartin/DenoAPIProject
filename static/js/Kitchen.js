@@ -10,9 +10,8 @@ export async function setup() {
 	console.log(localStorage)
 	console.log(`username: ${username}`)
 	if(username === null) window.location.href = '#login'
-	document.querySelector('h1').innerText = 'Home Page'
-	const nav = ['logout', 'foo']
-	nav.push('welcome')
+	document.querySelector('h1').innerText = 'Kitchen Page'
+	const nav = ['logout', 'home']
 	customiseNavBar(nav)
 	//
 	

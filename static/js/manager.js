@@ -8,8 +8,8 @@ export async function setup() {
 	console.log(`username: ${username}`)
 	if(username === null) window.location.href = '#login'
 	if(localStorage.getItem('userjob') !== 'manager')window.location.href = '#home'
-	document.querySelector('h1').innerText = 'test'
-	const nav = ['logout', 'foo','home']
+	document.querySelector('h1').innerText = 'Manager'
+	const nav = ['logout','home']
 	customiseNavBar(nav)
 	
 	const url1 = `/API/1/Online/Staff`

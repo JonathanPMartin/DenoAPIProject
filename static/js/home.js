@@ -1,6 +1,9 @@
 /* home.js */
 import { customiseNavBar,Home,sleepThenAct} from './browserUtility.js'
 export async function setup() {
+	if (localStorage.getItem('userid')== undefined){
+		window.location.href = '#login'
+	}
 	sleepThenAct(1000)
 	const envURl='/Enivorment'
 	const envOptions={
@@ -142,6 +145,10 @@ export async function setup() {
 		nav.push('AddOrder')
 	}else if(localStorage.getItem('userjob') ==='cheff'){
 		nav.push('Kitchen')
+	}else if(localStorage.getItem('userjob') ==='welcome'){
+		nav.push('welcome')
+	}else if(localStorage.getItem('userjob') ==='till'){
+		nav.push('Checkout')
 	}else{
 		console.log('welp')
 	}

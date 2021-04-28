@@ -49,7 +49,7 @@ export async function setup() {
 	document.querySelector('h1').innerText = 'Add Order'
 	console.log('options')
 	console.log(document.querySelector('select[name="itemordered"]'))
-	const nav = ['logout', 'foo']
+	const nav = ['logout', 'home']
 	customiseNavBar(nav)
 	const url1 = `/API/1/Menu`
 	const options1 = {
@@ -168,6 +168,7 @@ export async function setup() {
 			document.querySelector('aside').classList.toggle('hidden')
 			menu = document.querySelector('.div')
 			menu.classList.toggle('hidden');
+			document.querySelector('h1').innerText="Food Select"
 			const toggleClass = (el, className) => el.classList.toggle(className);
 			var element = document.getElementById('test');
 			element.classList.toggle('hidden');
@@ -253,11 +254,10 @@ export async function setup() {
 			localStorage.removeItem('orderid')
 		})
 	let button3 = document.createElement("button");
-		button3.innerHTML = 'Current Order';
+		button3.innerHTML = 'Veiw current Order';
 		button3.class='.button'
 		button3.id='test'
 		let body3 = document.getElementsByName("div2")[0]
-		body3.appendChild('<label>Click To check Current Order</label>')
 		body3.appendChild(button3);
 		console.log('££££££££££££££££££££££££££££££££££££££££££££££££££')
 		console.log(document.getElementsByTagName("div2")[0])

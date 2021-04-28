@@ -25,7 +25,8 @@ router.post(`/API/1/TableOrders`, async context => {
 	console.log(StaffData)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
-	const username = await login(credentials)
+	const username = await login(credentials)||'fail'
+	console.log(username)
 	const { user, pass } = credentials
 	console.log(user===username)
 	if(user==username){
@@ -38,6 +39,7 @@ router.post(`/API/1/TableOrders`, async context => {
 	context.response.body = JSON.stringify(test, null, 2)
 	console.log('APi test 2')
 	}else{
+		console.log('THIS SHOULD SHOW')
 		context.response.status = 401
 	}	
 })
@@ -46,18 +48,18 @@ router.get('/API/1/TableOrders', async context => {
 	
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM TableOrders;'
-	const actors = await db.query(sql)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
+	console.log('above the code that should run')
 	const username = await login(credentials)
 	const { user, pass } = credentials
 	console.log(user===username)
 	if(user==username){
+		const actors = await db.query(sql)
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors[actors.length -1], null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.get('/API/1/TableOrders/All', async context => {
@@ -75,8 +77,7 @@ router.get('/API/1/TableOrders/All', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.get('/API/1/TableOrders/Status/:status', async context => {
@@ -94,8 +95,7 @@ router.get('/API/1/TableOrders/Status/:status', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.get('/API/1/TableOrders/Tableid/:tableid', async context => {
@@ -111,10 +111,9 @@ router.get('/API/1/TableOrders/Tableid/:tableid', async context => {
 	console.log(user===username)
 	if(user==username){
 		context.response.status = 201
-		context.response.body = JSON.stringify(actors[actors.length -1], null, 2)
+		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.post(`/API/1/Orders`, async context => {
@@ -165,8 +164,7 @@ router.get('/API/1/Orders', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.put('/API/1/TableOrders/:id', async context => {
@@ -279,7 +277,7 @@ router.post('/API/1/accounts', async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify({ status: 'success', msg: 'account created' })
 	}else{
-		console.log('errror')
+		context.response.status = 401
 	}
 })
 router.post('/#AddOrder', async context => {
@@ -317,7 +315,7 @@ router.get(`/API/1/Accounts/User/:user`, async context => {
 	context.response.status = 201
 	context.response.body = JSON.stringify(test2, null, 2)
 	}else{
-		console.log('yer problem')
+		context.response.status = 401
 	}
 	
 })
@@ -375,8 +373,8 @@ router.get('/API/1/Menu', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
+		
 	}
 })
 router.get(`/API/1/Menu/:id`, async context => {
@@ -400,7 +398,7 @@ router.get(`/API/1/Menu/:id`, async context => {
 })
 router.get(`/API/1/Menu/Status/:status`, async context => {
 	console.log(context.params.status)
-	const sql = `SELECT * FROM menu WHERE status =${context.params.status};`
+	const sql = `SELECT * FROM menu WHERE status ="${context.params.status}";`
 	const actors = await db.query(sql)
 	console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
@@ -412,7 +410,7 @@ router.get(`/API/1/Menu/Status/:status`, async context => {
 	console.log(user===username)
 	if(user==username){
 	context.response.status = 201
-	context.response.body = JSON.stringify(actors[0], null, 2)
+	context.response.body = JSON.stringify(actors, null, 2)
 	}else{
 		context.response.status = 401
 	}
@@ -920,8 +918,7 @@ router.get('/API/1/Online/Staff', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 	})
 router.put('/API/1/Staff/Set/Job/:id', async context => {
@@ -965,7 +962,6 @@ router.put('/API/1/Staff/Stauts/:id', async context => {
 	const id = context.params.id
 	const sql = `UPDATE staff SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
-	await db.query(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
@@ -973,6 +969,7 @@ router.put('/API/1/Staff/Stauts/:id', async context => {
 	const { user, pass } = credentials
 	console.log(user===username)
 	if(user==username){
+	await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	return
@@ -1019,8 +1016,7 @@ router.get('/API/1/Table/:Status', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 	})
 router.put('/API/1/Tables/:id', async context => {
@@ -1222,7 +1218,7 @@ router.get('/API', async context => {
 			{
 				name: ' get Enivorment',
 				desc: 'returns /app if the server is running on heroku and returns /home/codio if being run on a codio tab',
-				href: `${baseurl}/Enivorment`
+				href: `https://${host}/Enivorment`
 			}
 		]
 	}
@@ -1243,8 +1239,7 @@ router.get('/API/1/TableTest', async context => {
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
-		context.response.status = 201
-		context.response.body = JSON.stringify('fail', null, 2)
+		context.response.status = 401
 	}
 })
 router.get(`/Enivorment`, async context => {

@@ -5,7 +5,7 @@ export async function setup() {
 	console.log(`username: ${username}`)
 	if(localStorage.getItem('userjob') !== 'welcome')window.location.href = '#home'
 	if(username === null) window.location.href = '#login'
-	document.querySelector('h1').innerText = 'test'
+	document.querySelector('h1').innerText = 'Welcome page'
 	const nav = ['logout','home']
 	customiseNavBar(nav)
 	const url1 = `/API/1/Table/Free`
