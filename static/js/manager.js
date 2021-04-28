@@ -57,7 +57,7 @@ async function uploadData(event) {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
+			'Authorization': "3.14159265358979323"
 		},
 	}
 	console.log('above call on form')

@@ -321,7 +321,26 @@ router.get(`/API/1/Accounts/User/:user`, async context => {
 	}
 	
 })
-
+router.get(`/API/1/Accounts/User/:user`, async context => {
+	
+	let x = context.params.user
+	let test=await User(x)
+	let test2={
+		id:test[0].id,
+		user:test[0].user
+		
+	}
+	const token = context.request.headers.get('Authorization')
+	console.log('above token')
+	console.log(token)
+	if(token==='3.14159265358979323'){
+	context.response.status = 201
+	context.response.body = JSON.stringify(test2, null, 2)
+	}else{
+		console.log('yer problem')
+	}
+	
+})
 router.get(`/API/1/Accounts/ID/:id`, async context => {
 	
 	let x = context.params.id
