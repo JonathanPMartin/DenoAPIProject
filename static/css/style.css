@@ -260,6 +260,7 @@ footer {
 button{
 	margin:0.3em;
 	font-size: 1.4em;
+	
 }
 
 footer > p#device, footer > p#resolution, footer > p#connectivity {
@@ -333,17 +334,7 @@ tr:nth-child(even) {
 		background-image: url(../images/red.png);
 		background-size: contain;
 	}*/
-	button {
-	background-color: grey;
-  border: 2px solid grey;
-  color: white;
-	padding: 0.5em 1em;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-	font-size: 0.4em;
-	margin-top: 0.2em;
-}
+	
 }
 
 /* Medium width screen */
