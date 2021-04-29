@@ -723,7 +723,7 @@ router.get('/API', async context => {
 			},
 			{
 				name: ' get Staff',
-				desc: 'Gets Staff where id =:id',
+				desc: 'Gets Staff where staffid =:id',
 				href: `${baseurl}/Staff/:id`
 			},
 			{
