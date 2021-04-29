@@ -45,7 +45,7 @@ async function register() {
 	const Body={
 		status:'online'
 	}
-	const url4 = `/API/1/Staff/New/${userid}`
+	const url4 = `/API/1/Staff/${userid}`
 	const options4 = {
 		method: 'POST',
 		headers: {

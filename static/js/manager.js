@@ -77,7 +77,7 @@ async function uploadData(event) {
 	console.log(JSON.stringify(Body))
 	
 	
-	const url = `/API/1/Staff/Set/Job/${id}`
+	const url = `/API/1/Staff/Job/${id}`
 	const options = {
 		method: 'PUT',
 		headers: {

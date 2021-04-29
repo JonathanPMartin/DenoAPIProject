@@ -1,5 +1,16 @@
 import { customiseNavBar } from './browserUtility.js'
 export async function setup() {
+	const envURl='/Enivorment'
+	const envOptions={
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': localStorage.getItem('authorization')
+		},
+	}
+	const envResponce=await fetch(envURl, envOptions)
+	const envDetails=await envResponce.json()
+	const env=envDetails.test !=='/home/codio'
 	console.log('manger')
 	const username = localStorage.getItem('username')
 	console.log(`username: ${username}`)
@@ -22,8 +33,11 @@ export async function setup() {
 	console.log(json)
 	for (let i = 0; i < json.length; i++) {
 		let id=json[i].id
-		let display=id+6
+		let display=id
+		if(env){
+		display=display+6
 		display=display/10
+		}
 		display=display.toString()
 		id=id.toString()
 		let seats =json[i].seats

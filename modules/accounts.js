@@ -8,7 +8,8 @@ const saltRounds = 10
 const salt = await genSalt(saltRounds)
 
 export async function login(credentials) {
-	
+	let id ='false'
+	let job="fail"
 	console.log('testing if this is run at all')
 	let check = true
 	let valid = false
@@ -21,18 +22,25 @@ export async function login(credentials) {
 	}
 	console.log(check)
 	if(check){
-	sql = `SELECT pass FROM accounts WHERE user = "${user}";`
+	sql = `SELECT * FROM accounts WHERE user = "${user}";`
 	records = await db.query(sql)
 	valid = await compare(pass, records[0].pass)
+	console.log(records)
 	console.log(valid)
+	id=records[0].id
+	sql=`SELECT * FROM staff where staffid = "${id}"`
+	records=await db.query(sql)
+	job=records[0].job
 	}
 	if(valid === false) {
 		console.log('test')
 		otheruser=user+'4'
 		console.log(otheruser)
+	}else{
+		
 	}
 	console.log(otheruser)
-	return otheruser
+	return [otheruser,job]
 }
 
 export async function register(credentials) {

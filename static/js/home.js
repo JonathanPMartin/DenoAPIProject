@@ -44,64 +44,7 @@ export async function setup() {
 	let json3= await response3.json()
 	let userjob =json3.job
 	
-	
-	const url5 = `API/1/GetAllOrders`
-	const options5 = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
-		},
-	}
-	console.log('above call on form')
-	const response5 = await fetch(url5, options5)
-	let orders= await response5.json()
-	let orderdetials={}
-	for(let i = 0; i <orders.length; i++){
-		let data= JSON.parse(orders[i].Detials)
-		let places = data.length
-		orderdetials[orders[i].id] = places
-	}
-	console.log(orderdetials)
-	
-	//
-	const url4 = `/API/1/GetAllTableOrders`
-	const options4 = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
-		},
-	}
-	console.log('above call on form')
-	const response4 = await fetch(url4, options4)
-	let tableorders = await response4.json()
-	let tableorderdetails=[]
-	for(let i = 0; i <tableorders.length; i++){
-		let time=tableorders[i].ordertime
-		let time2=time.substr(11, 17);
-		console.log('above table orders')
-		console.log(tableorders[i])
-		let places=orderdetials[tableorders[i].orderid]
-		let status=tableorders[i].status
-		let tem=tableorders[i].tableid
-		if (env!=='/home/codio'){
-			console.log(env)
-			tem=tem+6
-			tem=tem/10
-		}
-		let body={
-			table:tem,
-			places:places,
-			time:time2,
-			status:status
-		}
-		if(status==='placed'||'ready'){
-			tableorderdetails.push(body)
-		}
-	}
-	console.log(tableorderdetails)
-	tableorderdetails=result
+	let tableorderdetails=result
 	console.log('above new results')
 	console.log(result)
 	for(let i = 0; i <tableorderdetails.length; i++){

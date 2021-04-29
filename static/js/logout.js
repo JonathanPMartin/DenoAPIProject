@@ -6,7 +6,7 @@ export async function setup() {
 	const Body={
 		status:' Offline'
 	}
-	const url = `/API/1/Staff/Stauts/${localStorage.getItem('staffid')}`
+	const url = `/API/1/Staff/${localStorage.getItem('staffid')}`
 	const options = {
 		method: 'PUT',
 		headers: {

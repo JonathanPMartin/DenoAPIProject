@@ -22,10 +22,11 @@ async function login() {
 		const response = await fetch(url, options)
 		
 		let json = await response.json()
+		console.log(json)
 		console.log('json data bellow')
 			console.log(json.data)
-			localStorage.setItem('username', json.data.username)
-			const url2 = `/API/1/Accounts/User/${json.data.username}`
+			localStorage.setItem('username', json.data.username2)
+			const url2 = `/API/1/Accounts/User/${json.data.username2}`
 			const options2 = {
 				method: 'GET',
 				headers: {
@@ -55,7 +56,7 @@ async function login() {
 			const Body={
 				status:'Online'
 			}
-			const url4 = `/API/1/Staff/Stauts/${staffid}`
+			const url4 = `/API/1/Staff/${staffid}`
 			const options4 = {
 				method: 'PUT',
 				headers: {
@@ -76,7 +77,7 @@ async function login() {
 			localStorage.setItem('userjob',userjob)
 			localStorage.setItem('staffid',staffid)
 			window.location.href = '#home'
-			showMessage(`you are logged in as ${json.data.username}`)
+			showMessage(`you are logged in as ${json.data.username2}`)
 		} else {
 			showMessage('invalid username or password')
 			document.querySelector('input[name="pass"]').value = ''

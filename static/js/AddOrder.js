@@ -236,7 +236,7 @@ export async function setup() {
 			TRIAL.Detials=tem
 			TRIAL.status='placed'
 			TRIAL.time=time2
-			TRIAL.userid=localStorage.getItem('userid')
+			TRIAL.userid=localStorage.getItem('staffid')
 			TRIAL.tableid=tableid
 			console.log(TRIAL)
 			//fistcall(orders)

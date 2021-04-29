@@ -33,64 +33,7 @@ export async function setup() {
 	console.log('above menu')
 	console.log(Menu)
 	//
-	const url5 = `/API/1/GetAllOrders`
-	const options5 = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
-		},
-	}
-	console.log('above call on form')
-	const response5 = await fetch(url5, options5)
-	let orders= await response5.json()
-	let orderdetials={}
-	let tem={}
-	for(let i = 0; i <orders.length; i++){
-		let data= JSON.parse(orders[i].Detials)
-		for(let j = 1; j <21; j++){
-			tem[j]=0
-		}
-		for(let j = 0; j <data.length; j++){
-			tem[data[j].menuid]=tem[data[j].menuid]+1
-		}
-		orderdetials[orders[i].id]=tem
-		
-	}
-	//
-	const url4 = `/API/1/GetTableOrders/placed`
-	const options4 = {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': localStorage.getItem('authorization')
-		},
-	}
-	console.log('above call on form')
-	const response4 = await fetch(url4, options4)
-	const json4 = await response4.json()
-	let Order=[]
-	let Orders=[]
-	for(let i =0;i<json4.length;i++){
-		Order=[]
-		let id=json4[i].id
-		let time= json4[i].ordertime.substr(11, 17);
-		let tem=orderdetials[json4[i].orderid]
-		for(let j=4;j<198;j=j+10){
-			if(tem[j] !=0){
-				
-				let tem2=Menu[j]+":"+tem[j]
-				Order.push(tem2)
-			}
-			
-		}
-		let body={
-			id:id,
-			items:Order,
-			time:time
-		}
-		Orders.push(body)
-	}
+	
 	let body=""
 	/*for(let i=0; i<Orders.length;i++){
 		body=body+`<section><h3>Order id ${Orders[i].id} Time ${Orders[i].time}</h3>`
