@@ -70,13 +70,14 @@ router.get('/API/1/TableOrders/All', async context => {
 	
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM TableOrders;'
-	const actors = await db.query(sql)
+	
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+		const actors = await db.query(sql)
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -88,13 +89,13 @@ router.get('/API/1/TableOrders/Status/:status', async context => {
 	
 	const host = context.request.url.host
 	const sql = `SELECT * FROM TableOrders WHERE status ="${context.params.status}";`
-	const actors = await db.query(sql)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+		const actors = await db.query(sql)
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -106,13 +107,14 @@ router.get('/API/1/TableOrders/Tableid/:tableid', async context => {
 	
 	const host = context.request.url.host
 	const sql = `SELECT * FROM TableOrders WHERE tableid ="${context.params.tableid}";`
-	const actors = await db.query(sql)
+	
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+		const actors = await db.query(sql)
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -157,13 +159,13 @@ router.get('/API/1/Orders', async context => {
 	
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM Orders;'
-	const actors = await db.query(sql)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+		const actors = await db.query(sql)
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -181,8 +183,7 @@ router.put('/API/1/TableOrders/:id', async context => {
 	const StaffData = await body.value
 	const sql = `UPDATE TableOrders SET status ="${StaffData.status}" WHERE id ="${context.params.id}"`
 	console.log(sql)
-	const actors = await db.query(sql)
-	if(actors.length === 0) throw new Error('record not found')
+	
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
@@ -190,6 +191,8 @@ router.put('/API/1/TableOrders/:id', async context => {
 	const job=username[1]
 	const { user, pass } = credentials
 	if(job==="cheff"){
+		const actors = await db.query(sql)
+	if(actors.length === 0) throw new Error('record not found')
 	context.response.status = 201
 	context.response.statusText = JSON.stringify(actors, null, 2)
 	context.response.body = JSON.stringify(actors, null, 2)
@@ -277,10 +280,11 @@ router.post('/API/1/accounts', async context => {
 	const body  = await context.request.body()
 	const data = await body.value
 	console.log(data)
-	await register(data)
+	
 	const token = context.request.headers.get('Authorization')||'fail'
 	console.log(token)
 	if(token==="3.14159265358979323"){
+	await register(data)
 	context.response.status = 201
 	context.response.body = JSON.stringify({ status: 'success', msg: 'account created' })
 	}else{
@@ -349,8 +353,8 @@ router.get('/API/1/Menu', async context => {
 	
 	const host = context.request.url.host
 	const sql = 'SELECT * FROM menu;'
-	const actors = await db.query(sql)
-	console.log(actors)
+	
+	//console.log(actors)
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	
@@ -360,6 +364,7 @@ router.get('/API/1/Menu', async context => {
 	const username = await login(credentials)
 	const username2=username[0]
 	if(user===username2){
+		const actors = await db.query(sql)
 		console.log('test2')
 		context.response.status = 201
 		context.response.body = JSON.stringify(actors, null, 2)
@@ -371,8 +376,8 @@ router.get('/API/1/Menu', async context => {
 router.get(`/API/1/Menu/:id`, async context => {
 	console.log(context.params.id)
 	const sql = `SELECT * FROM menu WHERE id =${context.params.id};`
-	const actors = await db.query(sql)
-	console.log(actors[0])
+	
+	//console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
 	console.log('test')
 	const token = context.request.headers.get('Authorization')
@@ -381,6 +386,7 @@ router.get(`/API/1/Menu/:id`, async context => {
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+	const actors = await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors[0], null, 2)
 	}else{
@@ -390,8 +396,8 @@ router.get(`/API/1/Menu/:id`, async context => {
 router.get(`/API/1/Menu/Status/:status`, async context => {
 	console.log(context.params.status)
 	const sql = `SELECT * FROM menu WHERE status ="${context.params.status}";`
-	const actors = await db.query(sql)
-	console.log(actors[0])
+
+	//console.log(actors[0])
 	if(actors.length === 0) throw new Error('record not found')
 	console.log('test')
 	const token = context.request.headers.get('Authorization')
@@ -400,6 +406,7 @@ router.get(`/API/1/Menu/Status/:status`, async context => {
 	const username2=username[0]
 	const { user, pass } = credentials
 	if(user===username2){
+		const actors = await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(actors, null, 2)
 	}else{
@@ -419,7 +426,7 @@ router.put('/API/1/Menu/:id', async context => {
 	const id = context.params.id
 	const sql = `UPDATE menu SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
-	await db.query(sql)
+	
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
@@ -428,6 +435,7 @@ router.put('/API/1/Menu/:id', async context => {
 	const job=username[1]
 	const { user, pass } = credentials
 	if(job==="cheff"){
+	await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	}else{
@@ -494,7 +502,7 @@ router.put('/API/1/Staff/Job/:id', async context => {
 	const id = context.params.id
 	const sql = `UPDATE staff SET job = "${StaffData.job}" WHERE staffid = ${id}`
 	console.log(sql)
-	await db.query(sql)
+	
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
@@ -503,6 +511,7 @@ router.put('/API/1/Staff/Job/:id', async context => {
 	const job=username[1]
 	const { user, pass } = credentials
 	if(job==="manager"){
+	await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log(context.response.body)
@@ -599,7 +608,7 @@ router.put('/API/1/Tables/:id', async context => {
 	const id = context.params.id
 	const sql = `UPDATE tables SET status = "${StaffData.status}" WHERE id = ${id}`
 	console.log(sql)
-	await db.query(sql)
+	
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
@@ -608,6 +617,7 @@ router.put('/API/1/Tables/:id', async context => {
 	const job=username[1]
 	const { user, pass } = credentials
 	if(job==="welcome"){
+		await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log('APi test 2')
