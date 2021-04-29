@@ -50,12 +50,14 @@ async function login() {
 			console.log('above call on form')
 			const response3 = await fetch(url3, options3)
 			let json3= await response3.json()
+			console.log(json3)
 			let userjob =json3.job
-			let staffid =json3.id
+			let staffid =json3.staffid
 			//
 			const Body={
 				status:'Online'
 			}
+			console.log(staffid)
 			const url4 = `/API/1/Staff/${staffid}`
 			const options4 = {
 				method: 'PUT',

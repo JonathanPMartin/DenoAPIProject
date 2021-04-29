@@ -49,7 +49,6 @@ export async function setup() {
 		
 	}
 	document.querySelector('form').innerHTML=body
-	console.log(Orders)
 	//
 	
 	

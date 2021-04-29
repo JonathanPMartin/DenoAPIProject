@@ -328,7 +328,9 @@ router.get(`/API/1/Accounts/ID/:id`, async context => {
 	
 	let x = context.params.id
 	let test=await UserID(x)
-	console.log(test)
+	let test2={}
+	test2.id=test[0].id
+	test2.user=test[0].user
 	const token = context.request.headers.get('Authorization')
 	const credentials = extractCredentials(token)
 	const username = await login(credentials)
@@ -336,7 +338,7 @@ router.get(`/API/1/Accounts/ID/:id`, async context => {
 	const { user, pass } = credentials
 	if(user===username2){
 	context.response.status = 201
-	context.response.body = JSON.stringify(test[0], null, 2)
+	context.response.body = JSON.stringify(test2, null, 2)
 	}else{
 		console.log()
 	}
@@ -519,7 +521,7 @@ router.put('/API/1/Staff/:id', async context => {
 	const body = await context.request.body()
 	const StaffData = await body.value
 	const id = context.params.id
-	const sql = `UPDATE staff SET status = "${StaffData.status}" WHERE id = ${id}`
+	const sql = `UPDATE staff SET status = "${StaffData.status}" WHERE staffid = ${id}`
 	console.log(sql)
 	const data = {status: 200, msg: `genre ${id} updated to ${StaffData}`}
 	const token = context.request.headers.get('Authorization')

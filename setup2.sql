@@ -24,22 +24,6 @@ create table if not exists tables(
 	seats SMALLINT UNSIGNED NOT NULL,
 	status VARCHAR(25) NOT NULL
 );
-
-create table if not exists OrderDetails(
-	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	Detials VARCHAR(8000) NOT NULL
-);
-create table if not exists TableOrderDetails(
-	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	tableid SMALLINT UNSIGNED NOT NULL,
-	userid SMALLINT UNSIGNED,
-	orderid SMALLINT UNSIGNED,
-	ordertime varchar(60) not null,
-	status varchar(60) NOT NULL,
-	FOREIGN KEY(tableid) REFERENCES tables(id),
-	FOREIGN KEY(userid) REFERENCES staff(id),
-	FOREIGN KEY(orderid) REFERENCES OrderDetails(id)
-);
 create table if not exists TableOrders(
 	id SMALLINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	tableid SMALLINT UNSIGNED NOT NULL,
@@ -57,7 +41,7 @@ create table if not exists Orders(
 	FOREIGN KEY(menuid) REFERENCES menu(id),
 	FOREIGN KEY(TableOrderid) REFERENCES TableOrders(id)
 );
-insert into staff(job, staffid, status) values("manager",4,"Offline");
+insert into staff(job, staffid, status) values("manager",1,"Offline");
 
 insert into tables(seats, status) Values(2, "Free");
 insert into tables(seats, status) Values(2, "Free");
