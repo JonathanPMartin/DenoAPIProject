@@ -490,29 +490,7 @@ router.get('/API/1/Staff/Online/All', async context => {
 		context.response.status = 401
 	}
 	})
-router.get('/API/1/Online/Staff', async context => {
-	console.log('test')
-	console.log('test')
-	const host = context.request.url.host
-	console.log('test')
-	const sql = 'SELECT * FROM staff WHERE status= "Online";'
-	const actors = await db.query(sql)
-	actors.forEach(actor => {
-		actor.url = `https://${host}/Menu/${actor.id}`
-		delete actor.id
-	})
-	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const username2=username[0]
-	const { user, pass } = credentials
-	if(user===username2){
-		context.response.status = 201
-		context.response.body = JSON.stringify(actors, null, 2)
-	}else{
-		context.response.status = 401
-	}
-	})
+
 router.put('/API/1/Staff/Job/:id', async context => {
 	let expected ={
 		job:'new job i.e. cheff'
@@ -789,24 +767,7 @@ router.get('/API', async context => {
 	}
 	context.response.body = JSON.stringify(data, null, 2)
 })
-router.get('/API/1/TableTest', async context => {
-	console.log('why me')
-	
-	const host = context.request.url.host
-	const sql = 'show tables;'
-	const actors = await db.query(sql)
-	const token = context.request.headers.get('Authorization')
-	const credentials = extractCredentials(token)
-	const username = await login(credentials)
-	const username2=username[0]
-	const { user, pass } = credentials
-	if(user===username2){
-		context.response.status = 201
-		context.response.body = JSON.stringify(actors, null, 2)
-	}else{
-		context.response.status = 401
-	}
-})
+
 router.get(`/Enivorment`, async context => {
 	const home = Deno.env.get('HOME')
 	let actors ={test:home}
