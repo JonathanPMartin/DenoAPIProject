@@ -11,6 +11,8 @@ const router = new Router()
 // the routes defined here
 
 //run
+
+//start
 router.post(`/API/1/TableOrders`, async context => {
 	let expected={
 		tableid:'num of tableid',
@@ -32,6 +34,7 @@ router.post(`/API/1/TableOrders`, async context => {
 	const job=username[1]
 	const { user, pass } = credentials
 	console.log(job)
+	if(username2===user){
 	if(job==="server"){
 		console.log('testing if this should run')
 		let sql1 =`insert into TableOrders(tableid,userid,ordertime,status) Values('${StaffData.tableid}','${StaffData.userid}','${StaffData.time}','${StaffData.status}')`
@@ -44,7 +47,11 @@ router.post(`/API/1/TableOrders`, async context => {
 	}else{
 		console.log('THIS SHOULD SHOW')
 		context.response.status = 401
-	}	
+	}
+	}else{
+		console.log('THIS SHOULD SHOW')
+		context.response.status = 401
+	}
 })
 router.get('/API/1/TableOrders', async context => {
 	console.log('why me')
@@ -140,6 +147,7 @@ router.post(`/API/1/Orders`, async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="server"){
 		console.log('testing if this should run')
 		let sql1 =`insert into Orders(menuid,TableOrderid,status) Values('${StaffData.menuid}','${StaffData.TableOrderid}','${StaffData.details}')`
@@ -152,7 +160,9 @@ router.post(`/API/1/Orders`, async context => {
 	}else{
 		context.response.status = 401
 	}
-	
+	}else{
+		context.response.status = 401
+	}
 })
 router.get('/API/1/Orders', async context => {
 	console.log('why me')
@@ -172,6 +182,7 @@ router.get('/API/1/Orders', async context => {
 		context.response.status = 401
 	}
 })
+	//start
 router.put('/API/1/TableOrders/:id', async context => {
 	let expected={
 		status:'new status i.e. placed'
@@ -190,6 +201,7 @@ router.put('/API/1/TableOrders/:id', async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="cheff"){
 		const actors = await db.query(sql)
 	if(actors.length === 0) throw new Error('record not found')
@@ -205,6 +217,9 @@ router.put('/API/1/TableOrders/:id', async context => {
 		context.response.status = 401
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
+	}else{
+		context.response.status = 401
+	}
 })
 router.get('/', async context => {
 	const data = await Deno.readTextFile('static/index.html')
@@ -223,11 +238,15 @@ const username = await login(credentials)
 	const username2=username[0]
 	const { user, pass } = credentials
 	const job=username[1]
+	if (username2===user){
 	if(job==="till"){
 	console.log('test')
 	await db.query(sql2)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 401
+	}
 	}else{
 		context.response.status = 401
 	}
@@ -243,10 +262,14 @@ router.delete("/API/1/Orders/:TableOrderid", async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="till"){
 	await db.query(sql2)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 401
+	}
 	}else{
 		context.response.status = 401
 	}
@@ -434,10 +457,14 @@ router.put('/API/1/Menu/:id', async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="cheff"){
 	await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
+	}else{
+		context.response.status = 401
+	}
 	}else{
 		context.response.status = 401
 	}
@@ -512,12 +539,16 @@ router.put('/API/1/Staff/Job/:id', async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="manager"){
 	await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log(context.response.body)
 	console.log('APi test 4')
+	}else{
+		context.response.status = 401
+	}
 	}else{
 		context.response.status = 401
 	}
@@ -618,12 +649,16 @@ router.put('/API/1/Tables/:id', async context => {
 	const username2=username[0]
 	const job=username[1]
 	const { user, pass } = credentials
+	if(username2===user){
 	if(job==="welcome"){
 		await db.query(sql)
 	context.response.status = 201
 	context.response.body = JSON.stringify(data, null, 2)
 	console.log('APi test 2')
 	return
+	}else{
+		context.response.status = 401
+	}
 	}else{
 		context.response.status = 401
 	}
