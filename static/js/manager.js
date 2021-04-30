@@ -12,7 +12,7 @@ export async function setup() {
 	const nav = ['logout','home']
 	customiseNavBar(nav)
 	
-	const url1 = `/API/1/Online/Staff`
+	const url1 = `/API/1/Staff/Online/All`
 	const options1 = {
 		method: 'GET',
 		headers: {

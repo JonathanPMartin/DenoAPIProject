@@ -468,7 +468,31 @@ router.get('/API/1/Staff/:id', async context => {
 	}
 	//localStorage.setItem('data' , JSON.stringify(actors[0], null, 2))
 })
+router.get('/API/1/Staff/Online/All', async context => {
+	console.log('test')
+	const host = context.request.url.host
+	console.log('test')
+	const sql = 'SELECT * FROM staff WHERE status= "Online";'
+	const actors = await db.query(sql)
+	actors.forEach(actor => {
+		actor.url = `https://${host}/Menu/${actor.id}`
+		delete actor.id
+	})
+	const token = context.request.headers.get('Authorization')
+	const credentials = extractCredentials(token)
+	const username = await login(credentials)
+	const username2=username[0]
+	const { user, pass } = credentials
+	if(user===username2){
+		context.response.status = 201
+		context.response.body = JSON.stringify(actors, null, 2)
+	}else{
+		context.response.status = 401
+	}
+	})
 router.get('/API/1/Online/Staff', async context => {
+	console.log('test')
+	console.log('test')
 	const host = context.request.url.host
 	console.log('test')
 	const sql = 'SELECT * FROM staff WHERE status= "Online";'
@@ -729,7 +753,7 @@ router.get('/API', async context => {
 			{
 				name: ' get Staff',
 				desc: 'Gets the members of Staff Online',
-				href: `${baseurl}/Online/Staff`
+				href: `${baseurl}/Staff/Online/All`
 			},
 			{
 				name: ' put Staff',

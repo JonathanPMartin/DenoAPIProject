@@ -8,7 +8,7 @@ import { login } from './modules/accounts.js'
 import * as flags from "https://deno.land/std/flags/mod.ts"
 import router from './api.js'
 const{args}=Deno
-const Normalport = 8080
+const Normalport = 8070
 const Seccondport = flags.parse(args).port
 console.log(Seccondport)
 const port = Seccondport ? Number(Seccondport ):Normalport
